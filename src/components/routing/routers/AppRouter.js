@@ -8,6 +8,11 @@ import {RegisterGuard} from "components/routing/routeProtectors/RegisterGuard";
 import Register from "components/views/Register";
 import {DashboardGuard} from "components/routing/routeProtectors/DashboardGuard";
 import Dashboard from "components/views/Dashboard";
+import Profile from "components/views/Profile";
+import Waitingroom from "../../views/Waitingroom";
+import Ranking from "../../views/Ranking";
+import Rules from "../../views/Rules";
+import Lobby from "../../views/Lobby";
 
 /**
  * Main router of your application.
@@ -20,38 +25,56 @@ import Dashboard from "components/views/Dashboard";
  * Documentation about routing in React: https://reacttraining.com/react-router/web/guides/quick-start
  */
 const AppRouter = () => {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/game">
-          <GameGuard>
-            <GameRouter base="/game"/>
-          </GameGuard>
-        </Route>
-        <Route exact path="/login">
-          <LoginGuard>
-            <Login/>
-          </LoginGuard>
-        </Route>
-        <Route exact path="/register">
-          <RegisterGuard>
-            <Register/>
-          </RegisterGuard>
-        </Route>
-        <Route exact path="/dashboard">
-          <DashboardGuard>
-            <Dashboard/>
-          </DashboardGuard>
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/game"/>
-        </Route>
-        <Route exact path="/test">
-          <WebSocketTest />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route path="/game">
+                    <GameGuard>
+                        <GameRouter base="/game"/>
+                    </GameGuard>
+                </Route>
+                <Route exact path="/login">
+                    <LoginGuard>
+                        <Login/>
+                    </LoginGuard>
+                </Route>
+                <Route exact path="/register">
+                    <RegisterGuard>
+                        <Register/>
+                    </RegisterGuard>
+                </Route>
+                <Route exact path="/dashboard">
+                    <DashboardGuard>
+                        <Dashboard/>
+                    </DashboardGuard>
+                </Route>
+                <Route exact path="/">
+                    <Redirect to="/game"/>
+                </Route>
+                <Route exact path="/test">
+                    <WebSocketTest/>
+                </Route>
+                <Route exact path={"/dashboard"}>
+                    <Dashboard/>
+                </Route>
+                <Route exact path={"/profile"}>
+                    <Profile/>
+                </Route>
+                <Route exact path={"/waitingroom"}>
+                    <Waitingroom/>
+                </Route>
+                <Route exact path={"/ranking"}>
+                    <Ranking/>
+                </Route>
+                <Route exact path={"/rules"}>
+                    <Rules/>
+                </Route>
+                <Route exact path={"/lobby"}>
+                    <Lobby/>
+                </Route>
+            </Switch>
+        </BrowserRouter>
+    );
 };
 
 /*

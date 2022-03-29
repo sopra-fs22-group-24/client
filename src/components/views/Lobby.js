@@ -2,14 +2,14 @@ import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Profile.scss";
 
 
-const Waitingroom = () => {
+const Lobby = () => {
 
     return (
         <BaseContainer className="profile container">
-            <h2>Waitingroom</h2>
+            <h2>Lobby</h2>
         </BaseContainer>
     );
 }
 
 
-export default Waitingroom;
+export default Lobby;
