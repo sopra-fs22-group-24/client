@@ -66,7 +66,7 @@ const Register = props => {
       localStorage.setItem('token', user.token);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game`);
+      history.push(`/dashboard`);
     } catch (error) {
       alert(`Something went wrong during the registration: \n${handleError(error)}`);
     }

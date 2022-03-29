@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
-import User from 'models/User';
+//import User from 'models/User';
 import {useHistory} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
@@ -53,24 +53,35 @@ const Login = props => {
   const history = useHistory();
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-
+  
+ 
+  
   const doLogin = async () => {
     try {
-      const requestBody = JSON.stringify({username, password});
-      const response = await api.post('/users', requestBody);
+      const response = await api.get('/users');
+      
+      
+      response.data.forEach(function(item, index, array) {//iteration over all users
+        if(item.username===username & item.password===password){ //if we find a user, which has the same username and password as the one inserted, it's ok to enter.
+          
+          const requestBody = JSON.stringify({'loggedIn': "true"});
+          api.put('/users/'+item.id, requestBody);
+          
+          // Store the token into the local storage.
+          localStorage.setItem('token', item.token);
 
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
+                        
+          history.push('/dashboard');
+        }
+      });
 
-      // Store the token into the local storage.
-      localStorage.setItem('token', user.token);
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game`);
     } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
+      alert(`Something went wrong during the login procedure: \n${handleError(error)}`);
     }
+      
+    
   };
+  
 
   const doRegister = async () => {
     try {
