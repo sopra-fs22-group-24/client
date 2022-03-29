@@ -4,6 +4,10 @@ import GameRouter from "components/routing/routers/GameRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import WebSocketTest from "components/views/webSocketTest"
+import {RegisterGuard} from "components/routing/routeProtectors/RegisterGuard";
+import Register from "components/views/Register";
+import {DashboardGuard} from "components/routing/routeProtectors/DashboardGuard";
+import Dashboard from "components/views/Dashboard";
 
 /**
  * Main router of your application.
@@ -11,6 +15,7 @@ import WebSocketTest from "components/views/webSocketTest"
  * and another Router that matches the route "/game".
  * The main difference between these two routes is the following:
  * /login renders another component without any sub-route
+ * /register renders another component without any sub-route
  * /game renders a Router that contains other sub-routes that render in turn other react components
  * Documentation about routing in React: https://reacttraining.com/react-router/web/guides/quick-start
  */
@@ -27,6 +32,16 @@ const AppRouter = () => {
           <LoginGuard>
             <Login/>
           </LoginGuard>
+        </Route>
+        <Route exact path="/register">
+          <RegisterGuard>
+            <Register/>
+          </RegisterGuard>
+        </Route>
+        <Route exact path="/dashboard">
+          <DashboardGuard>
+            <Dashboard/>
+          </DashboardGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/game"/>
