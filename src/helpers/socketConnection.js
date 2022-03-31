@@ -20,7 +20,8 @@ class SocketConnection {
             console.log("Connect: "+response)
             this.isConnected=true
             for(var i=0; i<this.subscriptions.length;i++) {
-                var subscription = this.subscriptions[i]
+                var subscription = this.subscriptions[i];
+                console.log(subscription[0]+", "+subscription[1])
                 this.stompClient.subscribe(subscription[0],(response) => {
                     subscription[1](JSON.parse(response.body).content)
                 }); 
@@ -35,7 +36,7 @@ class SocketConnection {
     */
     send(destination, content) {
         if(!this.isConnected) {
-            //throw Error("Websocket not connected")
+            throw Error("Websocket not connected")
         }
         console.log(content)
         this.stompClient.send(destination, {}, JSON.stringify(content));
