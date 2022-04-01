@@ -69,6 +69,8 @@ const Login = props => {
           
           // Store the token into the local storage.
           localStorage.setItem('token', item.token);
+          localStorage.setItem('username', item.username);
+          localStorage.setItem('id', item.id);
 
                         
           history.push('/dashboard');

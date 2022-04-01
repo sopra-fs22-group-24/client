@@ -1,17 +1,13 @@
-import React, {useState} from 'react';
-import {api, handleError} from 'helpers/api';
-import User from 'models/User';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
 import 'styles/views/Dashboard.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import {Button} from 'components/ui/SquareButton';
-
-
+import {Circle} from "../ui/Circle";
 
 const Dashboard = props => {
-    const history = useHistory();
 
+    const history = useHistory();
 
     function goToGame() {
         history.push('/game');
@@ -29,38 +25,52 @@ const Dashboard = props => {
         history.push('/rules');
     }
 
+    function goToProfile() {
+        history.push('/profile');
+    }
+
     return (
         <BaseContainer>
+            <div className="dashboard header">
+                <Circle
+                    onClick={() => goToProfile()}
+                >
+                    L
+                </Circle>
+            </div>
             <div className="dashboard container">
+                <h1>Hello User</h1>
                 <div className="dashboard form">
-                <div className="dashboard button-container">
-                    <div>
-                        <Button
-                            onClick={() => goToLobby()}
-                        >
-                            Join Game
-                        </Button> {'     '}
-                        <Button
-                            onClick={()=> goToGame()}
-                        >
-                            New Game
-                        </Button>
+                    <div className="dashboard button-container">
+                        <div>
+                            <Button
+                                onClick={() => goToLobby()}
+                            >
+                                Join Game
+                            </Button> {'     '}
+                            <Button
+                                onClick={() => goToGame()}
+                            >
+                                New Game
+                            </Button>
+                        </div>
                     </div>
-                </div>
-                    <div className = "dashboard button-container">
-                    <div>
+                    <div className="dashboard button-container">
+                        <div>
 
-                        <Button
-                            onClick={()=> goToRules()}
-                        >
-                            Rules
-                        </Button> {'         '}
-                        <Button
-                            onClick={() => goToRanking()}
-                        >
-                            Ranking
-                        </Button>
-                    </div>
+                            <Button
+                                className="color-bottom"
+                                onClick={() => goToRules()}
+                            >
+                                Rules
+                            </Button> {'         '}
+                            <Button
+                                className="color-bottom"
+                                onClick={() => goToRanking()}
+                            >
+                                Ranking
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
