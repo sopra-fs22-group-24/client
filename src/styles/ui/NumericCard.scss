@@ -1,5 +1,29 @@
-.numredcard{
-  &.form {
+.numericcard{
+  &.yellow {
+    width: 111px;
+    height: 155px;
+    
+    
+    background: #ECD559;
+    border: 3px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+  }
+
+  &.green {
+    width: 111px;
+    height: 155px;
+    
+    
+    background: #3FED3B;
+    border: 3px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+  }
+
+  &.red {
     width: 111px;
     height: 155px;
     
@@ -10,6 +34,19 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
   }
+
+  &.blue {
+    width: 111px;
+    height: 155px;
+    
+    
+    background: #52ADEE;
+    border: 3px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+  }
+  
   &.upper {
     /* 5 */
 

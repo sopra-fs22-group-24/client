@@ -1,0 +1,68 @@
+.specialcard{
+  &.green {
+    width: 111px;
+    height: 155px;
+    
+    
+    background: #3FED3B;
+    border: 3px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+  }
+
+  &.red {
+    width: 111px;
+    height: 155px;
+    
+    
+    background: #E14343;
+    border: 3px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+  }
+
+  &.yellow {
+    width: 111px;
+    height: 155px;
+    
+    
+    background: #ECD559;
+    border: 3px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+  }
+
+  &.blue {
+    width: 111px;
+    height: 155px;
+    
+    
+    background: #52ADEE;
+    border: 3px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+  }
+  
+  &.middle {
+    margin-left: auto;
+    padding-left: 2px;
+    margin-top: auto;
+    padding-top: 58px;
+
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 35px;
+    //display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #000000;
+  }
+  
+}
