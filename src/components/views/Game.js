@@ -13,7 +13,7 @@ import 'styles/views/Game.scss';
 const Game = props => {
 
   return ( 
-    <div className="game">
+    <div className="game form1">
       <NumericCard>
         <div className="numericcard green">
         <div className="numericcard upper">9</div>
@@ -21,40 +21,64 @@ const Game = props => {
         <div className="numericcard lower">9</div>
         </div>
       </NumericCard>
-
-      <NumericCard>
-        <div className="numericcard yellow">
-        <div className="numericcard upper">9</div>
-        <div className="numericcard middle">9</div>
-        <div className="numericcard lower">9</div>
+        <div className="game form2">
+        <NumericCard>
+          <div className="numericcard red">
+          <div className="numericcard upper">9</div>
+          <div className="numericcard middle">9</div>
+          <div className="numericcard lower">9</div>
+          </div>
+        </NumericCard>
+          <div className="game form2">
+          <NumericCard>
+            <div className="numericcard red">
+            <div className="numericcard upper">3</div>
+            <div className="numericcard middle">3</div>
+            <div className="numericcard lower">3</div>
+            </div>
+          </NumericCard>
+            <div className="game form2">
+            <NumericCard>
+              <div className="numericcard yellow">
+              <div className="numericcard upper">2</div>
+              <div className="numericcard middle">2</div>
+              <div className="numericcard lower">2</div>
+              </div>
+            </NumericCard>
+              <div className="game form2">
+              <NumericCard>
+                <div className="numericcard blue">
+                <div className="numericcard upper">9</div>
+                <div className="numericcard middle">9</div>
+                <div className="numericcard lower">9</div>
+                </div>
+              </NumericCard>
+                  <div className="game form2">
+                  <NumericCard>
+                    <div className="numericcard green">
+                    <div className="numericcard upper">1</div>
+                    <div className="numericcard middle">1</div>
+                    <div className="numericcard lower">1</div>
+                    </div>
+                  </NumericCard>
+                      <div className="game form2">
+                      <SpecialCard>
+                        <div className="specialcard blue">
+                        <div className="specialcard middle">HIT</div>
+                        </div>
+                      </SpecialCard>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </NumericCard>
 
-      <NumericCard>
-        <div className="numericcard red">
-        <div className="numericcard upper">9</div>
-        <div className="numericcard middle">9</div>
-        <div className="numericcard lower">9</div>
-        </div>
-      </NumericCard>
+    </div>
 
-      <NumericCard>
-        <div className="numericcard blue">
-        <div className="numericcard upper">9</div>
-        <div className="numericcard middle">9</div>
-        <div className="numericcard lower">9</div>
-        </div>
-      </NumericCard>
+    
+    
       
-      <SpecialCard>
-        <div className="specialcard green">
-        
-        <div className="specialcard middle">EXTREME HIT</div>
-        
-        </div>
-        
-      </SpecialCard>
-      </div>
       
   );
 };
