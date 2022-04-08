@@ -18,7 +18,7 @@ const WebSocketTest = () => {
     }
 
     const startGame = () => {
-        socket.send("/app/startGame")
+        socket.send("/app/joinLobby")
     }
 
     const randomMessages = (response) => {
@@ -28,7 +28,11 @@ const WebSocketTest = () => {
     var socket = new SocketConnection()
     //socket.subscribe("/topic/greetings", displayResponse)
     socket.subscribe("/topic/messages", randomMessages)
-    socket.connect()
+
+    
+    socket.connect(localStorage.getItem('token'));
+    
+
     return (
             <div>
             <div>{message}</div>

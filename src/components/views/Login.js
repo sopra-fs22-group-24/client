@@ -59,25 +59,31 @@ const Login = props => {
   
   const doLogin = async () => {
     try {
-      const response = await api.get('/users');
-      
-      
+      //const response = await api.get('/users');
+      const response = await api.post("/login",JSON.stringify({username, password}))
+      // Store the token into the local storage.
+      const data = response.data
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', data.username);
+      localStorage.setItem('id', data.id);
+      history.push('/dashboard');
+
+      /*
+      //what is the meaning of this
       response.data.forEach(function(item, index, array) {//iteration over all users
         if(item.username===username & item.password===password){ //if we find a user, which has the same username and password as the one inserted, it's ok to enter.
           
           const requestBody = JSON.stringify({'loggedIn': "true"});
           api.put('/users/'+item.id, requestBody);
-          
-          // Store the token into the local storage.
+          console.log(item.token)
           localStorage.setItem('token', item.token);
           localStorage.setItem('username', item.username);
           localStorage.setItem('id', item.id);
-
                         
           history.push('/dashboard');
         }
       });
-
+      */
     } catch (error) {
       alert(`Something went wrong during the login procedure: \n${handleError(error)}`);
     }

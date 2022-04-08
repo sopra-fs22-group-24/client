@@ -9,14 +9,15 @@ class SocketConnection {
 
     constructor() {
         let url = getDomain()
-        this.socket = new SockJS(`${url}/ws-connect`)
+        this.socket = new SockJS(`${url}/ws-connect`, {headers: { Authorization:localStorage.getItem("token") }})
         this.stompClient = Stomp.over(this.socket)
         this.isConnected = false;
         this.subscriptions = []
     }
     
-    connect = async () => {
-        this.stompClient.connect({}, (response) => {
+    connect = async (token, lobbyId=null) => {
+        console.log(token)
+        this.stompClient.connect({"token":token}, (response) => {
             console.log("Connect: "+response)
             this.isConnected=true
             for(var i=0; i<this.subscriptions.length;i++) {
@@ -39,7 +40,7 @@ class SocketConnection {
             throw Error("Websocket not connected")
         }
         console.log(content)
-        this.stompClient.send(destination, {}, JSON.stringify(content));
+        this.stompClient.send(destination, {token: localStorage.getItem("token"),lobbyId: localStorage.getItem("lobbyId")}, JSON.stringify(content));
     }
 
     /*
