@@ -18,16 +18,20 @@ const WebSocketTest = () => {
     }
 
     const startGame = () => {
+        //socket.send("/app/anotherTest")
         socket.send("/app/joinLobby")
     }
 
     const randomMessages = (response) => {
-        console.log("rand messages")
+        console.log("/queue/message")
         console.log(response)
     }
+
+    const createLobby = () => {
+        socket.send("/app/createLobby",{})
+    }
     var socket = new SocketConnection()
-    //socket.subscribe("/topic/greetings", displayResponse)
-    socket.subscribe("/topic/messages", randomMessages)
+    socket.subscribe("/users/queue/messages", randomMessages)
 
     
     socket.connect(localStorage.getItem('token'));
@@ -38,7 +42,8 @@ const WebSocketTest = () => {
             <div>{message}</div>
             <input type="text" id="ladida" placeholder="Enter name" onChange={(input) => setName(input.target.value)} />
             <Button onClick={() => sendData()}>Send</Button>
-            <Button onClick={() => startGame()}>Start Game</Button>
+            <Button onClick={() => createLobby()}>create Lobby</Button>
+            <Button onClick={() => startGame()}>Start Game [Not Working]</Button>
         </div>
   );
 }

@@ -18,13 +18,14 @@ class SocketConnection {
     connect = async (token, lobbyId=null) => {
         console.log(token)
         this.stompClient.connect({"token":token}, (response) => {
+      
             console.log("Connect: "+response)
             this.isConnected=true
             for(var i=0; i<this.subscriptions.length;i++) {
                 var subscription = this.subscriptions[i];
                 console.log(subscription[0]+", "+subscription[1])
                 this.stompClient.subscribe(subscription[0],(response) => {
-                    subscription[1](JSON.parse(response.body).content)
+                    subscription[1](JSON.parse(response.body))
                 }); 
             }
         })
@@ -53,7 +54,7 @@ class SocketConnection {
             this.stompClient.subscribe(destination, (response) => {
                 console.log("miau")
                 console.log(JSON.parse(response.body).content);
-                callback(JSON.parse(response.body.content))
+                callback(JSON.parse(response.body))
             });
         }
     }
