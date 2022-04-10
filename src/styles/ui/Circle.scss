@@ -16,6 +16,8 @@
   text-transform: uppercase;
   font-size: 36px;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   height: 80px;
   width: 80px;
   border: solid;
@@ -27,6 +29,6 @@
   color: black;
   background-color: white;
   transition: all 0.3s ease;
-  display: inline-block;
-
+  display: flex;
+  float:right;
 }

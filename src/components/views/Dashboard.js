@@ -8,6 +8,8 @@ import {Circle} from "../ui/Circle";
 const Dashboard = props => {
 
     const history = useHistory();
+    let localUsername = localStorage.getItem("username");
+    let initial = localUsername[0];
 
     function goToGame() {
         history.push('/game');
@@ -35,11 +37,11 @@ const Dashboard = props => {
                 <Circle
                     onClick={() => goToProfile()}
                 >
-                    L
+                    {initial}
                 </Circle>
             </div>
             <div className="dashboard container">
-                <h1>Welcome!</h1>
+                <h1>Welcome {localUsername} !</h1>
                 <div className="dashboard form">
                     <div className="dashboard button-container">
                         <div>

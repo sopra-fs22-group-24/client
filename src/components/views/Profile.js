@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Profile.scss";
 import {Circle} from "../ui/Circle";
@@ -15,6 +15,8 @@ const Profile = () => {
     const [score, setScore] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(null);
     const [gamesWon, setGamesWon] = useState(null);
+    let localUsername = localStorage.getItem("username");
+    let initial = localUsername[0];
 
     useEffect(() => {
         async function fetchData() {
@@ -51,27 +53,27 @@ const Profile = () => {
 
     //let content = <Spinner/>;
 
-   // if (username) {
+    //if (username) {
      let content = (
             <div className="profile">
                 <div className="profile container">
                 <div className="profile form">
                     <Circle>
-                        L
+                        {initial}
                     </Circle>
+                    <h3> </h3>
                     <h3>Username: {username} </h3>
                     <h3>Games played: {gamesPlayed} </h3>
                     <h3>Games won: {gamesWon} </h3>
                     <h3>Score: {score} </h3>
+                    <h3> </h3>
                     <div className="button-container">
                 <Button
-                    width="50%"
                     onClick={() => logout()}
                 >
                     Logout
-                </Button>
+                </Button> {'     '}
                 <Button
-                    width="50%"
                     onClick={() => goToDashboard()}
                 >
                     Back
@@ -86,7 +88,6 @@ const Profile = () => {
     return (
         <BaseContainer>
             <div className="profile container">
-                <h2>This is your profile</h2>
                 {content}
             </div>
         </BaseContainer>
