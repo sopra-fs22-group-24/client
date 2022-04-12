@@ -2,7 +2,7 @@
 
 .login {
   &.container {
-    margin-top: 12em;
+    margin-top: 4em;
     min-height: 300px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
@@ -33,17 +33,13 @@
     height: 35px;
     padding-left: 15px;
     margin-left: -4px;
-    border: none;
+    border: black;
+    border-style: solid;
+    border-width: 2px;
     border-radius: 0.75em;
     margin-bottom: 20px;
     background: transparentize(white, 0.85);
-    color: $button;
-  }
-  &.label {
-    color: $button;
-    margin-bottom: 10px;
-    text-transform: lowercase;
-    font-weight: 300;
+    color: black;
   }
   &.button-container {
     display: flex;
