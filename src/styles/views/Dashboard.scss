@@ -2,7 +2,6 @@
 
 .dashboard {
 
-
   &.container {
     margin-top: 4em;
     min-height: 300px;
@@ -12,9 +11,9 @@
   }
 
   &.header {
+      margin-top: 2em;
        text-align: right;
      }
-
 
   &.form {
     display: flex;
@@ -62,9 +61,8 @@
     margin-top: 2em;
   }
 
-
 }
 
 h1{
-  color: black;
+  color: $color4;
 }

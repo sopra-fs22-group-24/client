@@ -2,10 +2,11 @@
 
 .header {
   &.container {
-    //border-bottom-color: $color2;
-    //border-bottom-style: solid;
-    //border-bottom-width: 5px;
-    background-color: $color1;
+    border-bottom-color: $color4;
+    border-bottom-style: solid;
+    border-bottom-width: 5px;
+    background-color: $color2;
+    box-shadow: $dropShadow;
   }
 
 .wrapper{
