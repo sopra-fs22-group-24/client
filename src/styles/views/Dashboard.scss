@@ -1,23 +1,25 @@
 @import 'styles/theme';
 
 .dashboard {
+
   &.container {
-    //margin-top: 4em;
-    min-height: 300px;
-    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
-    @include center;
-    flex-direction: column;
-  }
-  &.header {
     margin-top: 4em;
-    text-align: right;
+    min-height: 300px;
+    @include center;
+    flex-direction:column;
+    color: $color4;
   }
+
+  &.header {
+      margin-top: 2em;
+       text-align: right;
+     }
 
   &.form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 60%;
+    width: 80%;
     max-width: 30em;
     height: 25em;
     font-size: 16px;
@@ -26,8 +28,9 @@
     padding-right: 37px;
     border-radius: 0.75em;
     background-color: $background;
+    border-style: solid;
+    border: $border;
     transition: opacity 0.5s ease, transform 0.5s ease;
-    box-shadow: $dropShadow;
   }
   &.field {
     display: flex;
@@ -58,5 +61,8 @@
     margin-top: 2em;
   }
 
+}
 
+h1{
+  color: $color4;
 }
