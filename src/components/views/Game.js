@@ -18,7 +18,7 @@ const Game = props => {
     <BaseContainer>
       <div className="game container">
         <div className="game launcher">
-        <div className="game label">Launcher</div>
+        <div className="game label">LAUNCH</div>
         <Launcher>
         
           <div className="launcher"></div>

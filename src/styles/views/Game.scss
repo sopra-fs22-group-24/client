@@ -18,9 +18,10 @@
   }
   &.label{
     font-family: Arial, Helvetica, sans-serif;
-    position: relative; 
-    top: 5em; 
-    left: 1em;
+    position: absolute; 
+    top: 35px; 
+    left: 15px;
+    color: $color1;
   }
   &.form1{
     position: absolute;

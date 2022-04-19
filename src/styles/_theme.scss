@@ -8,16 +8,16 @@
    feel free to play around with these and see what other look you can come up with! :D
 */
 
-$color1: #121928;
-$color2:#317380;
-$color3: #7CA3A4;
-$color4: #FBE274;
-$yellow: #EACD0B;
+$color1: #121928;//#D0DAE4;//#2B103B;//#014254;//#121928;
+$color2: #317380;//#2A6078; //#715CA8;//#1ABCBD;//#317380;
+$color3: #E13239;//#7CA3A4;//#B9CD74;//#416EB6;//#F4A5A1;//#7CA3A4;
+$color4: #EECB27;//#FBE274;//#085438;//#EFC638;//#FFE246;//#FBE274;
+$yellow: #FFE246;//#EACD0B;
 
-$accent: #97ABFF;
+$accent: $color2;//#97ABFF;
 $accentDark: #E14343;
 
-$textColor: black;
+$textColor: $color1;//black;
 $background: $color2;
 
 $button: $color3;
