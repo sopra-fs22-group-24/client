@@ -41,7 +41,7 @@ class SocketConnection {
             throw Error("Websocket not connected")
         }
         console.log(content)
-        this.stompClient.send(destination, {token: localStorage.getItem("token"),lobbyId: localStorage.getItem("lobbyId")}, JSON.stringify(content));
+        this.stompClient.send(destination, {token: localStorage.getItem("token")}, JSON.stringify(content));
     }
 
     /*
@@ -52,8 +52,6 @@ class SocketConnection {
         this.subscriptions.push([destination,callback])
         if(this.isConnected) {
             this.stompClient.subscribe(destination, (response) => {
-                console.log("miau")
-                console.log(JSON.parse(response.body).content);
                 callback(JSON.parse(response.body))
             });
         }
