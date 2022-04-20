@@ -6,9 +6,7 @@ import "styles/views/Waitingroom.scss";
 
 
 const Waitingroom = () => {
-    var socket = new SocketConnection();
-    socket.subscribe("/users/queue/messages", goToGame2);
-    socket.connect(localStorage.getItem('token'));
+
     return (
         <BaseContainer className="waitingroom container">
             <h2>Waitingroom</h2>
@@ -32,8 +30,7 @@ const Waitingroom = () => {
                     </div>
                 </div>
             </div>
-            <Button
-                onClick={() => goToGame2()> Go To Game!</Button>
+
             
         </BaseContainer>
     );

@@ -23,6 +23,9 @@ const WebSocketTest = () => {
         console.log(response)
     }
     
+    const printCards = () => {
+        console.log(cards)
+    }
 
     // ----------------- LOBBY --------------------
     const createLobby = () => {
@@ -69,6 +72,10 @@ const WebSocketTest = () => {
 
     }
 
+    const drawCards = () => {
+        socket.send("/app/game/"+gameId+"/drawCard")
+    }
+
     const startGameCallback = (response) => {
         console.log("/lobby/"+lobbyId+"/startGame")
         console.log(response)
@@ -80,8 +87,10 @@ const WebSocketTest = () => {
         socket.subscribe("/game/"+gameId+"/topMostCard", topMostCardCallback)
         socket.subscribe("/game/"+gameId+"/playerTurn", playerTurnCallback)
         socket.subscribe("/game/"+gameId+"/playerHasNCards", playerHasNCardsCallback)
+        
         // privateChannel
         socket.subscribe("/users/queue/"+gameId+"/cards", playerCardsCallback)
+        socket.subscribe("/users/queue/"+gameId+"/cardsDrawn", playerCardsDrawnCallback)
 
         
     }
@@ -107,6 +116,14 @@ const WebSocketTest = () => {
         console.log(response)
         cards = response;
     }
+
+    const playerCardsDrawnCallback = (response) => {
+        console.log("/users/queue/"+gameId+"/cardsDrawn")
+        console.log(response)
+        cards = cards.concat(response);
+    }
+
+    
     // ------------------------ MAIN -----------------------------
     // setup socket
     var socket = new SocketConnection()
@@ -131,7 +148,12 @@ const WebSocketTest = () => {
                 <Button onClick={() => initGame()}> Initialise Game (Displays topMostCard, playerTurn and cards)</Button>
             </div>
             <FloForm callback={playCard} placeHolder="Enter card index" buttonMessage="play Card by Index" />
-
+            <div>
+                <Button onClick={() => drawCards()}>Draw Cards (0-12) </Button>
+            </div>
+            <div>
+               <Button onClick={() => printCards()}>Print cards stored locally </Button>
+            </div>
         </div>
   );
 }
