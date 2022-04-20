@@ -4,15 +4,32 @@ import 'styles/views/Dashboard.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {Button} from 'components/ui/SquareButton';
 import {Circle} from "../ui/Circle";
+import SocketConnection from 'helpers/socketConnection';
 
 const Dashboard = props => {
-
+    var socket = new SocketConnection();
+    socket.subscribe("/users/queue/messages", goToGame2);
+    socket.connect(localStorage.getItem('token'));
+      //await new Promise(resolve => setTimeout(resolve, 5000));
+      //localStorage.setItem('socket', socket);
+      //console.log(socket);
+      //console.log(localStorage.getItem('socket'));
     const history = useHistory();
     let localUsername = localStorage.getItem("username");
     let initial = localUsername[0];
 
     function goToGame() {
-        history.push('/game');
+
+        console.log(socket);
+        //socket.subscribe("/users/queue/messages", goToGame2);
+        socket.send("/app/createLobby");
+       
+        
+    }
+    function goToGame2(response){
+        console.log(response);
+        history.push('/waitingroom/'+response.lobbyId);
+        // history.push('/game');
     }
 
     function goToLobby() {

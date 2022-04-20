@@ -1,0 +1,94 @@
+@import 'styles/theme';
+
+.game {
+  &.container {
+    margin-top: 12em;
+    min-height: 300px;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+  }
+
+  /* &.launcher{
+    position: fixed;
+    top: 320px;
+    left: 100px;
+    
+  }
+  &.label{
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute; 
+    top: 40px; 
+    left: 15px;
+    color: $color1;
+  }
+  &.firstOwnCard{
+   
+    position: fixed;
+    top: 550px;
+    left: 600px;
+  }
+
+  &.nextCards{
+    //margin-left: auto;
+    //padding-left: 30px;
+    
+    position: relative; 
+    top: -9.7em; 
+    left: 4em;
+  }
+
+  &.middleCard{
+    position: fixed;
+    top: 250px;
+    left: 700px;
+  }
+
+  &.unoButton{
+    position: fixed;
+    top: 250px;
+    right: 20px;
+  }
+  &.protestButton{
+    position: fixed;
+    top: 350px;
+    right: 20px;
+    color: $color4;
+  }
+ */
+  &.ownUser{
+
+    position: fixed;
+    top: 300px;
+    left: 300px;
+
+  }
+
+  &.Enemy{
+    position: relative;
+    top:-6.5em; 
+    left: 6em;
+  }
+  
+  &.bottomComment{
+    position: relative;
+    top:0em;
+    left: 0em;
+    color: black;
+  }
+
+  /* &.comments{
+    position: fixed;
+    top: 300px;
+    right: 500px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: $color4;
+    font-weight: bold;
+    font-size: 40px;
+    text-transform: uppercase;
+   
+  } */
+
+  
+}
+
