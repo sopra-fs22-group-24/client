@@ -2,6 +2,7 @@ import { Button } from 'components/ui/Button';
 import React, { useState } from 'react';
 import SocketConnection from 'helpers/socketConnection';
 import FloForm from 'components/ui/FloForm';
+
 const SOCKET_URL = 'http://localhost:8080/gs-guide-websocket';
 
 const WebSocketTest = () => {
@@ -65,6 +66,7 @@ const WebSocketTest = () => {
 
     const playCard = (index) => {
         socket.send("/app/game/"+gameId+"/playCard", cards[index])
+
     }
 
     const startGameCallback = (response) => {
@@ -92,6 +94,7 @@ const WebSocketTest = () => {
     const playerTurnCallback = (response) => {
         console.log("/game/"+gameId+"/playerTurn")
         console.log(response);
+
     }
 
     const playerHasNCardsCallback = (response) => {
@@ -108,6 +111,7 @@ const WebSocketTest = () => {
     // setup socket
     var socket = new SocketConnection()
     // setup subscriptions
+
 
     socket.subscribe("/users/queue/joinLobby", joinLobbyCallback)
 
@@ -127,6 +131,7 @@ const WebSocketTest = () => {
                 <Button onClick={() => initGame()}> Initialise Game (Displays topMostCard, playerTurn and cards)</Button>
             </div>
             <FloForm callback={playCard} placeHolder="Enter card index" buttonMessage="play Card by Index" />
+
         </div>
   );
 }

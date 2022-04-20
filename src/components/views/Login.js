@@ -6,6 +6,7 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+//import SocketConnection from 'helpers/socketConnection';
 
 /*
 It is possible to add multiple components inside a single file,
@@ -66,6 +67,12 @@ const Login = props => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', data.username);
       localStorage.setItem('id', data.id);
+      //socket.connect(localStorage.getItem('token'));
+      //await new Promise(resolve => setTimeout(resolve, 5000));
+      //localStorage.setItem('socket', socket);
+      //console.log(socket);
+      //console.log(localStorage.getItem('socket'));
+      
       history.push('/dashboard');
 
       /*

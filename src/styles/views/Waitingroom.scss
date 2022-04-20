@@ -9,7 +9,7 @@
     flex-direction: column;
   }
 
-  &.launcher{
+  /* &.launcher{
     position: fixed;
     top: 320px;
     left: 100px;
@@ -55,39 +55,29 @@
     right: 20px;
     color: $color4;
   }
-
+ */
   &.ownUser{
 
     position: fixed;
-    top: 600px;
-    left: 500px;
+    top: 300px;
+    left: 300px;
 
   }
 
-  &.firstEnemy{
-    position: fixed;
-    top: 30px;
-    right: 400px;
-  }
-  &.nextEnemy{
+  &.Enemy{
     position: relative;
-    top:-8em; 
+    top:-6.5em; 
     left: 6em;
   }
-  &.topComment{
-    position: relative;
-    top:-8em;
-    left: 1em;
-    color: black;
-  }
+  
   &.bottomComment{
     position: relative;
     top:0em;
-    left: 1em;
+    left: 0em;
     color: black;
   }
 
-  &.comments{
+  /* &.comments{
     position: fixed;
     top: 300px;
     right: 500px;
@@ -97,7 +87,7 @@
     font-size: 40px;
     text-transform: uppercase;
    
-  }
+  } */
 
   
 }
