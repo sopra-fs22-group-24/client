@@ -66,7 +66,10 @@ const Lobby = () => {
   
   // lobby-content displayed correctly   
   let content; 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 55423a1 (Set up Waiting Room)
   if (lobbies) {
     content = (
        <div className="lobby">

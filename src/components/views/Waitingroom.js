@@ -1,6 +1,10 @@
 import {Circle} from "../ui/Circle";
 import BaseContainer from "components/ui/BaseContainer";
+<<<<<<< HEAD
 import React, {useEffect, useState} from 'react';
+=======
+import 'styles/views/Game.scss';
+>>>>>>> parent of 55423a1 (Set up Waiting Room)
 import "styles/views/Waitingroom.scss";
 import SocketConnection from 'helpers/socketConnection';
 import {useHistory} from 'react-router-dom';
@@ -99,25 +103,24 @@ const Waitingroom = () => {
 //   }
     return (
         <BaseContainer className="waitingroom container">
-            <h2 className = "waitingroom label">Waitingroom</h2>
+            <h2>Waitingroom</h2>
             {/* Users: Profile picture, names, remained cards */}
-            <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
-            <div className="waitingroom ownUser">
+            <div className="game ownUser">
                     <Circle>
                         me
                     </Circle>
-                    <div className="waitingroom bottomComment"> Me  </div>
-                <div className="waitingroom Enemy">
+                    <div className="game bottomComment"> Me  </div>
+                <div className="game Enemy">
                 <Circle>
                    1st 
                 </Circle>
-                <div className="waitingroom bottomComment"> Enemy1  </div>
+                <div className="game bottomComment"> Enemy1  </div>
 
-                    <div className="waitingroom Enemy">
+                    <div className="game Enemy">
                     <Circle>
                     2nd
                     </Circle>
-                    <div className="waitingroom bottomComment"> Enemy2  </div>
+                    <div className="game bottomComment"> Enemy2  </div>
                     </div>
                 </div>
             </div>
