@@ -103,6 +103,9 @@ function synthesizeSpeechScoring() {
 
 const Rules = () => {
     const history = useHistory();
+    let localUsername = localStorage.getItem("username");
+    let initial = localUsername[0];
+
     const goToDashboard = async () => {
         history.push(`/dashboard`);
     };
@@ -116,7 +119,7 @@ const Rules = () => {
                 <Circle
                     onClick={() => goToProfile()}
                 >
-                    L
+                    {initial}
                 </Circle>
             </div>
             <div className="rules container">

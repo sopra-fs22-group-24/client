@@ -37,7 +37,7 @@ const Dashboard = props => {
                 <Circle
                     onClick={() => goToProfile()}
                 >
-                    L
+                    {initial}
                 </Circle>
             </div>
             <div className="dashboard container">
