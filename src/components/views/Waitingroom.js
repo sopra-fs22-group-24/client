@@ -27,31 +27,31 @@ const Waitingroom = () => {
     // }
     
     //fetch all user-data
-    useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-    async function fetchData() {
-        try {
-            const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
-            console.log(response);
-            // Get the returned lobbies and update the state
-            response.forEach(function(item, index, array) {//iteration over all lobbies
-                if(item.gameId===gameId){ //We want to have the player of the open lobby
-                    setUsers(item.players);
+    // useEffect(() => {
+    // // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+    // async function fetchData() {
+    //     try {
+    //         const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+    //         console.log(response);
+    //         // Get the returned lobbies and update the state
+    //         response.forEach(function(item, index, array) {//iteration over all lobbies
+    //             if(item.gameId===gameId){ //We want to have the player of the open lobby
+    //                 setUsers(item.players);
                     
-                }
-            })
-            setUsers(response.data.gameId);
+    //             }
+    //         })
+    //         setUsers(response.data.gameId);
             
-        }   catch (error) {
-            console.error(`Something went wrong while fetching the lobby: \n${handleError(error)}`);
-            console.error("Details:", error);
-            alert("Something went wrong while fetching the lobby! See the console for details.");
-        }
+    //     }   catch (error) {
+    //         console.error(`Something went wrong while fetching the lobby: \n${handleError(error)}`);
+    //         console.error("Details:", error);
+    //         alert("Something went wrong while fetching the lobby! See the console for details.");
+    //     }
     
-    } fetchData();}, []
-    );
+    // } fetchData();}, []
+    // );
 
-    console.log(users);
+    // console.log(users);
 
 
 
