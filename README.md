@@ -1,3 +1,13 @@
+#Group 24 
+
+## Microsoft Azure - Text to speech
+
+Links:
+
+Get started: https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-text-to-speech?tabs=windowsinstall&pivots=programming-language-javascript
+
+How to: https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/how-to-speech-synthesis?tabs=require%2Cbrowserjs%2Cwindowsinstall&pivots=programming-language-javascript
+
 # SoPra FS22 - Client Template
 
 ## Getting started
