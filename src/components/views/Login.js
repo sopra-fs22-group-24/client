@@ -118,7 +118,7 @@ const Login = props => {
 
             
           </div>
-          <div className="register button-container">
+          <div className="login button-container">
           <Button
               width="100%"
               onClick={() => doRegister()}

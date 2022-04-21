@@ -7,6 +7,8 @@
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
     flex-direction: column;
+    height: auto;
+    overflow: auto;
   }
   &.form {
     display: flex;
@@ -23,10 +25,12 @@
     background-color: $color2;
     transition: opacity 0.5s ease, transform 0.5s ease;
     box-shadow: $dropShadow;
+    height: auto;
+    overflow: auto;
   }
   &.field {
     display: flex;
-    flex-direction: column;
+    //flex-direction: column;
     justify-content: center;
   }
   &.input {
@@ -55,6 +59,15 @@
     top: 50px;
     right: 50px;
 
+  }
+
+  &.labelLeft{
+    position: relative;
+    left: -7em;
+  }
+  &.labelRight{
+    position: relative;
+    left: 7em;
   }
   
 }
