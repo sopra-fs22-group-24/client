@@ -1,5 +1,5 @@
-import React from 'react';
 import {useHistory} from 'react-router-dom';
+import React, {useState} from 'react';
 import 'styles/views/Dashboard.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {Button} from 'components/ui/SquareButton';
@@ -7,28 +7,24 @@ import {Circle} from "../ui/Circle";
 import SocketConnection from 'helpers/socketConnection';
 
 const Dashboard = props => {
-    var socket = new SocketConnection();
-    socket.subscribe("/users/queue/messages", goToURL);
-    socket.connect(localStorage.getItem('token'));
-      //await new Promise(resolve => setTimeout(resolve, 5000));
-      //localStorage.setItem('socket', socket);
-      //console.log(socket);
-      //console.log(localStorage.getItem('socket'));
     const history = useHistory();
+    let gameId;
+    
     let localUsername = localStorage.getItem("username");
-    let initial = localUsername[0];
+    var socket = new SocketConnection();
+    socket.connect(localStorage.getItem('token'));
 
-    function goToGame() {
-
-        console.log(socket);
-        //socket.subscribe("/users/queue/messages", goToGame2);
-        socket.send("/app/createLobby");
-       
+    function goToGame(){
+        socket.send("/app/createLobby",{});
+        socket.subscribe("/users/queue/joinLobby", joinLobbyCallback);
         
     }
-    function goToURL(response){
-        console.log(response);
-        history.push('/waitingroom/'+response.lobbyId);
+    
+
+    const joinLobbyCallback = (response) => {
+        gameId = response.lobbyId;
+        localStorage.setItem('gameId',gameId);
+        history.push('/waitingroom/'+gameId);
     }
 
     function goToLobby() {

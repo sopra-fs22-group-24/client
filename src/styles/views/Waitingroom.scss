@@ -1,6 +1,6 @@
 @import 'styles/theme';
 
-.game {
+.waitingroom {
   &.container {
     margin-top: 12em;
     min-height: 300px;
@@ -9,53 +9,22 @@
     flex-direction: column;
   }
 
-  /* &.launcher{
-    position: fixed;
-    top: 320px;
-    left: 100px;
-    
-  }
   &.label{
     font-family: Arial, Helvetica, sans-serif;
     position: absolute; 
-    top: 40px; 
-    left: 15px;
-    color: $color1;
-  }
-  &.firstOwnCard{
-   
-    position: fixed;
-    top: 550px;
-    left: 600px;
-  }
-
-  &.nextCards{
-    //margin-left: auto;
-    //padding-left: 30px;
-    
-    position: relative; 
-    top: -9.7em; 
-    left: 4em;
-  }
-
-  &.middleCard{
-    position: fixed;
-    top: 250px;
-    left: 700px;
-  }
-
-  &.unoButton{
-    position: fixed;
-    top: 250px;
-    right: 20px;
-  }
-  &.protestButton{
-    position: fixed;
-    top: 350px;
-    right: 20px;
+    top: 250px; 
+    left: 250px;
     color: $color4;
   }
- */
+  &.Url{
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute; 
+    top: 80px; 
+    left: 750px;
+    color: black;
+  }
+
+  
   &.ownUser{
 
     position: fixed;
@@ -74,20 +43,8 @@
     position: relative;
     top:0em;
     left: 0em;
-    color: black;
-  }
-
-  /* &.comments{
-    position: fixed;
-    top: 300px;
-    right: 500px;
-    font-family: Arial, Helvetica, sans-serif;
     color: $color4;
-    font-weight: bold;
-    font-size: 40px;
-    text-transform: uppercase;
-   
-  } */
+  }
 
   
 }

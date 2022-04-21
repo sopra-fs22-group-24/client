@@ -66,6 +66,7 @@ const Lobby = () => {
   
   // lobby-content displayed correctly   
   let content; 
+  
   if (lobbies) {
     content = (
        <div className="lobby">
