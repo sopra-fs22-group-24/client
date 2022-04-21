@@ -6,7 +6,6 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-//import SocketConnection from 'helpers/socketConnection';
 
 /*
 It is possible to add multiple components inside a single file,
@@ -75,22 +74,7 @@ const Login = props => {
       
       history.push('/dashboard');
 
-      /*
-      //what is the meaning of this
-      response.data.forEach(function(item, index, array) {//iteration over all users
-        if(item.username===username & item.password===password){ //if we find a user, which has the same username and password as the one inserted, it's ok to enter.
-          
-          const requestBody = JSON.stringify({'loggedIn': "true"});
-          api.put('/users/'+item.id, requestBody);
-          console.log(item.token)
-          localStorage.setItem('token', item.token);
-          localStorage.setItem('username', item.username);
-          localStorage.setItem('id', item.id);
-                        
-          history.push('/dashboard');
-        }
-      });
-      */
+      
     } catch (error) {
       alert(`Something went wrong during the login procedure: \n${handleError(error)}`);
     }

@@ -8,7 +8,7 @@ import SocketConnection from 'helpers/socketConnection';
 
 const Dashboard = props => {
     var socket = new SocketConnection();
-    socket.subscribe("/users/queue/messages", goToGame2);
+    socket.subscribe("/users/queue/messages", goToURL);
     socket.connect(localStorage.getItem('token'));
       //await new Promise(resolve => setTimeout(resolve, 5000));
       //localStorage.setItem('socket', socket);
@@ -26,10 +26,9 @@ const Dashboard = props => {
        
         
     }
-    function goToGame2(response){
+    function goToURL(response){
         console.log(response);
         history.push('/waitingroom/'+response.lobbyId);
-        // history.push('/game');
     }
 
     function goToLobby() {
