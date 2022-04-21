@@ -41,7 +41,6 @@ const Dashboard = props => {
                 </Circle>
             </div>
             <div className="dashboard container">
-                <h1>Welcome {localUsername} !</h1>
                 <div className="dashboard form">
                     <div className="dashboard button-container">
                         <div>
