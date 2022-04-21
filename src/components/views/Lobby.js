@@ -66,14 +66,16 @@ const Lobby = () => {
   
   // lobby-content displayed correctly   
   let content; 
-  
+
   if (lobbies) {
     content = (
        <div className="lobby">
           <ul className="lobby lobbyList"> 
             {lobbies.map(lobby => (
                 <div>
-                  <Box className = "lobby field">
+                  <Box 
+                      className = "lobby field"
+                      onClick={() => goToLobby(lobby.lobbyId)}>
                         
                       <div className ="lobby labelLeft">Game {lobby.lobbyId}</div>  
                       <div className ="lobby labelRight">Players joined: 
@@ -96,7 +98,11 @@ const Lobby = () => {
     );
   } 
   
-  
+  function goToLobby(id){
+    history.push('/waitingroom/'+id);
+
+  }
+
 
   function goToProfile() {
     history.push('/profile');
