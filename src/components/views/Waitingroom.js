@@ -1,10 +1,6 @@
 import {Circle} from "../ui/Circle";
 import BaseContainer from "components/ui/BaseContainer";
-<<<<<<< HEAD
 import React, {useEffect, useState} from 'react';
-=======
-import 'styles/views/Game.scss';
->>>>>>> parent of 55423a1 (Set up Waiting Room)
 import "styles/views/Waitingroom.scss";
 import SocketConnection from 'helpers/socketConnection';
 import {useHistory} from 'react-router-dom';
