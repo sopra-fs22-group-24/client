@@ -2,19 +2,53 @@
 
 .game {
   &.container {
-    margin-top: 12em;
-    min-height: 300px;
-    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
-    @include center;
     flex-direction: column;
+    width: 700px;
+    height: 400px;
+    padding-bottom: 2em;
+    padding-top: 3em;
+  }
+
+  &.enemyContainer{
+    display: flex;
+    float: right;
+    width: 1000px;
+    height: 200px;
+    padding-top: 2em;
+    padding-bottom: 4em;
+    align-items: right;
+
+  }
+
+  &.playerContainer{
+    display: flex;
+    width: 1000px;
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
+
+  &.ownUser{
+    display: flex;
+    float: left;
+    padding-right: 2em;
+  }
+
+  &.buttonContainer{
+    display: flex;
+    width: 300px;
+    float:right;
+    padding-left: 3em;
+  }
+
+  &.handContainer{
+    display: flex;
+    width: 600px;
   }
 
   &.launcher{
-    position: fixed;
-    top: 320px;
-    left: 100px;
-    
+    float: left;
   }
+
   &.label{
     font-family: Arial, Helvetica, sans-serif;
     position: absolute; 
@@ -22,69 +56,36 @@
     left: 15px;
     color: $color1;
   }
+
   &.firstOwnCard{
-   
-    position: fixed;
-    top: 550px;
-    left: 600px;
+    display: flex;
   }
 
   &.nextCards{
-    //margin-left: auto;
-    //padding-left: 30px;
-    
-    position: relative; 
-    top: -9.7em; 
-    left: 4em;
+    display: flex;
+    //position: relative;
+    //top: -9.7em;
+    //left: 4em;
   }
 
   &.middleCard{
-    position: fixed;
-    top: 250px;
-    left: 700px;
-  }
-
-  &.unoButton{
-    position: fixed;
-    top: 250px;
-    right: 20px;
-  }
-  &.protestButton{
-    position: fixed;
-    top: 350px;
-    right: 20px;
-    color: $color4;
-  }
-
-  &.ownUser{
-
-    position: fixed;
-    top: 600px;
-    left: 500px;
-
+    float:right;
   }
 
   &.firstEnemy{
-    position: fixed;
-    top: 30px;
-    right: 400px;
+    float: right;
   }
+
   &.nextEnemy{
-    position: relative;
-    top:-8em; 
-    left: 6em;
+    float: right;
   }
+
   &.topComment{
-    position: relative;
-    top:-8em;
-    left: 1em;
-    color: black;
+  float: right;
   }
+
   &.bottomComment{
-    position: relative;
-    top:0em;
-    left: 1em;
-    color: black;
+    float: right;
   }
 
   &.comments{

@@ -7,6 +7,7 @@
     border-bottom-width: 5px;
     background-color: $color2;
     box-shadow: $dropShadow;
+    height: 9em;
   }
 
 .wrapper{
@@ -21,7 +22,7 @@
     font-family: 'Arial';
     font-style: normal;
     font-weight: 700;
-    font-size: 52px;
+    font-size: 48px;
     text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
     line-height: 93px;
     display: flex;
@@ -35,12 +36,12 @@
 
   &.extreme {
     width: 100px;
-    padding-left: 3em;
-    padding-top: 0.5em;
+    padding-left: 3.5em;
+    padding-top: 0.3em;
     font-family: 'Arial';
     font-style: normal;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 28px;
     line-height: 47px;
     letter-spacing: -0.05em;
     color: black;
