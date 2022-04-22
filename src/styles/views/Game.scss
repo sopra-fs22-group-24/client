@@ -4,91 +4,94 @@
   &.container {
     flex-direction: column;
     width: 700px;
-    height: 400px;
+    height: 350px;
     padding-bottom: 2em;
     padding-top: 3em;
+    margin-top: 11em;
   }
 
-  &.enemyContainer{
+  &.enemyContainer {
     display: flex;
     float: right;
-    width: 1000px;
-    height: 200px;
+    width: 400px;
+    height: 250px;
     padding-top: 2em;
     padding-bottom: 4em;
-    align-items: right;
-
   }
 
-  &.playerContainer{
+  &.playerContainer {
     display: flex;
     width: 1000px;
     padding-top: 2em;
     padding-bottom: 2em;
   }
 
-  &.ownUser{
+  &.ownUser {
     display: flex;
     float: left;
     padding-right: 2em;
   }
 
-  &.buttonContainer{
+  &.buttonContainer {
     display: flex;
     width: 300px;
-    float:right;
+    float: right;
     padding-left: 3em;
+    h1{
+      color: $color1;
+      font-size: 15px;
+    }
   }
 
-  &.handContainer{
+  &.handContainer {
     display: flex;
     width: 600px;
   }
 
-  &.launcher{
+  &.launcher {
     float: left;
   }
 
-  &.label{
+  &.label {
     font-family: Arial, Helvetica, sans-serif;
-    position: absolute; 
-    top: 40px; 
+    position: absolute;
+    top: 40px;
     left: 15px;
     color: $color1;
   }
 
-  &.firstOwnCard{
+  &.firstOwnCard {
     display: flex;
   }
 
-  &.nextCards{
+  &.nextCards {
     display: flex;
     //position: relative;
     //top: -9.7em;
     //left: 4em;
   }
 
-  &.middleCard{
-    float:right;
-  }
-
-  &.firstEnemy{
+  &.middleCard {
     float: right;
   }
 
-  &.nextEnemy{
+  &.firstEnemy {
     float: right;
   }
 
-  &.topComment{
-  float: right;
-  }
-
-  &.bottomComment{
+  &.nextEnemy {
     float: right;
   }
 
-  &.comments{
+  &.topComment {
+    float: right;
+  }
+
+  &.bottomComment {
+    float: right;
+  }
+
+  &.comments {
     position: fixed;
     top: 300px;
     right: 500px;
@@ -97,9 +100,9 @@
     font-weight: bold;
     font-size: 40px;
     text-transform: uppercase;
-   
+
   }
 
-  
+
 }
 

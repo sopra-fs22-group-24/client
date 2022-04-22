@@ -101,22 +101,22 @@ const Waitingroom = () => {
         <BaseContainer className="waitingroom container">
             <h2>Waitingroom</h2>
             {/* Users: Profile picture, names, remained cards */}
-            <div className="game ownUser">
+            <div className="waitingroom ownUser">
                     <Circle>
                         me
                     </Circle>
-                    <div className="game bottomComment"> Me  </div>
-                <div className="game Enemy">
+                    <div className="waitingroom bottomComment"> Me  </div>
+                <div className="waitingroom Enemy">
                 <Circle>
                    1st 
                 </Circle>
-                <div className="game bottomComment"> Enemy1  </div>
+                <div className="waitingroom bottomComment"> Enemy1  </div>
 
-                    <div className="game Enemy">
+                    <div className="waitingroom Enemy">
                     <Circle>
                     2nd
                     </Circle>
-                    <div className="game bottomComment"> Enemy2  </div>
+                    <div className="waitingroom bottomComment"> Enemy2  </div>
                     </div>
                 </div>
             </div>
