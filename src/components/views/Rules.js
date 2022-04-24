@@ -45,7 +45,7 @@ const Rules = () => {
 
     return (
         <BaseContainer>
-            <div className="rules header">
+            <div className="rules profile-container">
                 <Circle
                     onClick={() => goToProfile()}
                 >
@@ -88,7 +88,7 @@ const Rules = () => {
                     <p> Wild: 50 Points</p>
                     <p> Extreme Hit: 50 Points</p>
                     <Button
-                        width="50%"
+                        width="7em"
                         onClick={() => goToDashboard()}
                     >
                         Back

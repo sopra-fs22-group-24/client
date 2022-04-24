@@ -37,7 +37,6 @@ const Ranking = () => {
         history.push('/profile');
     }
 
-
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchData() {
@@ -78,7 +77,7 @@ const Ranking = () => {
                 </ul>
                 <div className="ranking button-container">
                 <Button
-                    width="60%"
+                    width="100px"
                     onClick={() => goToDashboard()}
                 >
                     Back
@@ -90,7 +89,7 @@ const Ranking = () => {
 
     return (
         <BaseContainer>
-            <div className="dashboard header">
+            <div className="ranking profile-container">
                 <Circle
                     onClick={() => goToProfile()}
                 >

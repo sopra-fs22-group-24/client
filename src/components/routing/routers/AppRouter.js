@@ -13,6 +13,7 @@ import Waitingroom from "../../views/Waitingroom";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
 import Lobby from "../../views/Lobby";
+import UserProfile from "../../views/UserProfile";
 
 /**
  * Main router of your application.
@@ -57,7 +58,10 @@ const AppRouter = () => {
                 <Route exact path={"/dashboard"}>
                     <Dashboard/>
                 </Route>
-                <Route exact path={"/profile"}>
+                <Route exact path={"/user"}>
+                    <UserProfile/>
+                </Route>
+                <Route path="/profile/:id">
                     <Profile/>
                 </Route>
                 <Route exact path={"/waitingroom"}>

@@ -11,9 +11,10 @@
     color: $color4;
   }
 
-  &.header {
-      margin-top: 2em;
-       text-align: right;
+  &.profile-container {
+    position: absolute;
+    top: 32px;
+    right: 50px;
      }
 
   &.form {

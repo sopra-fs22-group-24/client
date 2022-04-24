@@ -44,12 +44,12 @@ const Dashboard = props => {
     }
 
     function goToProfile() {
-        history.push('/profile');
+        history.push('/user');
     }
 
     return (
         <BaseContainer>
-            <div className="dashboard header">
+            <div className="dashboard profile-container">
                 <Circle
                     onClick={() => goToProfile()}
                 >

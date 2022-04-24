@@ -9,19 +9,20 @@
   border:solid;
   margin-left: 1em;
   margin-right: 1em;
+  text-align: center;
 
   &:hover {
     transform: translateY(-2px);
   }
+  h1{
+     font-size: 48px;
+     margin-top: 0;
+     margin-bottom:0;
+   }
+  p{
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    color: white;
+  }
 }
 
-h1{
-  font-size: 48px;
-  margin-top: 0;
-  margin-bottom:0;
-}
-p{
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
-  color: white;
-}

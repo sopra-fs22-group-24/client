@@ -1,10 +1,10 @@
 import "styles/ui/NumericCard.scss";
 
 export const NumericCard = props => (
-  <numericcard
+  <numeric-card
     {...props}
-    style={{width: props.width, ...props.style}}
-    className={`numericcard ${props.className}`}>
+    style={{width: props.width, backgroundColor: props.backgroundColor,...props.style}}
+    className={`numeric-card ${props.className}`}>
     {props.children}
-  </numericcard>
+  </numeric-card>
 );

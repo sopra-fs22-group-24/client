@@ -2,12 +2,11 @@
 
 .game {
   &.container {
-    flex-direction: column;
-    width: 700px;
-    height: 350px;
+    width: 500px;
+    height: 250px;
     padding-bottom: 2em;
     padding-top: 3em;
-    margin-top: 11em;
+    margin-top: 14em;
   }
 
   &.enemyContainer {
@@ -27,6 +26,7 @@
   }
 
   &.ownUser {
+    margin-top: 2em;
     display: flex;
     float: left;
     padding-right: 2em;
@@ -39,7 +39,7 @@
     padding-left: 3em;
     h1{
       color: $color1;
-      font-size: 15px;
+      font-size: 10px;
     }
   }
 
@@ -50,6 +50,7 @@
 
   &.launcher {
     float: left;
+    margin-left: 3em;
   }
 
   &.label {
@@ -100,9 +101,6 @@
     font-weight: bold;
     font-size: 40px;
     text-transform: uppercase;
-
   }
-
-
 }
 
