@@ -68,7 +68,8 @@ const WebSocketTest = () => {
     }
 
     const playCard = (index) => {
-        socket.send("/app/game/"+gameId+"/playCard", cards[index])
+        var payload = {"card": cards[index], "user":null, "uno": null}
+        socket.send("/app/game/"+gameId+"/playCard", payload)
 
     }
 
