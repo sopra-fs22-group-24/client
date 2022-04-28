@@ -34,7 +34,11 @@ const WebSocketTest = () => {
     
     const joinLobby = (lobbyId) => {
         //socket.send("/app/anotherTest")
-        socket.send("/app/joinLobby", {"lobbyId": lobbyId} )
+        socket.send("/app/lobby/"+lobbyId+"/joinLobby", {} )
+    }
+
+    const leaveLobby = () => {
+        socket.send("/app/lobby/"+lobbyId+"/leaveLobby", {});
     }
 
     const joinLobbyCallback = (response) => {
@@ -45,6 +49,9 @@ const WebSocketTest = () => {
         // We are now connected to the lobby
         // Let us now subscribe to the lobby channels
         socket.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
+
+        socket.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
+
         socket.subscribe("/lobby/"+lobbyId+"/startGame", startGameCallback)
 
         socket.subscribe("/users/queue/error", receiveErrorCallback)
@@ -54,6 +61,20 @@ const WebSocketTest = () => {
     const userJoinedCallback = (response) => {
         console.log("/lobby/"+lobbyId+"/userJoined")
         console.log(response)
+    }
+
+    const userLeftCallback = (response) => {
+        console.log("/lobby/"+lobbyId+"/userLeft");
+        console.log(response)
+        if(response.username == localStorage.getItem("username")) {
+            socket.unsubscribe("/lobby/"+lobbyId+"/userJoined")
+
+            socket.unsubscribe("/lobby/"+lobbyId+"/userLeft")
+    
+            socket.unsubscribe("/lobby/"+lobbyId+"/startGame")
+    
+            socket.unsubscribe("/users/queue/error")        
+        }
     }
 
     
@@ -142,6 +163,9 @@ const WebSocketTest = () => {
             
             <Button onClick={() => createLobby()}>create Lobby</Button>
             <FloForm callback={joinLobby} placeholder="Enter Lobby Id" buttonMessage="Join Lobby"/>
+            <div>
+                <Button onClick={() => leaveLobby()}>Leave Lobby</Button>
+            </div>
             <div>
                 <Button onClick={() => startGame()}>Start Game</Button>
             </div>
