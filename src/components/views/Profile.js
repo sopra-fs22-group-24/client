@@ -9,9 +9,8 @@ import {Circle} from "../ui/Circle";
 
 
 const Profile = () => {
-
+    
     const { id } = useParams();
-
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [score, setScore] = useState(null);
@@ -22,6 +21,7 @@ const Profile = () => {
         async function fetchData() {
             try {
                 //const id = localStorage.getItem("id")
+                
                 const response = await api.get(`/users/${id}`);
 
                 setUsername(response.data.username);
@@ -35,7 +35,6 @@ const Profile = () => {
                 alert(`Something went wrong\n${handleError(error)}`);
             }
         }
-
         console.log("Userprofil")
         fetchData();
     }, []);
