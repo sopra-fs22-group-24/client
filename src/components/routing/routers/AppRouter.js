@@ -31,7 +31,7 @@ const AppRouter = () => {
             <Switch>
                 <Route path="/game">
                     <GameGuard>
-                        <GameRouter base="/game"/>
+                        <GameRouter base="/game/:id"/>
                     </GameGuard>
                 </Route>
                 <Route exact path="/login">
