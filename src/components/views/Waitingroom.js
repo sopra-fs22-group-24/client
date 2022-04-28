@@ -18,55 +18,77 @@ const Waitingroom = () => {
     let gameId = localStorage.getItem('gameId');
     
     const history = useHistory();
-
-    
-
     function goToGame(id){
         history.push('/game/'+id);
     
     }
     function goToURL(response){
-      console.log(response);
       history.push('/game/'+gameId);
       
     }
     
+    
+    //fetch all user-data for this waitingroom
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+          async function fetchData() {
+            try {
+              const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+              for (let i in response.data) {
+                  console.log(response.data[i].lobbyId);
+                  console.log(gameId);
+                if (response.data[i].lobbyId==gameId){
+                    
+                    setUsers(response.data[i].players);
+                    
+                }
+             }
+              
+            } catch (error) {
+              console.error(`Something went wrong while fetching the lobbies: \n${handleError(error)}`);
+              console.error("Details:", error);
+              alert("Something went wrong while fetching the lobbies! See the console for details.");
+            }
+          }
+          fetchData();}, []
+        );
+      
+    // users displayed correctly   
+    let content; 
+    if (users) {
+        content = (
+        <div className="waitingroom">
+            <ul> 
+                {users.map(user => (
+                    <div>
+                        <Circle>
+                            U{user.id}
+                        </Circle> 
+                        
+                        <div className ="waitingroom labelBottom">{user.username}</div>
+                    </div> 
+                ))}         
 
+            </ul>  
+        </div>
+        );
+    } 
 
     
     
-
     return (
         <BaseContainer className="waitingroom container">
             <h2 className = "waitingroom label">Waitingroom</h2>
             <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
             
-            {/* Users: Profile picture, names, remained cards */}
-            <div className="waitingroom ownUser">
-                    <Circle>
-                        me
-                    </Circle>
-                    <div className="waitingroom bottomComment"> Me  </div>
-                <div className="waitingroom Enemy">
-                <Circle>
-                   1st 
-                </Circle>
-                <div className="waitingroom bottomComment"> Enemy1  </div>
-
-                    <div className="waitingroom Enemy">
-                    <Circle>
-                    2nd
-                    </Circle>
-                    <div className="waitingroom bottomComment"> Enemy2  </div>
-                    </div>
-                </div>
-                <Box
-                className = "lobby field"
+            <div className = "waitingroom content">{content}</div>
+            
+            <Box
+                className = "waitingroom field"
                 onClick={() => goToGame(gameId)}
                 >
                     Start Game
                 </Box>
-            </div>
 
             
         </BaseContainer>

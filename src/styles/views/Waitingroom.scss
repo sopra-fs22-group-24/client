@@ -12,12 +12,10 @@
   
   &.ownUser{
 
-    // position: fixed;
-    // top: 300px;
-    // left: 300px;
-    position: relative;
-    top:0em;
-    left: 0em;
+    
+    position: fixed;
+    top:300px;
+    left: 550px;
     color: black;
   }
 
@@ -42,6 +40,28 @@
     left: 750px;
     color: black;
   }
+  &.field {
+    position: fixed;
+    top: 500px;
+    left: 600px;
+    width: 200px;
+  }
+
+  &.label {
+    position: fixed;
+    top: 200px;
+    left: 600px;
+    color: $color3;
+  }
   
+  &.labelBottom{
+    position: relative;
+    left: 0em;
+  }
+  &.content{
+    position: absolute;
+    top: 300px;
+    left: 400px;
+  }
 }
 
