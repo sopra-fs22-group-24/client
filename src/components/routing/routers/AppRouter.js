@@ -64,7 +64,7 @@ const AppRouter = () => {
                 <Route path="/profile/:id">
                     <Profile/>
                 </Route>
-                <Route exact path={"/waitingroom"}>
+                <Route exact path={"/waitingroom/:id"}>
                     <Waitingroom/>
                 </Route>
                 <Route exact path={"/ranking"}>
