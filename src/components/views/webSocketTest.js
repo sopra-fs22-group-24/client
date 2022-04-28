@@ -66,7 +66,7 @@ const WebSocketTest = () => {
     const userLeftCallback = (response) => {
         console.log("/lobby/"+lobbyId+"/userLeft");
         console.log(response)
-        if(response.username == localStorage.getItem("username")) {
+        if(response.username === localStorage.getItem("username")) {
             socket.unsubscribe("/lobby/"+lobbyId+"/userJoined")
 
             socket.unsubscribe("/lobby/"+lobbyId+"/userLeft")

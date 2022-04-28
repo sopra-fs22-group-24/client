@@ -42,7 +42,7 @@ const Waitingroom = () => {
               for (let i in response.data) {
                 console.log(response.data[i]);
                 console.log(gameId);
-                if (response.data[i].lobbyId==gameId){
+                if (response.data[i].lobbyId===gameId){
                     console.log(response.data[i]);
                     setUsers(response.data[i].players);
                     setGameMaster(response.data[i].players[0]);

@@ -29,7 +29,7 @@
 
   &.playerContainer {
     display: flex;
-    width: 1000px;
+    width: 1200px;
     padding-top: 2em;
     padding-bottom: 2em;
   }
@@ -53,7 +53,8 @@
 
   &.handContainer {
     display: flex;
-    width: 800px;
+    position: relative;
+    width: 1000px;
   }
 
   &.launcher {
