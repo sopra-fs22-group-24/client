@@ -1,5 +1,5 @@
 import BaseContainer from "components/ui/BaseContainer";
-import {useHistory} from 'react-router-dom';
+import {useHistory,useParams} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import SocketConnection from 'helpers/socketConnection';
@@ -10,31 +10,30 @@ import "styles/views/Lobby.scss";
 
 const Lobby = () => {
     var socket = new SocketConnection();
+    let gameId;
     socket.connect(localStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
     
     const history = useHistory();
-    socket.subscribe("/users/queue/messages", goToURL);
+    //socket.subscribe("/users/queue/messages", goToURL);
     socket.connect(localStorage.getItem('token'));
 
-    function goToGame() {
-
-        console.log(socket);
-        socket.send("/app/createLobby");
-       
-        
-    }
-    function goToURL(response){
-      console.log(response);
-      history.push('/waitingroom/'+response.lobbyId);
-  }
+    //const { id } = useParams();
+    
+    const [ownUsername, setOwnUsername] = useState(null);
+    
 
     //fetch all lobby-data
     useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
       async function fetchData() {
         try {
+
           const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+          const id = localStorage.getItem("id")
+          const responseUser = await api.get(`/users/${id}`);
+          console.log(responseUser);
+          setOwnUsername(responseUser.data.username);
           console.log(response);
           // Get the returned lobbies and update the state.
           setLobbies(response.data);
@@ -47,7 +46,7 @@ const Lobby = () => {
       }
       fetchData();}, []
     );
-  console.log(lobbies);
+    console.log(lobbies);
 
   
   
@@ -84,13 +83,42 @@ const Lobby = () => {
     );
   } 
   
-  function goToLobby(id){
-    localStorage.setItem('gameId',id);
-    socket.send("/app/joinLobby", {"lobbyId": id} );
-    history.push('/waitingroom/'+id);
-
+  function goToGame(){
+    socket.send("/app/createLobby",{});
+    socket.subscribe("/users/queue/joinLobby", joinLobbyCallback);  
   }
 
+  const joinLobbyCallback = (response) => {
+    gameId = response.lobbyId;
+    localStorage.setItem('gameId',gameId);
+    history.push('/waitingroom/'+gameId);
+  }
+
+  
+
+
+  async function goToLobby(requestedId){
+    
+      let alreadyInLobby=0;
+      console.log(ownUsername);
+      for (let i in lobbies){
+        if (lobbies[i].lobbyId==requestedId){//find lobby to join
+          for (let j in lobbies[i].players){
+            if (lobbies[i].players[j].username==ownUsername){//look for own username in players list in lobby to join
+              alreadyInLobby=1;
+            }
+          }
+        }
+      }
+      if (alreadyInLobby===0){//user didn't join so far!
+        localStorage.setItem('gameId',requestedId);
+        socket.send("/app/joinLobby", {"lobbyId": requestedId} );
+        history.push('/waitingroom/'+requestedId);
+      }
+      else{
+        alert("You already joined this lobby!");
+      }
+  }
 
   function goToProfile() {
     history.push('/user');
