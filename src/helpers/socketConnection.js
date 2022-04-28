@@ -56,6 +56,13 @@ class SocketConnection {
             });
         }
     }
+
+    /*
+    unsubscribe from destination
+    */
+    unsubscribe(destination) {
+        this.stompClient.unsubscribe(destination);
+    }
 }
 
 
