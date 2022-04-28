@@ -98,6 +98,10 @@ const WebSocketTest = () => {
         socket.send("/app/game/"+gameId+"/drawCard")
     }
 
+    const callOutPlayer = (username) => {
+        socket.send("/app/game/"+gameId+"/callOut",{"username": username })
+    }
+
     const startGameCallback = (response) => {
         console.log("/lobby/"+lobbyId+"/startGame")
         console.log(response)
@@ -109,6 +113,7 @@ const WebSocketTest = () => {
         socket.subscribe("/game/"+gameId+"/topMostCard", topMostCardCallback)
         socket.subscribe("/game/"+gameId+"/playerTurn", playerTurnCallback)
         socket.subscribe("/game/"+gameId+"/playerHasNCards", playerHasNCardsCallback)
+        socket.subscribe("/game/"+gameId+"/calledOut", calledOutCallback)
         
         // privateChannel
         socket.subscribe("/users/queue/"+gameId+"/cards", playerCardsCallback)
@@ -145,6 +150,10 @@ const WebSocketTest = () => {
         cards = cards.concat(response);
     }
 
+    const calledOutCallback = (response) => {
+        console.log("/game/"+gameId+"/calledOut")
+        console.log(response)
+    }
     
     // ------------------------ MAIN -----------------------------
     // setup socket
@@ -172,13 +181,14 @@ const WebSocketTest = () => {
             <div>
                 <Button onClick={() => initGame()}> Initialise Game (Displays topMostCard, playerTurn and cards)</Button>
             </div>
-            <FloForm callback={playCard} placeHolder="Enter card index" buttonMessage="play Card by Index" />
+            <FloForm callback={playCard} placeholder="Enter card index" buttonMessage="play Card by Index" />
             <div>
                 <Button onClick={() => drawCards()}>Draw Cards (0-12) </Button>
             </div>
             <div>
                <Button onClick={() => printCards()}>Print cards stored locally </Button>
             </div>
+            <FloForm callback={callOutPlayer} placeholder="Enter username to call out" buttonMessage="Call out player" />
         </div>
   );
 }
