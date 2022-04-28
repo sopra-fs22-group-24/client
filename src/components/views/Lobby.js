@@ -85,6 +85,8 @@ const Lobby = () => {
   } 
   
   function goToLobby(id){
+    localStorage.setItem('gameId',id);
+    socket.send("/app/joinLobby", {"lobbyId": id} );
     history.push('/waitingroom/'+id);
 
   }

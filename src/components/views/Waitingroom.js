@@ -35,10 +35,10 @@ const Waitingroom = () => {
             try {
               const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
               for (let i in response.data) {
-                  console.log(response.data[i].lobbyId);
-                  console.log(gameId);
+                console.log(response.data[i]);
+                console.log(gameId);
                 if (response.data[i].lobbyId==gameId){
-                    
+                    console.log(response.data[i]);
                     setUsers(response.data[i].players);
                     
                 }
@@ -52,21 +52,22 @@ const Waitingroom = () => {
           }
           fetchData();}, []
         );
+        console.log(users);
       
     // users displayed correctly   
     let content; 
     if (users) {
         content = (
-        <div className="waitingroom">
+        <div id="menu">
             <ul> 
                 {users.map(user => (
-                    <div>
+                    <li>
                         <Circle>
                             U{user.id}
                         </Circle> 
                         
                         <div className ="waitingroom labelBottom">{user.username}</div>
-                    </div> 
+                    </li>
                 ))}         
 
             </ul>  
