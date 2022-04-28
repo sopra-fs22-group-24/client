@@ -16,12 +16,11 @@ const Lobby = () => {
     
     const history = useHistory();
     //socket.subscribe("/users/queue/messages", goToURL);
-    socket.connect(localStorage.getItem('token'));
+    //socket.connect(localStorage.getItem('token'));
 
     //const { id } = useParams();
     
     const [ownUsername, setOwnUsername] = useState(null);
-    
 
     //fetch all lobby-data
     useEffect(() => {
@@ -95,8 +94,6 @@ const Lobby = () => {
   }
 
   
-
-
   async function goToLobby(requestedId){
     
       let alreadyInLobby=0;

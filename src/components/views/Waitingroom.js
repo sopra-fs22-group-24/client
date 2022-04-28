@@ -13,8 +13,10 @@ const Waitingroom = () => {
     var socket = new SocketConnection();
     socket.subscribe("/users/queue/messages", goToURL);
     socket.connect(localStorage.getItem('token'));
+    const [ownUsername, setOwnUsername] = useState(null);
 
     const [users, setUsers] = useState(null);
+    const [gameMaster, setGameMaster] = useState(null);
     let gameId = localStorage.getItem('gameId');
     
     const history = useHistory();
@@ -34,13 +36,16 @@ const Waitingroom = () => {
           async function fetchData() {
             try {
               const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+              const id = localStorage.getItem("id")
+              const responseUser = await api.get(`/users/${id}`);//actual user on the page.
+              setOwnUsername(responseUser.data.username);
               for (let i in response.data) {
                 console.log(response.data[i]);
                 console.log(gameId);
                 if (response.data[i].lobbyId==gameId){
                     console.log(response.data[i]);
                     setUsers(response.data[i].players);
-                    
+                    setGameMaster(response.data[i].players[0]);
                 }
              }
               
@@ -75,6 +80,20 @@ const Waitingroom = () => {
         );
     } 
 
+    let startButton;
+    if (gameMaster.username===ownUsername){
+        startButton= (
+            <Box
+            className = "waitingroom field"
+            //disabled={gameMaster.username!==ownUsername}
+            onClick={() => goToGame(gameId)}
+            >
+                Start Game
+            </Box>
+        );
+        
+    }
+
     
     
     return (
@@ -83,13 +102,8 @@ const Waitingroom = () => {
             <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
             
             <div className = "waitingroom content">{content}</div>
+            <div>{startButton}</div>
             
-            <Box
-                className = "waitingroom field"
-                onClick={() => goToGame(gameId)}
-                >
-                    Start Game
-                </Box>
 
             
         </BaseContainer>

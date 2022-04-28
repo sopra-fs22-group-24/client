@@ -1,5 +1,4 @@
-import {NumericCard} from 'components/ui/NumericCard';
-import {SpecialCard} from 'components/ui/SpecialCard';
+import NumericCard from 'components/ui/NumericCard';
 import {Launcher} from 'components/ui/Launcher';
 import {Button} from 'components/ui/Button';
 import {Circle} from "../ui/Circle";
@@ -9,8 +8,9 @@ import 'styles/views/Game.scss';
 import SocketConnection from "../../helpers/socketConnection";
 import PropTypes from "prop-types";
 import {GoPerson} from "react-icons/go";
-import React from "react";
+import React,{Component} from "react";
 import {generatePath, Link} from "react-router-dom";
+import Card from "../../models/Card";
 
 
 
@@ -18,27 +18,77 @@ const Game = props => {
     let socket = new SocketConnection();
     socket.connect(localStorage.getItem('token'));
 
-    let hand = []
-    let middleCard = drawCard();
-    let middleCardColor = "red";
-    let middleCardSymbol = 1;
+    let cards = []
+    let middleCard;
 
     const gameId = localStorage.getItem('gameId');
     const userId = localStorage.getItem("id");
+    const username = localStorage.getItem("username");
+    const lobbyId = localStorage.getItem("lobbyId");
 
-    function drawCard() {
-        socket.subscribe('/game/' + gameId + '/drawCard', NewCard);
+    const initGame = () => {
+        socket.send("/app/game/"+gameId+"/init")
     }
-     const NewCard = (response) => {
-        return response;
-     }
 
-    function playCard(card){
-        const responseBody = (gameId, card, userId)
-        socket.send('/game/' + gameId +'/playCard', responseBody);
-        middleCard = card;
-        middleCardColor = middleCard.color;
-        middleCardSymbol = middleCard.symbol;
+    const startGame = () => {
+        socket.send("/app/game", {"lobbyId": lobbyId})
+    }
+
+    const drawCards = () => {
+        socket.send("/app/game/"+gameId+"/drawCard")
+    }
+
+    const playCard = (index) => {
+        var payload = {"card": cards[index], "user":null, "uno": null}
+        socket.send("/app/game/"+gameId+"/playCard", payload);
+        middleCard = cards[index];
+    }
+
+    const startGameCallback = (response) => {
+        console.log("/lobby/"+lobbyId+"/startGame")
+        console.log(response)
+        // Don't use state or else the whole component will reload and you have to reconnect
+        gameId = response.gameId
+        // We are now connected to the game
+        // Let us now subscribe to the game channels
+        // public channels
+        socket.subscribe("/game/"+gameId+"/topMostCard", topMostCardCallback)
+        socket.subscribe("/game/"+gameId+"/playerTurn", playerTurnCallback)
+        socket.subscribe("/game/"+gameId+"/playerHasNCards", playerHasNCardsCallback)
+
+        // privateChannel
+        socket.subscribe("/users/queue/"+gameId+"/cards", playerCardsCallback)
+        socket.subscribe("/users/queue/"+gameId+"/cardsDrawn", playerCardsDrawnCallback)
+
+
+    }
+
+    const topMostCardCallback = (response) => {
+        console.log("/game/"+gameId+"/topMostCard")
+        console.log(response);
+    }
+
+    const playerTurnCallback = (response) => {
+        console.log("/game/"+gameId+"/playerTurn")
+        console.log(response);
+
+    }
+
+    const playerHasNCardsCallback = (response) => {
+        console.log("/game/"+gameId+"/playerHasNCards")
+        console.log(response);
+    }
+
+    const playerCardsCallback = (response) => {
+        console.log("/users/queue/"+gameId+"/cards")
+        console.log(response)
+        cards = response;
+    }
+
+    const playerCardsDrawnCallback = (response) => {
+        console.log("/users/queue/"+gameId+"/cardsDrawn")
+        console.log(response)
+        cards = cards.concat(response);
     }
 
     function uno(){
@@ -51,91 +101,63 @@ const Game = props => {
         socket.send('/game/' + gameId +'/callOut', userId)
     }
 
+    let displayHand = (
+        <div className="game firstOwnCard">
+            <NumericCard color="YELLOW" symbol="1"/>
+        </div>
+    );
+
+    let displayEnemies = (
+        <div>
+        <Enemy>
+        <h1><GoPerson/></h1>
+        <p> Susie</p>
+        <p> 5 cards</p>
+    </Enemy>
+    <Enemy>
+        <h1><GoPerson/></h1>
+        <p> Joe </p>
+        <p> 3 cards</p>
+    </Enemy>
+    <Enemy>
+        <h1><GoPerson/></h1>
+        <p> Peter </p>
+        <p> 6 cards</p>
+    </Enemy>
+        </div>
+);
+
+    let displayMiddleCard = (
+        <div>
+            <NumericCard color="YELLOW" symbol="1"/>
+        </div>
+
+    );
+
+
     return (
         <BaseContainer>
             <div className="game enemyContainer">
-                <Enemy>
-                    <h1><GoPerson/></h1>
-                    <p> Susie</p>
-                    <p> 5 cards</p>
-                    </Enemy>
-
-                <Enemy>
-                    <h1><GoPerson/></h1>
-                    <p> Joe </p>
-                    <p> 3 cards</p>
-                </Enemy>
-                <Enemy>
-                    <h1><GoPerson/></h1>
-                    <p> Peter </p>
-                    <p> 6 cards</p>
-                </Enemy>
+                {displayEnemies}
             </div>
 
             <div className="game container">
                 <div className="game launcher">
-                    <Launcher onClick={() => drawCard()}>
+                    <Launcher onClick={() => drawCards()}>
                         Launch
                     </Launcher>
                 </div>
                 <div className="game middleCard">
-                    <NumericCard>
-                        <div className="numeric-card" backgroundColor = "blue">
-                        {middleCardSymbol}
-                        </div>
-                    </NumericCard>
+                    {displayMiddleCard}
                 </div>
             </div>
 
             <div className="game playerContainer">
                 <div className="game ownUser">
-                    <Circle>
-                        me
-                    </Circle>
+                    <h1> {username} </h1>
                 </div>
-                <div claseName="game handContainer">
-                    <div className="game firstOwnCard">
-                        <NumericCard>
-                            <div className="numeric-card green">
-                                1
-                            </div>
-                        </NumericCard>
-                        <div className="game nextCards">
-                            <NumericCard>
-                                <div className="numeric-card red">
-                                    2
-                                </div>
-                            </NumericCard>
-                            <div className="game nextCards">
-                                <NumericCard>
-                                    <div className="numeric-card red">
-                                        3
-                                    </div>
-                                </NumericCard>
-                                <div className="game nextCards">
-                                    <NumericCard>
-                                        <div className="numeric-card yellow">
-                                            4
-                                        </div>
-                                    </NumericCard>
-                                    <div className="game nextCards">
-                                        <NumericCard>
-                                            <div className="numeric-card blue">
-                                                5
-                                            </div>
-                                        </NumericCard>
-                                        <div className="game nextCards">
-                                            <NumericCard>
-                                                <div className="numeric-card green">
-                                               6
-                                                </div>
-                                            </NumericCard>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="game handContainer">
+                    {displayHand}
                 </div>
 
                 <div className="game buttonContainer">
