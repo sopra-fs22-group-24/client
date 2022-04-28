@@ -18,6 +18,15 @@
     padding-bottom: 4em;
   }
 
+  &.initContainer{
+    display: flex;
+    float: left;
+    width: 100px;
+    height: 200px;
+    padding-top: 2em;
+    padding-bottom: 4em;
+  }
+
   &.playerContainer {
     display: flex;
     width: 1000px;
@@ -34,7 +43,6 @@
 
   &.buttonContainer {
     display: flex;
-    width: 300px;
     float: right;
     padding-left: 3em;
     h1{
@@ -45,7 +53,7 @@
 
   &.handContainer {
     display: flex;
-    width: 600px;
+    width: 800px;
   }
 
   &.launcher {

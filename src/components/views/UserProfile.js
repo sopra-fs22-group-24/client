@@ -66,15 +66,15 @@ const UserProfile = () => {
                         <div className="button-container">
                             <Button
                                 width="100px"
-                                onClick={() => logout()}
-                            >
-                                Logout
+                                onClick={() => goToDashboard()}
+                                >
+                                Back
                             </Button> {'     '}
                             <Button
                                 width="100px"
-                                onClick={() => goToDashboard()}
+                                onClick={() => logout()}
                             >
-                                Back
+                                Logout
                             </Button>
                         </div>
                     </div>
