@@ -14,7 +14,6 @@ const Waitingroom = () => {
     socket.subscribe("/users/queue/messages", goToURL);
     socket.connect(localStorage.getItem('token'));
     const [ownUsername, setOwnUsername] = useState(null);
-
     const [users, setUsers] = useState(null);
     const [gameMaster, setGameMaster] = useState(null);
     let gameId = localStorage.getItem('gameId');
@@ -40,14 +39,17 @@ const Waitingroom = () => {
               const responseUser = await api.get(`/users/${id}`);//actual user on the page.
               setOwnUsername(responseUser.data.username);
               for (let i in response.data) {
-                console.log(response.data[i]);
-                console.log(gameId);
-                if (response.data[i].lobbyId===gameId){
+                
+                if (response.data[i].lobbyId==gameId){
                     console.log(response.data[i]);
                     setUsers(response.data[i].players);
-                    setGameMaster(response.data[i].players[0]);
+                    //console.log(users);
+                    //console.log(response.data[i].players);
+                    setGameMaster(response.data[i].players[0].username);
+                    console.log(response.data[i].players[0].username);
+                    //console.log(gameMaster);
                 }
-             }
+              }
               
             } catch (error) {
               console.error(`Something went wrong while fetching the lobbies: \n${handleError(error)}`);
@@ -56,7 +58,7 @@ const Waitingroom = () => {
             }
           }
           fetchData();}, []
-        );
+         );
         console.log(users);
       
     // users displayed correctly   
@@ -79,33 +81,27 @@ const Waitingroom = () => {
         </div>
         );
     } 
-
-    let startButton;
-    if (gameMaster.username===ownUsername){
-        startButton= (
-            <Box
-            className = "waitingroom field"
-            //disabled={gameMaster.username!==ownUsername}
-            onClick={() => goToGame(gameId)}
-            >
-                Start Game
-            </Box>
-        );
-        
-    }
+    console.log("GameMaster:");
+    console.log(gameMaster);
+    console.log("Own Username:");
+    console.log(ownUsername);
+    console.log(gameMaster==ownUsername);
 
     
     
     return (
         <BaseContainer className="waitingroom container">
-            <h2 className = "waitingroom label">Waitingroom</h2>
-            <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
+             <h2 className = "waitingroom label">Waitingroom</h2> 
+             <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
+             <div className = "waitingroom content">{content}</div>
             
-            <div className = "waitingroom content">{content}</div>
-            <div>{startButton}</div>
-            
-
-            
+             <Box
+             className = "waitingroom field"
+             disabled={gameMaster!=ownUsername}
+             onClick={() => goToGame(gameId)}
+             >
+                 Start Game
+             </Box>   
         </BaseContainer>
     );
 }

@@ -101,7 +101,7 @@ const Lobby = () => {
       for (let i in lobbies){
         if (lobbies[i].lobbyId==requestedId){//find lobby to join
           for (let j in lobbies[i].players){
-            if (lobbies[i].players[j].username===ownUsername){//look for own username in players list in lobby to join
+            if (lobbies[i].players[j].username==ownUsername){//look for own username in players list in lobby to join
               alreadyInLobby=1;
             }
           }
