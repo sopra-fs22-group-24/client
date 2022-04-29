@@ -13,6 +13,7 @@ const Lobby = () => {
     let gameId;
     socket.connect(localStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
+    const [openLobbies, setOpenLobbies] = useState(null);
     
     const history = useHistory();
     //socket.subscribe("/users/queue/messages", goToURL);
@@ -31,11 +32,26 @@ const Lobby = () => {
           const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
           const id = localStorage.getItem("id")
           const responseUser = await api.get(`/users/${id}`);
-          console.log(responseUser);
+         //console.log(responseUser);
           setOwnUsername(responseUser.data.username);
-          console.log(response);
+          //console.log(response);
           // Get the returned lobbies and update the state.
           setLobbies(response.data);
+          
+          let open = [];
+          let count = 0;
+          for (let j in response.data){
+            if(response.data[j].players.length!=4){
+              open[count] = response.data[j];
+              count +=1;
+            }
+            console.log(response.data[j]);
+            console.log(response.data[j].players.length);
+          }
+
+          setLobbies(open);
+
+
           
         } catch (error) {
           console.error(`Something went wrong while fetching the lobbies: \n${handleError(error)}`);
@@ -45,7 +61,7 @@ const Lobby = () => {
       }
       fetchData();}, []
     );
-    console.log(lobbies);
+    //console.log(lobbies);
 
   
   
@@ -97,7 +113,7 @@ const Lobby = () => {
   async function goToLobby(requestedId){
     
       let alreadyInLobby=0;
-      console.log(ownUsername);
+      //console.log(ownUsername);
       for (let i in lobbies){
         if (lobbies[i].lobbyId==requestedId){//find lobby to join
           for (let j in lobbies[i].players){

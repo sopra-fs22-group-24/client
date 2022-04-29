@@ -11,7 +11,7 @@ const Dashboard = props => {
     const history = useHistory();
     let gameId;
     let localUsername = localStorage.getItem("username");
-    let initial = localUsername[0];
+    //let initial = localUsername[0];
     
     var socket = new SocketConnection();
     socket.connect(localStorage.getItem('token'));
@@ -50,7 +50,8 @@ const Dashboard = props => {
                 <Circle
                     onClick={() => goToProfile()}
                 >
-                    {initial}
+                    {/* //{initial} */}
+                    Me
                 </Circle>
             </div>
             <div className="dashboard container">

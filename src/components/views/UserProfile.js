@@ -15,7 +15,7 @@ const UserProfile = () => {
     const [gamesPlayed, setGamesPlayed] = useState(null);
     const [gamesWon, setGamesWon] = useState(null);
     let localUsername = localStorage.getItem("username");
-    let initial = localUsername[0];
+    //let initial = localUsername[0];
 
     useEffect(() => {
         async function fetchData() {
@@ -55,7 +55,8 @@ const UserProfile = () => {
                 <div className="profile container">
                     <div className="profile form">
                         <Circle>
-                            {initial}
+                            {/* {initial} */}
+                            Me
                         </Circle>
                         <h3> </h3>
                         <h3>Username: {username} </h3>
