@@ -14,6 +14,7 @@ import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
 import Lobby from "../../views/Lobby";
 import UserProfile from "../../views/UserProfile";
+import Game from "../../views/Game";
 
 /**
  * Main router of your application.
@@ -29,10 +30,8 @@ const AppRouter = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/game">
-                    <GameGuard>
-                        <GameRouter base="/game/:id"/>
-                    </GameGuard>
+                <Route exact path="/game/:id">
+                    <Game/>
                 </Route>
                 <Route exact path="/login">
                     <LoginGuard>

@@ -1,26 +1,27 @@
 import NumericCard from 'components/ui/NumericCard';
+import {SpecialCard} from 'components/ui/SpecialCard';
 import {Launcher} from 'components/ui/Launcher';
 import {Button} from 'components/ui/Button';
-//import {Circle} from "../ui/Circle";
+import {Circle} from "../ui/Circle";
 import {Enemy} from "../ui/Enemy";
 import BaseContainer from "components/ui/BaseContainer";
 import 'styles/views/Game.scss';
 import SocketConnection from "../../helpers/socketConnection";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import {GoPerson} from "react-icons/go";
-import React, {Component, useEffect, useState} from "react";
-//import {generatePath, Link} from "react-router-dom";
-//import Card from "../../models/Card";
+import React, {useEffect, useState} from "react";
+import {generatePath, Link, useParams} from "react-router-dom";
+import Card from "../../models/Card";
+import {api, handleError} from "../../helpers/api";
 
 
 const Game = props => {
 
-    useEffect(() => {
-        initGame()
-    });
 
     let socket = new SocketConnection();
     socket.connect(localStorage.getItem('token'));
+
+    const {id} = useParams();
 
     let cards = []
     let hand = []
@@ -28,6 +29,7 @@ const Game = props => {
     const [middleCard, setMiddleCard] = useState(null);
     const [users, setUsers] = useState(null);
     const [currentTurn, setCurrentTurn] = useState(null);
+    //const [gameId, setGameId] = useState(null);
 
     const gameId = localStorage.getItem('gameId');
     const userId = localStorage.getItem("id");
@@ -113,98 +115,113 @@ const Game = props => {
     }
 
     let displayEnemies;
-    // users displayed correctly: An Livia: Du brauchst ein Array der user, dann kannst du so alle user anzeigen lassen: (siehe WaitingRoom)    
-    /* if (users) {
-        content = (
-        <div id="menu">
-            <ul> 
-                {users.map(user => (
-                    <li>
-                        <Enemy>
-                        <h1><GoPerson/></h1>
-                        <p> {user.username}</p>
-                        <p> 7 cards</p>
-                        </Enemy>
-                    </li>
-                ))}         
 
-            </ul>  
-        </div>
-        );
-    } */ 
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        async function fetchData() {
+            try {
+                const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+                const id = localStorage.getItem("id")
+                const responseUser = await api.get(`/users/${id}`);//actual user on the page.
+                for (let i in response.data) {
+                    if (response.data[i].lobbyId==gameId){
+                        setUsers(response.data[i].players);
+                    }
+                }
 
-    let displayMiddleCard = (
-        <div>
-            <NumericCard color={middleCard.color} symbol={middleCard.symbol}/>
-        </div>
+            } catch (error) {
+                console.error(`Something went wrong while fetching the lobbies: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the lobbies! See the console for details.");
+            }
+        }
+        fetchData();}, []
     );
 
-        return (
-            <BaseContainer>
-                <div className="game initContainer">
-                    <Button
-                        width="100px">
-                        START
-                    </Button>
-                </div>
+    if (users) {
+        displayEnemies = (
+            <div id="menu">
+                <ul>
+                    {users.map(user => (
+                            <Enemy>
+                                <h1><GoPerson/></h1>
+                                <p> {user.username}</p>
+                                <p> 7 cards</p>
+                            </Enemy>
 
-                <div className="game enemyContainer">
-                    <Enemy>
-                        <h1><GoPerson/></h1>
-                        <p> Susie</p>
-                        <p> 5 cards</p>
-                    </Enemy>
-                    <Enemy>
-                        <h1><GoPerson/></h1>
-                        <p> Joe </p>
-                        <p> 3 cards</p>
-                    </Enemy>
-                    <Enemy>
-                        <h1><GoPerson/></h1>
-                        <p> Peter </p>
-                        <p> 6 cards</p>
-                    </Enemy>
-                </div>
+                    ))}
 
-                <div className="game container">
-                    <div className="game launcher">
-                        <Launcher onClick={() => drawCards()}>
-                            Launch
-                        </Launcher>
-                    </div>
-                    <div className="game middleCard">
-                        {displayMiddleCard}
-                    </div>
-                </div>
-
-                <div className="game playerContainer">
-                    <div className="game ownUser">
-                        <h1> {username} </h1>
-                    </div>
-                    <div className="game handContainer">
-                        {displayHand}
-                    </div>
-
-                    <div className="game buttonContainer">
-                        <div>
-                            <h1> empty </h1>
-                            <Button
-                                width="100px"
-                                onClick={() => sayUno()}>
-                                UNO
-                            </Button>{'     '}
-                            <h1> empty </h1>
-                            <Button
-                                width="100px"
-                                onClick={() => protest()}>
-                                PROTEST
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </BaseContainer>
-
+                </ul>
+            </div>
         );
+    }
+
+
+    let displayMiddleCard = (
+        <NumericCard color="YELLOW" symbol="6"/>
+       // <div>
+       //     <NumericCard color={middleCard.color} symbol={middleCard.symbol}/>
+       // </div>
+    );
+
+    return (
+        <BaseContainer>
+            <div className="game initContainer">
+                <Button
+                    width="100px"
+                    onClick={() => initGame()}>
+                    START
+                </Button>
+            </div>
+
+            <div className="game enemyContainer">
+                {displayEnemies}
+            </div>
+
+            <div className="game container">
+                <div className="game launcher">
+                    <Launcher onClick={() => drawCards()}>
+                        Launch
+                    </Launcher>
+                </div>
+                <div className="game middleCard">
+                    {displayMiddleCard}
+                </div>
+            </div>
+
+            <div className="game playerContainer">
+                <div className="game ownUser">
+                    <h1> {username} </h1>
+                </div>
+                <div className="game handContainer">
+                    <div className="game firstOwnCard">
+                        <NumericCard
+                            color="BLUE"
+                            symbol="2"
+                        />
+                    </div>
+                </div>
+
+                <div className="game buttonContainer">
+                    <div>
+                        <h1> empty </h1>
+                        <Button
+                            width="100px"
+                            onClick={() => sayUno()}>
+                            UNO
+                        </Button>{'     '}
+                        <h1> empty </h1>
+                        <Button
+                            width="100px"
+                            onClick={() => protest()}>
+                            PROTEST
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </BaseContainer>
+
+    );
 };
 
 const sdk = require("microsoft-cognitiveservices-speech-sdk");
