@@ -113,6 +113,25 @@ const Game = props => {
     }
 
     let displayEnemies;
+    // users displayed correctly: An Livia: Du brauchst ein Array der user, dann kannst du so alle user anzeigen lassen: (siehe WaitingRoom)    
+    /* if (users) {
+        content = (
+        <div id="menu">
+            <ul> 
+                {users.map(user => (
+                    <li>
+                        <Enemy>
+                        <h1><GoPerson/></h1>
+                        <p> {user.username}</p>
+                        <p> 7 cards</p>
+                        </Enemy>
+                    </li>
+                ))}         
+
+            </ul>  
+        </div>
+        );
+    } */ 
 
     let displayMiddleCard = (
         <div>
