@@ -6,14 +6,6 @@ class NumericCard extends Component {
 
     let color =this.props.color;
     let symbol = this.props.symbol;
-/*
-    return(
-        <div className= {`numeric-card ${color}``}>
-          {symbol}
-        </div>
-    )
-
- */
 
     if (color === "YELLOW") {
       return (

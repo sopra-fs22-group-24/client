@@ -23,7 +23,7 @@ const Game = props => {
 
     const {id} = useParams();
 
-    let cards = []
+    let cards = [{color:"YELLOW", symbol:"1"}, {color:"YELLOW", symbol:"2"},{color:"YELLOW", symbol:"3"},{color:"YELLOW", symbol:"4"}]
     let hand = []
     let uno = false;
     const [middleCard, setMiddleCard] = useState(null);
@@ -55,7 +55,7 @@ const Game = props => {
     const playerTurnCallback = (response) => {
         console.log("/game/" + gameId + "/playerTurn")
         console.log(response);
-        setCurrentTurn(response);
+        setCurrentTurn(response.username);
     }
 
     const playerHasNCardsCallback = (response) => {
@@ -80,10 +80,19 @@ const Game = props => {
         socket.send("/app/game/" + gameId + "/drawCard")
     }
 
+    //not finished
     const playCard = (index) => {
+        let card = cards[index];
+        if (card.color == "WILDCARD"){
+            let newColor = prompt("What color do you wish?");
+        }
+        if (card.color == "EXTERMEHIT"){
+
+        }
         let payload = {"card": cards[index], "user": null, "uno": {uno}}
         socket.send("/app/game/" + gameId + "/playCard", payload);
         setMiddleCard(cards[index]);
+        cards.splice(index,1);
     }
 
     function sayUno() {
@@ -166,16 +175,20 @@ const Game = props => {
 
     return (
         <BaseContainer>
-            <div className="game initContainer">
-                <Button
-                    width="100px"
-                    onClick={() => initGame()}>
-                    START
-                </Button>
-            </div>
-
-            <div className="game enemyContainer">
-                {displayEnemies}
+            <div className="game topContainer">
+                <div className="game initContainer">
+                    <Button
+                        width="100px"
+                        onClick={() => initGame()}>
+                        START
+                    </Button>
+                </div>
+                <div className="game currentPlayerContainer">
+                    <h3> Current player: {currentTurn}</h3>
+                </div>
+                <div className="game enemyContainer">
+                    {displayEnemies}
+                </div>
             </div>
 
             <div className="game container">
@@ -195,10 +208,7 @@ const Game = props => {
                 </div>
                 <div className="game handContainer">
                     <div className="game firstOwnCard">
-                        <NumericCard
-                            color="BLUE"
-                            symbol="2"
-                        />
+                        {displayHand()}
                     </div>
                 </div>
 

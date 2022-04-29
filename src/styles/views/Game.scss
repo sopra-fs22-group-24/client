@@ -3,11 +3,15 @@
 .game {
   &.container {
     width: 600px;
-    height: 400px;
+    height: 250px;
     padding-bottom: 2em;
-    padding-top: 12em;
+    padding-top: 2em;
   }
 
+  &.topContainer {
+    display: flex;
+
+  }
   &.enemyContainer {
     display: flex;
     float: right;
@@ -26,6 +30,17 @@
     padding-bottom: 4em;
   }
 
+  &.currentPlayerContainer{
+    display: flex;
+    padding-left: 3em;
+    padding-top: 2em;
+    width: 400px;
+    h3{
+      color: $color4;
+    }
+
+  }
+
   &.playerContainer {
     display: flex;
     width: 1200px;
@@ -38,6 +53,9 @@
     display: flex;
     float: left;
     padding-right: 2em;
+    h1{
+      color: $color3;
+    }
   }
 
   &.buttonContainer {
