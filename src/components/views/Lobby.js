@@ -109,7 +109,8 @@ const Lobby = () => {
       }
       if (alreadyInLobby===0){//user didn't join so far!
         localStorage.setItem('gameId',requestedId);
-        socket.send("/app/joinLobby", {"lobbyId": requestedId} );
+        socket.send("/app/lobby/"+requestedId+"/joinLobby", {} );
+        // socket.send("/app/joinLobby", {"lobbyId": requestedId} );
         history.push('/waitingroom/'+requestedId);
       }
       else{

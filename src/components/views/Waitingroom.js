@@ -20,8 +20,10 @@ const Waitingroom = () => {
     
     const history = useHistory();
     function goToGame(id){
+        if (gameMaster==ownUsername){
+            socket.send("/app/lobby/"+id+"/leaveLobby", {});
+        }
         history.push('/game/'+id);
-    
     }
     function goToURL(response){
       history.push('/game/'+gameId);
@@ -41,13 +43,14 @@ const Waitingroom = () => {
               for (let i in response.data) {
                 
                 if (response.data[i].lobbyId==gameId){
-                    console.log(response.data[i]);
                     setUsers(response.data[i].players);
-                    //console.log(users);
-                    //console.log(response.data[i].players);
                     setGameMaster(response.data[i].players[0].username);
-                    console.log(response.data[i].players[0].username);
-                    //console.log(gameMaster);
+                    // let usersCounted=0;
+                    // for (let j in response.data[i].players){
+                    //     usersCounted+=1;
+                    // }
+                    // console.log("Users in Lobby:");
+                    // console.log(usersCounted);
                 }
               }
               
@@ -59,7 +62,6 @@ const Waitingroom = () => {
           }
           fetchData();}, []
          );
-        console.log(users);
       
     // users displayed correctly   
     let content; 
@@ -81,12 +83,35 @@ const Waitingroom = () => {
         </div>
         );
     } 
+    let usersCounted=0;
+    for (let i in users){
+        usersCounted+=1;
+    }
     console.log("GameMaster:");
     console.log(gameMaster);
     console.log("Own Username:");
     console.log(ownUsername);
-    console.log(gameMaster==ownUsername);
+    console.log("Users in Lobby:");
+    console.log(usersCounted);
+    console.log(usersCounted!=4);
+    //console.log(users.length);
 
+    let gameBox;
+    if (usersCounted!=4){
+        gameBox = (
+            <div>Wait until you are 4 users joining the lobby. Click on Start Button, as soon it appears.</div>
+        );
+    } else{
+        gameBox = (
+        <Box
+             className = "waitingroom field"
+             disabled={true}
+             onClick={() => goToGame(gameId)}
+             >
+                 Start Game
+             </Box>
+        );
+    }
     
     
     return (
@@ -94,14 +119,8 @@ const Waitingroom = () => {
              <h2 className = "waitingroom label">Waitingroom</h2> 
              <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
              <div className = "waitingroom content">{content}</div>
-            
-             <Box
-             className = "waitingroom field"
-             disabled={gameMaster!=ownUsername}
-             onClick={() => goToGame(gameId)}
-             >
-                 Start Game
-             </Box>   
+             <div className = "waitingroom gameBox">{gameBox}</div>
+                
         </BaseContainer>
     );
 }
