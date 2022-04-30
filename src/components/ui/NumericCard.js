@@ -9,27 +9,31 @@ class NumericCard extends Component {
 
     if (color === "YELLOW") {
       return (
-        <div className="numeric-card yellow">
+        <div className="numeric-card yellow"
+             onClick={() => this.props.onClick()}>
           {symbol}
         </div>
       );
     }
     else if (color === "BLUE"){
       return (
-            <div className="numeric-card blue">
+            <div className="numeric-card blue"
+                 onClick={() => this.props.onClick()}>
               {symbol}
             </div>
       );
     }
     else if (color === "RED"){
       return (
-        <div className="numeric-card red">
+        <div className="numeric-card red"
+             onClick={() => this.props.onClick()}>
           {symbol}
         </div>);
     }
     else if (color === "GREEN"){
       return (
-        <div className="numeric-card green">
+        <div className="numeric-card green"
+             onClick={() => this.props.onClick()}>
           {symbol}
         </div>);
     }

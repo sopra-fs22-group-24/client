@@ -46,6 +46,7 @@ const WebSocketTest = () => {
         console.log(response)
         // Don't use state or else the whole component will reload and you have to reconnect
         lobbyId = response.lobbyId;
+        localStorage.setItem("testLobbyId", lobbyId)
         // We are now connected to the lobby
         // Let us now subscribe to the lobby channels
         socket.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
@@ -107,6 +108,7 @@ const WebSocketTest = () => {
         console.log(response)
         // Don't use state or else the whole component will reload and you have to reconnect
         gameId = response.gameId
+        localStorage.setItem("testGameId", gameId)
         // We are now connected to the game
         // Let us now subscribe to the game channels
         // public channels
@@ -118,8 +120,6 @@ const WebSocketTest = () => {
         // privateChannel
         socket.subscribe("/users/queue/"+gameId+"/cards", playerCardsCallback)
         socket.subscribe("/users/queue/"+gameId+"/cardsDrawn", playerCardsDrawnCallback)
-
-        
     }
 
     const topMostCardCallback = (response) => {

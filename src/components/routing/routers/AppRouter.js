@@ -33,6 +33,9 @@ const AppRouter = () => {
                 <Route exact path="/game/:id">
                     <Game/>
                 </Route>
+                <Route exact path="/game">
+                    <Game/>
+                </Route>
                 <Route exact path="/login">
                     <LoginGuard>
                         <Login/>

@@ -1,8 +1,6 @@
 import NumericCard from 'components/ui/NumericCard';
-import {SpecialCard} from 'components/ui/SpecialCard';
 import {Launcher} from 'components/ui/Launcher';
 import {Button} from 'components/ui/Button';
-import {Circle} from "../ui/Circle";
 import {Enemy} from "../ui/Enemy";
 import BaseContainer from "components/ui/BaseContainer";
 import 'styles/views/Game.scss';
@@ -21,17 +19,20 @@ const Game = props => {
     let socket = new SocketConnection();
     socket.connect(localStorage.getItem('token'));
 
-    const {id} = useParams();
-
-    let cards = [{color:"YELLOW", symbol:"1"}, {color:"YELLOW", symbol:"2"},{color:"YELLOW", symbol:"3"},{color:"YELLOW", symbol:"4"}]
+    //const {id} = useParams();
+    //let cards = null;
+    let cards = [{color:"YELLOW", symbol:"WILDCARD"}, {color:"YELLOW", symbol:"2"},{color:"YELLOW", symbol:"3"},{color:"YELLOW", symbol:"4"}]
     let hand = []
     let uno = false;
+    let lobbyId = localStorage.getItem("testLobbyId");
+    //let gameId = null;
+    const gameId = localStorage.getItem('testGameId');
+
     const [middleCard, setMiddleCard] = useState(null);
     const [users, setUsers] = useState(null);
     const [currentTurn, setCurrentTurn] = useState(null);
     //const [gameId, setGameId] = useState(null);
 
-    const gameId = localStorage.getItem('gameId');
     const userId = localStorage.getItem("id");
     const username = localStorage.getItem("username");
 
@@ -45,6 +46,7 @@ const Game = props => {
         socket.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
         socket.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
     }
+
 
     const topMostCardCallback = (response) => {
         console.log("/game/" + gameId + "/topMostCard")
@@ -80,24 +82,33 @@ const Game = props => {
         socket.send("/app/game/" + gameId + "/drawCard")
     }
 
-    //not finished
     const playCard = (index) => {
+        console.log("played Card");
+        //debugger;
         let card = cards[index];
-        if (card.color == "WILDCARD"){
+        if (card.symbol == "WILDCARD"){
             let newColor = prompt("What color do you wish?");
+            let newCard = {color: {newColor}, symbol: card.symbol};
+            let payload = {"card": newCard, "user": null, "uno": {uno}};
+            socket.send("/app/game/" + gameId + "/playCard", payload);
+        } else if (card.symbol == "EXTREMEHIT"){
+            let newColor = prompt("What color do you wish?");
+            let enemyGetsHit = prompt("Who do you want to hit?");
+            let newCard = {color: {newColor}, symbol: card.symbol};
+            let payload = {"card": newCard, "user": enemyGetsHit, "uno": {uno}};
+            socket.send("/app/game/" + gameId + "/playCard", payload);
+        } else{
+            let payload = {"card": cards[index], "user": null, "uno": uno}
+            socket.send("/app/game/" + gameId + "/playCard", payload);
         }
-        if (card.color == "EXTERMEHIT"){
-
-        }
-        let payload = {"card": cards[index], "user": null, "uno": {uno}}
-        socket.send("/app/game/" + gameId + "/playCard", payload);
         setMiddleCard(cards[index]);
         cards.splice(index,1);
     }
 
     function sayUno() {
-        synthesizeSpeech("UNO")
-        socket.send('/game/' + gameId + '/UNO', userId)
+        synthesizeSpeech("UNO");
+        socket.send('/game/' + gameId + '/UNO', userId);
+        uno = true;
     }
 
     function protest() {
@@ -157,7 +168,6 @@ const Game = props => {
                                 <p> {user.username}</p>
                                 <p> 7 cards</p>
                             </Enemy>
-
                     ))}
 
                 </ul>
@@ -168,21 +178,26 @@ const Game = props => {
 
     let displayMiddleCard = (
         <NumericCard color="YELLOW" symbol="6"/>
-       // <div>
-       //     <NumericCard color={middleCard.color} symbol={middleCard.symbol}/>
-       // </div>
+        //<div>
+        //    <NumericCard color={middleCard.color} symbol={middleCard.symbol}/>
+        //</div>
     );
 
-    return (
-        <BaseContainer>
+    let gameDisplay = (
+        <div className="game initContainer">
+            <Button
+                width="100px"
+                onClick={() => initGame()}>
+                START
+            </Button>
+        </div>
+    )
+
+    if (hand) {
+        gameDisplay=(
+            <div>
             <div className="game topContainer">
-                <div className="game initContainer">
-                    <Button
-                        width="100px"
-                        onClick={() => initGame()}>
-                        START
-                    </Button>
-                </div>
+
                 <div className="game currentPlayerContainer">
                     <h3> Current player: {currentTurn}</h3>
                 </div>
@@ -190,45 +205,50 @@ const Game = props => {
                     {displayEnemies}
                 </div>
             </div>
+        <div className="game container">
+            <div className="game launcher">
+                <Launcher onClick={() => drawCards()}>
+                    Launch
+                </Launcher>
+            </div>
+            <div className="game middleCard">
+                {displayMiddleCard}
+            </div>
+        </div>
 
-            <div className="game container">
-                <div className="game launcher">
-                    <Launcher onClick={() => drawCards()}>
-                        Launch
-                    </Launcher>
-                </div>
-                <div className="game middleCard">
-                    {displayMiddleCard}
+        <div className="game playerContainer">
+            <div className="game ownUser">
+                <h1> {username} </h1>
+            </div>
+            <div className="game handContainer">
+                <div className="game firstOwnCard">
+                    {displayHand()}
                 </div>
             </div>
 
-            <div className="game playerContainer">
-                <div className="game ownUser">
-                    <h1> {username} </h1>
-                </div>
-                <div className="game handContainer">
-                    <div className="game firstOwnCard">
-                        {displayHand()}
-                    </div>
-                </div>
-
-                <div className="game buttonContainer">
-                    <div>
-                        <h1> empty </h1>
-                        <Button
-                            width="100px"
-                            onClick={() => sayUno()}>
-                            UNO
-                        </Button>{'     '}
-                        <h1> empty </h1>
-                        <Button
-                            width="100px"
-                            onClick={() => protest()}>
-                            PROTEST
-                        </Button>
-                    </div>
+            <div className="game buttonContainer">
+                <div>
+                    <h1> empty </h1>
+                    <Button
+                        width="100px"
+                        onClick={() => sayUno()}>
+                        UNO
+                    </Button>{'     '}
+                    <h1> empty </h1>
+                    <Button
+                        width="100px"
+                        onClick={() => protest()}>
+                        PROTEST
+                    </Button>
                 </div>
             </div>
+        </div>
+            </div>
+        )
+    }
+    return (
+        <BaseContainer>
+            {gameDisplay}
         </BaseContainer>
 
     );

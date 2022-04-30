@@ -4,6 +4,7 @@
     height: 155px;
     color: white;
     font-size: 28px;
+    font-size: 1vw;
     border: solid;
     border-width: 5px;
     box-sizing: border-box;
@@ -14,6 +15,7 @@
     padding-top: 50px;
     margin-left: 0.3px;
     cursor: pointer;
+
   &:hover {
     transform: translateY(-2px);
   }
