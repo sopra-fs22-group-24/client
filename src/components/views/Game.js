@@ -13,40 +13,10 @@ import Card from "../../models/Card";
 import {api, handleError} from "../../helpers/api";
 
 
+
 const Game = props => {
 
-
-    let socket = new SocketConnection();
-    socket.connect(localStorage.getItem('token'));
-
-    //const {id} = useParams();
-    //let cards = null;
-    let cards = [{color:"YELLOW", symbol:"WILDCARD"}, {color:"YELLOW", symbol:"2"},{color:"YELLOW", symbol:"3"},{color:"YELLOW", symbol:"4"}]
-    let hand = []
-    let uno = false;
-    let lobbyId = localStorage.getItem("testLobbyId");
-    //let gameId = null;
-    const gameId = localStorage.getItem('testGameId');
-
-    const [middleCard, setMiddleCard] = useState(null);
-    const [users, setUsers] = useState(null);
-    const [currentTurn, setCurrentTurn] = useState(null);
-    //const [gameId, setGameId] = useState(null);
-
-    const userId = localStorage.getItem("id");
-    const username = localStorage.getItem("username");
-
-    const initGame = () => {
-        socket.send("/app/game/" + gameId + "/init")
-        socket.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
-        socket.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
-        socket.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
-
-        // privateChannel
-        socket.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
-        socket.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
-    }
-
+    const gameId = localStorage.getItem('gameId');
 
     const topMostCardCallback = (response) => {
         console.log("/game/" + gameId + "/topMostCard")
@@ -77,6 +47,35 @@ const Game = props => {
         cards = cards.concat(response);
     }
 
+    let socket = new SocketConnection();
+    socket.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
+    socket.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
+    socket.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
+
+    // privateChannel
+    socket.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
+    socket.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
+    socket.connect(localStorage.getItem('token'));
+
+
+    //const {id} = useParams();
+    //let cards = null;
+    let cards = [{color:"YELLOW", symbol:"WILDCARD"}, {color:"YELLOW", symbol:"2"},{color:"YELLOW", symbol:"3"},{color:"YELLOW", symbol:"4"}]
+    let hand = []
+    let uno = false;
+
+    const [middleCard, setMiddleCard] = useState(null);
+    const [users, setUsers] = useState(null);
+    const [currentTurn, setCurrentTurn] = useState(null);
+    //const [gameId, setGameId] = useState(null);
+
+    const userId = localStorage.getItem("id");
+    const username = localStorage.getItem("username");
+
+
+    const initGame = () => {
+        socket.send("/app/game/" + gameId + "/init")
+    }
 
     const drawCards = () => {
         socket.send("/app/game/" + gameId + "/drawCard")
@@ -169,7 +168,6 @@ const Game = props => {
                                 <p> 7 cards</p>
                             </Enemy>
                     ))}
-
                 </ul>
             </div>
         );
@@ -197,7 +195,13 @@ const Game = props => {
         gameDisplay=(
             <div>
             <div className="game topContainer">
-
+                <div className="game initContainer">
+                    <Button
+                        width="100px"
+                        onClick={() => initGame()}>
+                        START
+                    </Button>
+                </div>
                 <div className="game currentPlayerContainer">
                     <h3> Current player: {currentTurn}</h3>
                 </div>

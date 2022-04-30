@@ -3,7 +3,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import React, {useEffect, useState} from 'react';
 import "styles/views/Waitingroom.scss";
 import SocketConnection from 'helpers/socketConnection';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {api, handleError} from 'helpers/api';
 
 import {Box} from "../ui/Box";
@@ -11,14 +11,14 @@ import {Box} from "../ui/Box";
 const Waitingroom = () => {
     //socketconnection
     var socket = new SocketConnection();
-    let lobbyId = localStorage.getItem('lobbyId');
+    let lobbyId = useParams().id;
     let gameId;
 
     const startGameCallback = (response) => {
         console.log("/lobby/"+lobbyId+"/startGame")
         console.log(response)
         // Don't use state or else the whole component will reload and you have to reconnect
-        gameId = response.gameId
+        gameId = response.gameId;
         localStorage.setItem("gameId", gameId)
     }
 
