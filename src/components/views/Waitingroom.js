@@ -99,7 +99,7 @@ const Waitingroom = () => {
     let gameBox;
     if (usersCounted!=4){
         gameBox = (
-            <div>Wait until you are 4 users joining the lobby. Click on Start Button, as soon it appears.</div>
+            <div>Refresh this page regularly until you are 4 users joining the lobby. Click on Start Button, as soon it appears.</div>
         );
     } else{
         gameBox = (
