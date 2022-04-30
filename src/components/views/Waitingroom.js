@@ -20,6 +20,7 @@ const Waitingroom = () => {
         // Don't use state or else the whole component will reload and you have to reconnect
         gameId = response.gameId;
         localStorage.setItem("gameId", gameId)
+        history.push('/game/'+gameId);
     }
 
     //socket.subscribe("/users/queue/messages", goToURL);
@@ -41,7 +42,7 @@ const Waitingroom = () => {
         if (gameMaster==ownUsername){
             //socket.send("/app/lobby/"+id+"/leaveLobby", {});
         }
-        history.push('/game/'+id);
+
     }
 
 
