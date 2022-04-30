@@ -10,15 +10,11 @@ import "styles/views/Lobby.scss";
 
 const Lobby = () => {
     var socket = new SocketConnection();
-    let gameId;
     socket.connect(localStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
     const [openLobbies, setOpenLobbies] = useState(null);
     
     const history = useHistory();
-    //socket.subscribe("/users/queue/messages", goToURL);
-    //socket.connect(localStorage.getItem('token'));
-
     //const { id } = useParams();
     
     const [ownUsername, setOwnUsername] = useState(null);
@@ -28,7 +24,6 @@ const Lobby = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
       async function fetchData() {
         try {
-
           const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
           const id = localStorage.getItem("id")
           const responseUser = await api.get(`/users/${id}`);
@@ -50,8 +45,6 @@ const Lobby = () => {
           }
 
           setLobbies(open);
-
-
           
         } catch (error) {
           console.error(`Something went wrong while fetching the lobbies: \n${handleError(error)}`);
@@ -63,8 +56,7 @@ const Lobby = () => {
     );
     //console.log(lobbies);
 
-  
-  
+
   // lobby-content displayed correctly   
   let content; 
   if (lobbies) {
@@ -86,10 +78,7 @@ const Lobby = () => {
                     {lobby.players.map(player => (
                       <div>{player.username}</div>
                     ))} */}
-                    
-                    
-                     
-                  
+
                 </div> 
               ))}         
 
@@ -104,9 +93,9 @@ const Lobby = () => {
   }
 
   const joinLobbyCallback = (response) => {
-    gameId = response.lobbyId;
-    localStorage.setItem('gameId',gameId);
-    history.push('/waitingroom/'+gameId);
+    let lobbyId = response.lobbyId;
+    localStorage.setItem('lobbyId',lobbyId);
+    history.push('/waitingroom/'+lobbyId);
   }
 
 
@@ -124,7 +113,7 @@ const Lobby = () => {
         }
       }
       if (alreadyInLobby===0){//user didn't join so far!
-        localStorage.setItem('gameId',requestedId);
+        localStorage.setItem('lobbyId',requestedId);
         socket.send("/app/lobby/"+requestedId+"/joinLobby", {} );
         // socket.send("/app/joinLobby", {"lobbyId": requestedId} );
         history.push('/waitingroom/'+requestedId);

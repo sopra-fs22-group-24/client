@@ -11,25 +11,44 @@ import {Box} from "../ui/Box";
 const Waitingroom = () => {
     //socketconnection
     var socket = new SocketConnection();
-    socket.subscribe("/users/queue/messages", goToURL);
+    let lobbyId = localStorage.getItem('lobbyId');
+    let gameId;
+
+    const startGameCallback = (response) => {
+        console.log("/lobby/"+lobbyId+"/startGame")
+        console.log(response)
+        // Don't use state or else the whole component will reload and you have to reconnect
+        gameId = response.gameId
+        localStorage.setItem("gameId", gameId)
+    }
+
+    //socket.subscribe("/users/queue/messages", goToURL);
+    //socket.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
+    //socket.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
+    socket.subscribe("/lobby/"+lobbyId+"/startGame", startGameCallback)
+    //socket.subscribe("/users/queue/error", receiveErrorCallback)
     socket.connect(localStorage.getItem('token'));
+
     const [ownUsername, setOwnUsername] = useState(null);
     const [users, setUsers] = useState(null);
     const [gameMaster, setGameMaster] = useState(null);
-    let gameId = localStorage.getItem('gameId');
-    
+
     const history = useHistory();
+
     function goToGame(id){
+        //starts game
+        socket.send("/app/game", {"lobbyId": lobbyId})
         if (gameMaster==ownUsername){
-            socket.send("/app/lobby/"+id+"/leaveLobby", {});
+            //socket.send("/app/lobby/"+id+"/leaveLobby", {});
         }
         history.push('/game/'+id);
     }
+
+
     function goToURL(response){
       history.push('/game/'+gameId);
-      
     }
-    
+
     
     //fetch all user-data for this waitingroom
     useEffect(() => {
@@ -42,7 +61,7 @@ const Waitingroom = () => {
               setOwnUsername(responseUser.data.username);
               for (let i in response.data) {
                 
-                if (response.data[i].lobbyId==gameId){
+                if (response.data[i].lobbyId==lobbyId){
                     setUsers(response.data[i].players);
                     setGameMaster(response.data[i].players[0].username);
                     // let usersCounted=0;
@@ -97,7 +116,7 @@ const Waitingroom = () => {
     //console.log(users.length);
 
     let gameBox;
-    if (usersCounted!=4){
+    if (usersCounted!=1){
         gameBox = (
             <div>Refresh this page regularly until you are 4 users joining the lobby. Click on Start Button, as soon it appears.</div>
         );
