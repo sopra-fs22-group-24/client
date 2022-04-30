@@ -9,7 +9,7 @@ import SocketConnection from 'helpers/socketConnection';
 const Dashboard = props => {
     
     const history = useHistory();
-    let gameId;
+    let lobbyId;
     let localUsername = localStorage.getItem("username");
     let initial = localUsername[0];
     
@@ -23,9 +23,9 @@ const Dashboard = props => {
     }
 
     const joinLobbyCallback = (response) => {
-        gameId = response.lobbyId;
-        localStorage.setItem('gameId',gameId);
-        history.push('/waitingroom/'+gameId);
+        lobbyId = response.lobbyId;
+        localStorage.setItem('lobbyId',lobbyId);
+        history.push('/waitingroom/'+lobbyId);
     }
 
     function goToLobby() {
