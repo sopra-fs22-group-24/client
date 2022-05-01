@@ -15,6 +15,7 @@ import Rules from "../../views/Rules";
 import Lobby from "../../views/Lobby";
 import UserProfile from "../../views/UserProfile";
 import Game from "../../views/Game";
+import WebSocketTestWithStates from "components/views/webSocketTest withStates";
 
 /**
  * Main router of your application.
@@ -56,6 +57,9 @@ const AppRouter = () => {
                 </Route>
                 <Route exact path="/test">
                     <WebSocketTest/>
+                </Route>
+                <Route exact path="/test-with-states">
+                    <WebSocketTestWithStates />
                 </Route>
                 <Route exact path={"/dashboard"}>
                     <Dashboard/>
