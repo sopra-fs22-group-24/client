@@ -6,43 +6,47 @@ export const NumericCard = (props) => {
     let color = props.color;
     let symbol = props.symbol;
 
-    if ( symbol == "WILDCARD" ||symbol == "EXTREME_HIT" ){
-        return(
-        <div className="numeric-card black"
-             onClick={() => props.onClick()}>
-            {symbol}
-        </div>
-        )
+    switch (symbol){
+        case "WILDCARD":
+            return(
+                <div className="numeric-card black"
+                     onClick={() => props.onClick()}>
+                    {symbol}
+                </div>
+            )
+        case "EXTREME_HIT":
+            return(
+                <div className="numeric-card black"
+                     onClick={() => props.onClick()}>
+                    EXTREME
+                    HIT
+                </div>
+            )
+        case "HIT_2":
+            return(
+                <div className={`numeric-card ${color}`}
+                     onClick={() => props.onClick()}>
+                    HIT 2
+                </div>
+            )
+        case "DISCARD_ALL":
+            return(
+                <div className= {`numeric-card ${color}`}
+                     onClick={() => props.onClick()}>
+                    DISCARD
+                    ALL
+                </div>
+            )
+
+        default:
+            return(
+                <div className= {`numeric-card ${color}`}
+                     onClick={() => props.onClick()}>
+                    {symbol}
+                </div>
+            );
+
     }
-    if (color == "YELLOW") {
-      return (
-        <div className="numeric-card yellow"
-             onClick={() => props.onClick()}>
-          {symbol}
-        </div>
-      );
-    }
-    else if (color == "BLUE"){
-      return (
-            <div className="numeric-card blue"
-                 onClick={() => props.onClick()}>
-              {symbol}
-            </div>
-      );
-    }
-    else if (color == "RED"){
-      return (
-        <div className="numeric-card red"
-             onClick={() => props.onClick()}>
-          {symbol}
-        </div>);
-    }
-    else if (color == "GREEN"){
-      return (
-        <div className="numeric-card green"
-             onClick={() => props.onClick()}>
-          {symbol}
-        </div>);
-    }
+
 
   }
