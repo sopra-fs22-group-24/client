@@ -19,25 +19,25 @@
     transform: translateY(-2px);
   }
 
-  &.yellow {
+  &.YELLOW {
     background-color: #EECB27;
   }
 
-  &.green {
+  &.GREEN {
     background-color: hsl(123, 74%, 46%);
   }
 
-  &.red {
+  &.RED {
     background-color: #E13239;
   }
 
-  &.blue {
+  &.BLUE {
     background-color: #0046d9;
   }
 
   &.black{
     background-color: black;
-    font-size: 1vw;
+    font-size: 18px;
   }
   
   &.upper {
