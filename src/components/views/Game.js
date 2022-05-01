@@ -67,7 +67,7 @@ const Game = () => {
         socket.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
         socket.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
         socket.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
-        socket.subscribe("/game/"+gameId+"/calledOut", calledOutCallback)
+        //socket.subscribe("/game/"+gameId+"/calledOut", calledOutCallback)
         // privateChannel
         socket.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
         socket.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
