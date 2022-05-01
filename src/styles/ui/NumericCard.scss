@@ -3,8 +3,7 @@
     width: 111px;
     height: 155px;
     color: white;
-    font-size: 28px;
-    font-size: 1vw;
+    font-size: 18px;
     border: solid;
     border-width: 5px;
     box-sizing: border-box;
@@ -34,6 +33,11 @@
 
   &.blue {
     background-color: #0046d9;
+  }
+
+  &.black{
+    background-color: black;
+    font-size: 1vw;
   }
   
   &.upper {

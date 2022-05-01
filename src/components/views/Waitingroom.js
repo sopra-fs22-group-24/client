@@ -39,9 +39,9 @@ const Waitingroom = () => {
     function goToGame(id){
         //starts game
         socket.send("/app/game", {"lobbyId": lobbyId})
-        if (gameMaster==ownUsername){
+        //if (gameMaster==ownUsername){
             //socket.send("/app/lobby/"+id+"/leaveLobby", {});
-        }
+        //}
 
     }
 
@@ -65,6 +65,7 @@ const Waitingroom = () => {
                 if (response.data[i].lobbyId==lobbyId){
                     setUsers(response.data[i].players);
                     setGameMaster(response.data[i].players[0].username);
+                    localStorage.setItem("gameMaster", gameMaster);
                     // let usersCounted=0;
                     // for (let j in response.data[i].players){
                     //     usersCounted+=1;
