@@ -5,12 +5,11 @@ import "styles/views/Waitingroom.scss";
 import SocketConnection from 'helpers/socketConnection';
 import {useHistory, useParams} from 'react-router-dom';
 import {api, handleError} from 'helpers/api';
-
+import socket from "helpers/socketConnection"
 import {Box} from "../ui/Box";
 
 const Waitingroom = () => {
     //socketconnection
-    var socket = new SocketConnection();
     let lobbyId = useParams().id;
     let gameId;
 
@@ -21,14 +20,10 @@ const Waitingroom = () => {
         gameId = response.gameId;
         localStorage.setItem("gameId", gameId)
         history.push('/game/'+gameId);
+        console.log("hello")
     }
 
-    //socket.subscribe("/users/queue/messages", goToURL);
-    //socket.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
-    //socket.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
-    socket.subscribe("/lobby/"+lobbyId+"/startGame", startGameCallback)
-    //socket.subscribe("/users/queue/error", receiveErrorCallback)
-    socket.connect(localStorage.getItem('token'));
+
 
     const [ownUsername, setOwnUsername] = useState(null);
     const [users, setUsers] = useState(null);
@@ -44,7 +39,17 @@ const Waitingroom = () => {
         //}
 
     }
+    function userJoinedCallback(response) {
+        console.log(response)
+    }
 
+    function userLeftCallback(response) {
+        console.log(response)
+    }
+
+    function receiveErrorCallback(response) {
+        console.log(response)
+    }
 
     function goToURL(response){
       history.push('/game/'+gameId);
@@ -134,7 +139,15 @@ const Waitingroom = () => {
         );
     }
     
-    
+    useEffect(() => {
+        socket = new SocketConnection();
+        socket.subscribe("/users/queue/messages", goToURL);
+        socket.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
+        socket.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
+        socket.subscribe("/lobby/"+lobbyId+"/startGame", startGameCallback)
+        //socket.subscribe("/users/queue/error", receiveErrorCallback)
+        socket.connect(localStorage.getItem('token'));
+    },[])
     return (
         <BaseContainer className="waitingroom container">
              <h2 className = "waitingroom label">Waitingroom</h2> 

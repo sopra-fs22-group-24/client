@@ -22,14 +22,17 @@ class SocketConnection {
             console.log("Connect: "+response)
             this.isConnected=true
             for(var i=0; i<this.subscriptions.length;i++) {
-                var subscription = this.subscriptions[i];
-                console.log(subscription[0]+", "+subscription[1])
-                this.stompClient.subscribe(subscription[0],(response) => {
-                    subscription[1](JSON.parse(response.body))
-                }); 
+                this._subscribe(this.subscriptions[i][0], this.subscriptions[i][1])
+
             }
         })
 
+    }
+
+    _subscribe(destination, callback) {
+        this.stompClient.subscribe(destination,(response) => {
+            callback(JSON.parse(response.body))
+        }); 
     }
 
 
