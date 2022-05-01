@@ -12,6 +12,7 @@ import React, {useEffect, useState} from "react";
 //import Card from "../../models/Card";
 import {api, handleError} from "../../helpers/api";
 //import {Spinner} from "../ui/Spinner";
+import socket from 'helpers/socketConnection'
 
 
 
@@ -20,7 +21,7 @@ const Game = () => {
     //const {gameId} = useParams().id;
     const gameId = localStorage.getItem('gameId');
     const lobbyId = localStorage.getItem("lobbyId")
-    let socket = new SocketConnection();
+
     //let cards = [{color:"YELLOW", symbol:"WILDCARD"}, {color:"YELLOW", symbol:"2"},{color:"YELLOW", symbol:"3"},{color:"YELLOW", symbol:"4"}]
     let hand = []
     let uno = false;
@@ -28,7 +29,8 @@ const Game = () => {
     const [middleCard, setMiddleCard] = useState({color: "YELLOW", symbol: "Test"});
     const [users, setUsers] = useState(null);
     const [currentTurn, setCurrentTurn] = useState(null);
-    const [cards, setCards] = useState([{color:"YELLOW", symbol:"WILDCARD"}, {color:"BLUE", symbol:"2"},{color:"YELLOW", symbol:"3"},{color:"RED", symbol:"REVERSE"},{color:"YELLOW", symbol:"TAKE_2"}]);
+    const [cards, setCards] = useState([{color:"YELLOW", symbol:"WILDCARD"}, {color:"BLUE", symbol:"2"},{color:"YELLOW", symbol:"3"},{color:"RED", symbol:"REVERSE"},{color:"YELLOW", symbol:"DISCARD_ALL"}]);
+    const[player, setPlayer] = useState([localStorage.getItem("username")])
 
     const userId = localStorage.getItem("id");
     const username = localStorage.getItem("username");
@@ -37,7 +39,7 @@ const Game = () => {
         const topMostCardCallback = (response) => {
             console.log("/game/" + gameId + "/topMostCard")
             console.log(response);
-            setMiddleCard(response);
+            setMiddleCard([response]);
         }
 
         const playerTurnCallback = (response) => {
@@ -54,30 +56,44 @@ const Game = () => {
         const playerCardsCallback = (response) => {
             console.log("/users/queue/" + gameId + "/cards")
             console.log(response)
-            setCards(response);
+            setCards(oldCards => [...oldCards, ...response[0]])
         }
 
         const playerCardsDrawnCallback = (response) => {
             console.log("/users/queue/" + gameId + "/cardsDrawn")
             console.log(response)
-            //cards = cards.concat(response);
+            setCards(oldCards => oldCards.concat(response))
+        }
+        const calledOutCallback = (response) => {
+            console.log("/game/"+gameId+"/calledOut")
+            console.log(response)
         }
 
-    //useEffect(() => {
-        socket.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
-        socket.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
-        socket.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
-        //socket.subscribe("/game/"+gameId+"/calledOut", calledOutCallback)
-        // privateChannel
-        socket.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
-        socket.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
-        socket.connect(localStorage.getItem('token'));
-        //socket.send("/app/game/" + gameId + "/init")
+        const playedCardCallback = (response) => {
+            console.log("/game/"+gameId+"/playedCard")
+            setCards(response)
+        }
 
-    //}, []);
+        useEffect(() => {
+            socket = new SocketConnection()
+            //socket.subscribe("/users/queue/joinLobby", joinLobbyCallback)
+            // connect
+            socket.connect(localStorage.getItem('token'));
+        }, [])
 
+        useEffect(() => {
+            if(gameId != null) {
+                socket.subscribe("/game/"+gameId+"/topMostCard", topMostCardCallback)
+                socket.subscribe("/game/"+gameId+"/playerTurn", playerTurnCallback)
+                socket.subscribe("/game/"+gameId+"/playerHasNCards", playerHasNCardsCallback)
+                socket.subscribe("/game/"+gameId+"/calledOut", calledOutCallback)
 
-
+                // privateChannel
+                socket.subscribe("/users/queue/"+gameId+"/cards", playerCardsCallback)
+                socket.subscribe("/users/queue/"+gameId+"/cardsDrawn", playerCardsDrawnCallback)
+                socket.subscribe("/users/queue/"+gameId+"/playedCard", playedCardCallback)
+            }
+        }, [gameId])
 
 
     const initGame = () => {
@@ -88,7 +104,7 @@ const Game = () => {
         socket.send("/app/game/" + gameId + "/drawCard")
     }
 
-    const playCard = (index) => {
+    const playCard = async (index) => {
         console.log("played Card");
         //debugger;
         let card = cards[index];
@@ -281,6 +297,8 @@ const Game = () => {
             </div>
         )
     }
+
+
 
         return (
             <BaseContainer>
