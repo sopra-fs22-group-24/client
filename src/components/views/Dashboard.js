@@ -44,6 +44,8 @@ const Dashboard = props => {
         history.push('/user');
     }
 
+     
+
     return (
         <BaseContainer>
             <div className="dashboard profile-container">
@@ -54,40 +56,34 @@ const Dashboard = props => {
                 </Circle>
             </div>
             <div className="dashboard container">
-                <div className="dashboard form">
-                    <div className="dashboard button-container">
                         <div>
                             <Button
+                                className="dashboard color-bottom"
                                 onClick={() => goToLobby()}
                             >
                                 Join Game
-                            </Button> {'     '}
+                            </Button> 
                             <Button
-                                onClick={() => goToGame()}
-                            >
-                                New Game
+                                    className="dashboard color-bottom"
+                                    onClick={() => goToGame()}
+                                >
+                                    New Game
                             </Button>
-                        </div>
-                    </div>
-                    <div className="dashboard button-container">
-                        <div>
-
                             <Button
-                                className="color-bottom"
+                                className="dashboard color-bottom"
                                 onClick={() => goToRules()}
                             >
                                 Rules
                             </Button> {'         '}
                             <Button
-                                className="color-bottom"
+                                className="dashboard color-bottom"
                                 onClick={() => goToRanking()}
                             >
                                 Ranking
                             </Button>
                         </div>
-                    </div>
-                </div>
             </div>
+                    
         </BaseContainer>
     );
 };

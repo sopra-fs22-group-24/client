@@ -22,11 +22,7 @@
   border-radius: $borderRadius;
   cursor: pointer;
   opacity: 1;
-  color: $background;
-  background-color: $color4;
+  color: black;
   transition: all 0.3s ease;
 }
 
-.color-bottom {
-  background-color: $color1;//$color3;
-}

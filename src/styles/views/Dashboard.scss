@@ -47,10 +47,10 @@
     border-radius: 0.75em;
     margin-bottom: 20px;
     background: transparentize(white, 0.85);
-    color: $color1;//$textColor;
+    color: $color2;//$textColor;
   }
   &.label {
-    color: $color1;//$textColor;
+    color: $color2;//$textColor;
     margin-bottom: 10px;
     text-transform: lowercase;
     font-weight: 300;
@@ -63,8 +63,11 @@
     margin-top: 2em;
   }
 
+  &.color-bottom {
+    background-color: $color3;//$color3;
+  }
+
+    
+
 }
 
-h1{
-  color: $color4;
-}
