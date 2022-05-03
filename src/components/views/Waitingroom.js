@@ -150,13 +150,14 @@ const Waitingroom = () => {
     },[])
 
 
-    setInterval(function(){
-        window.location.reload(1);
-      }, 30000);
+    // setInterval(function(){
+    //     window.location.reload(1);
+    //   }, 30000);
 
 
     return (
         <BaseContainer className="waitingroom container">
+             <meta http-equiv="refresh" content="30"></meta>
              <h2 className = "waitingroom label">Waitingroom</h2> 
              <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
              <div className = "waitingroom content">{content}</div>

@@ -26,15 +26,16 @@ const Lobby = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
       async function fetchData() {
         try {
-          const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
-          const id = localStorage.getItem("id")
-          const responseUser = await api.get(`/users/${id}`);
-         //console.log(responseUser);
-          setOwnUsername(responseUser.data.username);
-          console.log(ownUsername);
-          //console.log(response);
-          // Get the returned lobbies and update the state.
-          setLobbies(response.data);
+           const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+           const id = localStorage.getItem("id")
+           const responseUser = await api.get(`/users/${id}`);
+           //console.log(responseUser);
+            setOwnUsername(responseUser.data.username);
+        //   console.log(ownUsername);
+        //   //console.log(response);
+        //   // Get the returned lobbies and update the state.
+            //console.log(response.data);
+            //setLobbies(response.data);
           
           let open = [];
           let count = 0;
@@ -43,10 +44,10 @@ const Lobby = () => {
               open[count] = response.data[j];
               count +=1;
             }
-            console.log(response.data[j]);
-            console.log(response.data[j].players.length);
+            // console.log(response.data[j]);
+            // console.log(response.data[j].players.length);
           }
-
+          console.log(open);
           setLobbies(open);
           
         } catch (error) {
