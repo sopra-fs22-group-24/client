@@ -19,6 +19,8 @@ const Lobby = () => {
     
     const [ownUsername, setOwnUsername] = useState(null);
 
+    
+
     //fetch all lobby-data
     useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
@@ -29,6 +31,7 @@ const Lobby = () => {
           const responseUser = await api.get(`/users/${id}`);
          //console.log(responseUser);
           setOwnUsername(responseUser.data.username);
+          console.log(ownUsername);
           //console.log(response);
           // Get the returned lobbies and update the state.
           setLobbies(response.data);

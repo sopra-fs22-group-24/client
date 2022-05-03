@@ -148,6 +148,13 @@ const Waitingroom = () => {
         //socket.subscribe("/users/queue/error", receiveErrorCallback)
         socket.connect(localStorage.getItem('token'));
     },[])
+
+
+    setInterval(function(){
+        window.location.reload(1);
+      }, 30000);
+
+
     return (
         <BaseContainer className="waitingroom container">
              <h2 className = "waitingroom label">Waitingroom</h2> 
