@@ -20,9 +20,32 @@
     padding-bottom: 4em;
   }
 
+  &.singleEnemy {
+    display: block;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 100px;
+    border-radius: 5px;
+    padding-right: 1em;
+    padding-left: 1em;
+    border:solid;
+    margin-left: 1em;
+    margin-right: 1em;
+    text-align: center;
+    h1{
+      font-size: 48px;
+      margin-top: 0;
+      margin-bottom:0;
+    }
+    p{
+      margin-top: 0.2em;
+      margin-bottom: 0.2em;
+      color: white;
+    }
+  }
+
   &.initContainer{
     display: flex;
-    float: left;
+    float: right;
     width: 100px;
     height: 200px;
     padding-top: 2em;
@@ -71,7 +94,12 @@
     display: flex;
     position: relative;
     width: 1000px;
+    align-items: center;
   }
+
+  &.cardWrapper { overflow: hidden;  }
+  &.cardWrapper:last-child,
+  &.cardWrapper:hover {overflow: visible;  }
 
   &.launcher {
     float: left;
