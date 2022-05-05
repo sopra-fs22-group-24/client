@@ -102,7 +102,7 @@ const Game = () => {
             }
         }
 
-        function sayUno() {
+    function sayUno() {
             synthesizeSpeech("UNO");
             socket.send('/game/' + gameId + '/UNO', userId);
             uno = true;
@@ -129,29 +129,7 @@ const Game = () => {
             return (hand)
         }
 
-        /*
-            let enemyList = [];
-
-            const displayEnemies = () => {
-                for (let i = 0; i <= users.length; i++) {
-                    const user = users[i];
-                    enemyList.push(
-                            <Enemy
-                                username={user.username}
-                                nCards ={user.nCards}
-                            >
-                            </Enemy>
-                    )
-                }
-
-                return (enemyList)
-
-            }
-
-         */
-
         let displayEnemies;
-
         if (users) {
             displayEnemies = (
                 <>
@@ -170,45 +148,29 @@ const Game = () => {
         let gameDisplay = (
             <div className="game initContainer">
                 <Button
-                    width="100px"
+                    className = "button-73"
                     onClick={() => initGame()}>
                     START
                 </Button>
             </div>);
 
-        /*
-        if (gameMaster==username){
-            gameDisplay= (
-                <div className="game initContainer">
-                <Button
-                width="100px"
-                onClick={() => initGame()}>
-                START
-                </Button>
-                </div>)
-            } else {
-                gameDisplay = <Spinner/>;
-            }
 
-            */
-        useEffect(() => {
-            socket = new SocketConnection();
-            socket.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
-            socket.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
-            socket.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
-            socket.subscribe("/game/" + gameId + "/calledOut", calledOutCallback)
-            // privateChannel
-            socket.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
-            socket.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
-            socket.subscribe("/users/queue/error", receiveErrorCallback)
-            socket.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
+    useEffect(() => {
+        socket = new SocketConnection();
+        socket.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
+        socket.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
+        socket.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
+        socket.subscribe("/game/" + gameId + "/calledOut", calledOutCallback)
+        // privateChannel
+        socket.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
+        socket.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
+        socket.subscribe("/users/queue/error", receiveErrorCallback)
+        socket.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
 
-            socket.connect(localStorage.getItem('token'));
-            //socket.send("/app/game/" + gameId + "/init")
+        socket.connect(localStorage.getItem('token'));
 
-        }, []);
-
-
+    }, []);
+    
         if (cards) {
             gameDisplay = (
                 <div>
@@ -223,7 +185,7 @@ const Game = () => {
                     <div className="game container">
                         <div className="game launcher">
                             <Launcher onClick={() => drawCards()}>
-                                Launch
+                                   Launch
                             </Launcher>
                         </div>
                         <div className="game middleCard">
@@ -262,6 +224,7 @@ const Game = () => {
                 </div>
             )
         }
+
 
         return (
             <BaseContainer>

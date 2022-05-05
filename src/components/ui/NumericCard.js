@@ -1,5 +1,8 @@
 import "styles/ui/NumericCard.scss";
 import React from "react";
+import { AiOutlineStop } from "react-icons/ai";
+import {BsArrowLeftRight} from "react-icons/bs";
+import{GiCardDiscard} from "react-icons/gi";
 
 export const NumericCard = (props) => {
 
@@ -9,32 +12,56 @@ export const NumericCard = (props) => {
     switch (symbol){
         case "WILDCARD":
             return(
-                <div className="card black"
+                <div className="card WILDCARD BLACK"
                      onClick={() => props.onClick()}>
-                    {symbol}
+                    <span className="inner">
+                    <span className="mark">WILD</span>
+                    </span>
                 </div>
             )
         case "EXTREME_HIT":
             return(
-                <div className="card black"
+                <div className="card EXTREME_HIT BLACK"
                      onClick={() => props.onClick()}>
-                    EXTREME
-                    HIT
+                    <span className="inner">
+                    <span className="mark">Xtrem</span>
+                    </span>
                 </div>
             )
         case "HIT_2":
             return(
-                <div className={`card ${color}`}
+                <div className={`card HIT_2 ${color}`}
                      onClick={() => props.onClick()}>
-                    HIT 2
+                    <span className="inner">
+                    <span className="mark">2x</span>
+                    </span>
                 </div>
             )
         case "DISCARD_ALL":
             return(
-                <div className= {`card ${color}`}
+                <div className= {`card DISCARD_ALL ${color}`}
                      onClick={() => props.onClick()}>
-                    DISCARD
-                    ALL
+                    <span className="inner">
+                    <span className="mark"><GiCardDiscard/></span>
+                    </span>
+                </div>
+            )
+        case "SKIP":
+            return(
+                <div className= {`card SKIP ${color}`}
+                     onClick={() => props.onClick()}>
+                    <span className="inner">
+                    <span className="mark" ><AiOutlineStop/></span>
+                    </span>
+                </div>
+            )
+        case "REVERSE":
+            return(
+                <div className= {`card REVERSE ${color}`}
+                     onClick={() => props.onClick()}>
+                    <span className="inner">
+                    <span className="mark"><BsArrowLeftRight/></span>
+                    </span>
                 </div>
             )
         case "ONE":
@@ -134,8 +161,5 @@ export const NumericCard = (props) => {
                     {symbol}
                 </div>
             );
-
     }
-
-
   }

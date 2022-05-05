@@ -5,31 +5,20 @@
   float:left;
   background:#fff;
   border-radius:5px;
+  border-color: white;
   display:table;
   box-sizing:border-box;
   padding:5px;
   font-family: 'Source Sans Pro', sans-serif;
-  font-size:36px;
-  text-shadow:
-          1px  1px 0 #000000,
-          -1px -1px 0 #000000,
-          -1px  1px 0 #000000,
-          1px -1px 0 #000000,
-          1px  0   0 #000000,
-          -1px  0   0 #000000,
-          0   -1px 0 #000000,
-          0    1px 0 #000000,
-          4px  4px 0 #000000;
+  font-size:48px;
+  font-weight: bold;
+  text-shadow: 2px 2px black;
   box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
   text-align:center;
   position:relative;
   cursor: pointer;
 
-  &.black{
-    background-color: black;
-    font-size: 18px;
-    
-  }
+
 }
 .card .inner{
   display:table-cell;
@@ -39,11 +28,13 @@
 }
 
 .card .mark{
-  display:inline-block;
-  vertical-align:middle;
+  display:flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
   background:#ffffff;
   margin:auto;
-  padding:0 26px;
+  padding:5px;
   border-radius:100px 60px / 120px 60px;
   line-height:1.4;
 }
@@ -109,6 +100,14 @@
   background:#E6CA1E;
 }
 
+.card.BLACK {
+  color: #C72A18;
+  font-size: 18px;
+}
+
+.card.BLACK .inner{
+  background: black;
+}
 
 .card.num-0:before,
 .card.num-0:after{
@@ -164,6 +163,32 @@
 .card.num-10:after{
   content:"10";
 }
+.card.WILDCARD:before,
+.card.WILDCARD:after{
+  content:"Wild";
+}
+.card.REVERSE:before,
+.card.REVERSE:after{
+  content:"Reverse";
+}
+.card.HIT_2:before,
+.card.HIT_2:after{
+  content:"2x";
+}
+.card.SKIP:before,
+.card.SKIP:after{
+  content:"Skip";
+}
+.card.DISCARD_ALL:before,
+.card.DISCARD_ALL:after{
+  content:"Discard All";
+  font-size: 16px;
+}
+.card.EXTREME_HIT:before,
+.card.EXTREME_HIT:after{
+  content:"Extreme";
+}
+
 
 /*
 .card.num-6 .mark:after,

@@ -45,11 +45,12 @@
 
   &.initContainer{
     display: flex;
-    float: right;
-    width: 100px;
+    float: left;
+    width: 200px;
     height: 200px;
     padding-top: 2em;
     padding-bottom: 4em;
+    margin-left: 20em;
   }
 
   &.currentPlayerContainer{
