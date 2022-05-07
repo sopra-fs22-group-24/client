@@ -11,6 +11,14 @@ export const NumericCard = (props) => {
 
     switch (symbol){
         case "WILDCARD":
+            if (color != "NULL") {
+                return(<div className={`card WILDCARD ${color}`}
+                            onClick={() => props.onClick()}>
+                    <span className="inner">
+                    <span className="mark">WILD</span>
+                    </span>
+                    </div>)
+            } else{
             return(
                 <div className="card WILDCARD BLACK"
                      onClick={() => props.onClick()}>
@@ -18,7 +26,7 @@ export const NumericCard = (props) => {
                     <span className="mark">WILD</span>
                     </span>
                 </div>
-            )
+            )}
         case "EXTREME_HIT":
             return(
                 <div className="card EXTREME_HIT BLACK"
