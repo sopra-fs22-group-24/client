@@ -1,10 +1,10 @@
 import "styles/ui/Circle.scss";
 
 export const Circle = props => (
-    <circle
+    <div
         {...props}
         style={{width: props.width, ...props.style}}
         className={`circle ${props.className}`}>
         {props.children}
-    </circle>
+    </div>
 );

@@ -73,4 +73,4 @@ class SocketConnection {
 export { SocketConnection,
         SocketConnection as socket};
 */
-export default SocketConnection
+export default SocketConnection;

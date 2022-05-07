@@ -1,10 +1,10 @@
 import "styles/ui/Launcher.scss";
 
 export const Launcher = props => (
-  <launcher
+  <div
     {...props}
     style={{width: props.width, ...props.style}}
     className={`launcher ${props.className}`}>
     {props.children}
-  </launcher>
+  </div>
 );
