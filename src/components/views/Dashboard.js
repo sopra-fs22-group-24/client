@@ -94,32 +94,6 @@ const Dashboard = props => {
             <div className="dashboard overview">
                 <GiCardPlay/>
             </div>
-            
-
-            {/* <div className="dashboard container">
-                        <div>
-                            
-                            <Button
-                                    className="dashboard color-bottom"
-                                    onClick={() => goToGame()}
-                                >
-                                    New Game
-                            </Button>
-                            <Button
-                                className="dashboard color-bottom"
-                                onClick={() => goToRules()}
-                            >
-                                Rules
-                            </Button> {'         '}
-                            <Button
-                                className="dashboard color-bottom"
-                                onClick={() => goToRanking()}
-                            >
-                                Ranking
-                            </Button>
-                        </div>
-                        
-            </div> */}
                     
         </BaseContainer>
     );
