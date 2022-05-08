@@ -104,8 +104,19 @@ const Lobby = () => {
 
 
   async function goToLobby(requestedId){
+    try{
+      console.log(lobbies);
+      socket.send("/app/lobby/"+requestedId+"/joinLobby", {} );
+      console.log(lobbies);
+      history.push('/waitingroom/'+requestedId);
+    } catch (error) {
+      console.error(`Something went wrong while joining the lobbies: \n${handleError(error)}`);
+      console.error("Details:", error);
+      alert("Something went wrong while joining the lobby! See the console for details.");
+    }
     
-      let alreadyInLobby=0;
+    
+   /*    let alreadyInLobby=0;
       //console.log(ownUsername);
       for (let i in lobbies){
         if (lobbies[i].lobbyId==requestedId){//find lobby to join
@@ -119,13 +130,15 @@ const Lobby = () => {
       if (alreadyInLobby===0){//user didn't join so far!
         localStorage.setItem('lobbyId',requestedId);
         socket.send("/app/lobby/"+requestedId+"/joinLobby", {} );
-        // socket.send("/app/joinLobby", {"lobbyId": requestedId} );
+        socket.subscribe("/users/queue/joinLobby", joinLobbyCallback);
         history.push('/waitingroom/'+requestedId);
       }
       else{
         alert("You already joined this lobby!");
-      }
+      } */
   }
+
+
 
   function goToProfile() {
     history.push('/user');

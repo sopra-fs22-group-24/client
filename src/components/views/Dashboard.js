@@ -77,8 +77,7 @@ const Dashboard = props => {
                 4 Player
             </div>
             <div 
-                className="dashboard overviewGame"
-                onClick={() => goToGame()}>
+                className="dashboard overviewGame">
                 New Game
             </div>
             <div 

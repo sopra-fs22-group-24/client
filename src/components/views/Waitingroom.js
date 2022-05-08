@@ -14,13 +14,12 @@ const Waitingroom = () => {
     let gameId;
 
     const startGameCallback = (response) => {
-        console.log("/lobby/"+lobbyId+"/startGame")
-        console.log(response)
+        // console.log("/lobby/"+lobbyId+"/startGame")
+        // console.log(response)
         // Don't use state or else the whole component will reload and you have to reconnect
         gameId = response.gameId;
         localStorage.setItem("gameId", gameId)
         history.push('/game/'+gameId);
-        console.log("hello")
     }
 
 
@@ -31,9 +30,11 @@ const Waitingroom = () => {
 
     const history = useHistory();
 
-    function goToGame(id){
+    function goToGame(){
         //starts game
-        socket.send("/app/game", {"lobbyId": lobbyId})
+        //socket.send("/app/game", {"lobbyId": lobbyId});
+        socket.send("/app/game", {"lobbyId": lobbyId}); //gameId oder lobbyId?
+        history.push('/game/'+lobbyId); //gameId oder lobbyId?
         //if (gameMaster==ownUsername){
             //socket.send("/app/lobby/"+id+"/leaveLobby", {});
         //}
@@ -52,7 +53,7 @@ const Waitingroom = () => {
     }
 
     function goToURL(response){
-      history.push('/game/'+gameId);
+      history.push('/game/'+lobbyId); //gameId oder lobbyId?
     }
 
     
@@ -62,6 +63,7 @@ const Waitingroom = () => {
           async function fetchData() {
             try {
               const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+              console.log(response);
               const id = localStorage.getItem("id")
               const responseUser = await api.get(`/users/${id}`);//actual user on the page.
               setOwnUsername(responseUser.data.username);
@@ -113,30 +115,39 @@ const Waitingroom = () => {
     for (let i in users){
         usersCounted+=1;
     }
-    console.log("GameMaster:");
+    /* console.log("GameMaster:");
     console.log(gameMaster);
     console.log("Own Username:");
     console.log(ownUsername);
     console.log("Users in Lobby:");
     console.log(usersCounted);
     console.log(usersCounted!=4);
-    //console.log(users.length);
+    //console.log(users.length); */
 
     let gameBox;
-    if (usersCounted!=1){
+    if (usersCounted!=2){
         gameBox = (
-            <div>Refresh this page regularly until you are 4 users joining the lobby. Click on Start Button, as soon it appears.</div>
+            <div>Wait until there are enough user in the waiting room.</div>
+            
         );
     } else{
         gameBox = (
-        <Box
-             className = "waitingroom field"
-             disabled={true}
-             onClick={() => goToGame(gameId)}
-             >
-                 Start Game
-             </Box>
+            <div>
+                <div>You are enough user now! Start game by clicking on the following button:</div>
+                <Box
+                className = "waitingroom field"
+                disabled={true}
+                onClick={() => goToGame()}
+                >
+                    Start Game
+                </Box> 
+                
+                
+            </div>
+             
+            
         );
+        //goToGame(gameId);
     }
     
     useEffect(() => {
