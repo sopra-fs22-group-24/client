@@ -66,6 +66,198 @@
   &.color-bottom {
     background-color: $color3;//$color3;
   }
+  &.overview {
+    display: block;
+    height: 300px;
+    width: 300px;
+    line-height: 300px;
+
+    -moz-border-radius: 150px; /* or 50% */
+    border-radius: 150px; /* or 50% */
+
+    background-color: $color2;
+    color: $color1;
+    text-align: center;
+    font-size: 2em;
+
+    position: absolute;
+    top: 300px;
+    left: 600px;
+
+    font-size: 100px;
+
+
+  }
+  &.overviewLobby {
+    display: block;
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+
+    -moz-border-radius: 100px; /* or 50% */
+    border-radius: 100px; /* or 50% */
+
+    background-color: $color4;
+    color: $color1;
+    text-align: center;
+    font-size: 2em;
+
+    position: absolute;
+    top: 500px;
+    left: 800px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+
+
+  }
+
+  &.overviewGame {
+    display: block;
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+
+    -moz-border-radius: 100px; /* or 50% */
+    border-radius: 100px; /* or 50% */
+
+    background-color: $color4;
+    color: $color1;
+    text-align: center;
+    font-size: 2em;
+
+    position: absolute;
+    top: 200px;
+    left: 500px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  &.overviewGame2 {
+    display: block;
+    height: 100px;
+    width: 100px;
+    line-height: 100px;
+
+    -moz-border-radius: 50px; /* or 50% */
+    border-radius: 50px; /* or 50% */
+
+    background-color: $color2;
+    color: $color1;
+    text-align: center;
+    font-size: 2em;
+
+    position: absolute;
+    top: 220px;
+    left: 403px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  &.overviewGame3 {
+    display: block;
+    height: 100px;
+    width: 100px;
+    line-height: 100px;
+
+    -moz-border-radius: 50px; /* or 50% */
+    border-radius: 50px; /* or 50% */
+
+    background-color: $color3;
+    color: $color1;
+    text-align: center;
+    font-size: 2em;
+
+    position: absolute;
+    top: 325px;
+    left: 420px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  &.overviewGame4 {
+    display: block;
+    height: 100px;
+    width: 100px;
+    line-height: 100px;
+
+    -moz-border-radius: 50px; /* or 50% */
+    border-radius: 50px; /* or 50% */
+
+    background-color: $color4;
+    color: $color1;
+    text-align: center;
+    font-size: 2em;
+
+    position: absolute;
+    top: 390px;
+    left: 500px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  &.overviewRules {
+    display: block;
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+
+    -moz-border-radius: 100px; /* or 50% */
+    border-radius: 100px; /* or 50% */
+
+    background-color: $color3;
+    color: $color1;
+    text-align: center;
+    font-size: 2em;
+
+    position: absolute;
+    top: 200px;
+    left: 800px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+
+
+  }
+
+  &.overviewRanking {
+    display: block;
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+
+    -moz-border-radius: 100px; /* or 50% */
+    border-radius: 100px; /* or 50% */
+
+    background-color: $color3;
+    color: $color1;
+    text-align: center;
+    font-size: 2em;
+
+    position: absolute;
+    top: 500px;
+    left: 500px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    cursor: pointer;
+  }
 
     
 
