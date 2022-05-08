@@ -125,7 +125,7 @@ const Waitingroom = () => {
     //console.log(users.length); */
 
     let gameBox;
-    if (usersCounted!=2){
+    if (usersCounted!=2){// first look, how many players can join the game!
         gameBox = (
             <div>Wait until there are enough user in the waiting room.</div>
             

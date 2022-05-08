@@ -67,13 +67,13 @@ const Dashboard = props => {
                 2 Player
             </div>
             <div 
-                className="dashboard overviewGame3"
-                onClick={() => goToGame()}>
+                className="dashboard overviewGame3">
+                {/* onClick={() => goToGame()}> */}
                 3 Player
             </div>
             <div 
-                className="dashboard overviewGame4"
-                onClick={() => goToGame()}>
+                className="dashboard overviewGame4">
+                {/*onClick={() => goToGame()}> */}
                 4 Player
             </div>
             <div 
