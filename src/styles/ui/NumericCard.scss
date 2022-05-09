@@ -39,6 +39,19 @@
   line-height:1.4;
 }
 
+.card .text{
+  display:flex;
+  font-size: 20px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background:#ffffff;
+  margin:auto;
+  padding:5px;
+  border-radius:100px 60px / 120px 60px;
+  line-height:1.4;
+}
+
 .card:before,
 .card:after{
   display:inline-block;
@@ -102,7 +115,7 @@
 
 .card.BLACK {
   color: #C72A18;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .card.BLACK .inner{

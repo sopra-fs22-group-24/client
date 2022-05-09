@@ -13,9 +13,10 @@ export const NumericCard = (props) => {
         case "WILDCARD":
             if (color != "NULL") {
                 return(<div className={`card WILDCARD ${color}`}
-                            onClick={() => props.onClick()}>
+                            onClick={() => props.onClick()}
+                            >
                     <span className="inner">
-                    <span className="mark">WILD</span>
+                    <span className="text">WILD</span>
                     </span>
                     </div>)
             } else{
@@ -23,19 +24,27 @@ export const NumericCard = (props) => {
                 <div className="card WILDCARD BLACK"
                      onClick={() => props.onClick()}>
                     <span className="inner">
-                    <span className="mark">WILD</span>
+                    <span className="text">WILD</span>
                     </span>
                 </div>
             )}
         case "EXTREME_HIT":
+            if (color != "NULL") {
+                return(<div className={`card EXTREME_HIT ${color}`}
+                            onClick={() => props.onClick()}>
+                    <span className="inner">
+                    <span className="text">XTREM</span>
+                    </span>
+                </div>)
+            } else{
             return(
                 <div className="card EXTREME_HIT BLACK"
                      onClick={() => props.onClick()}>
                     <span className="inner">
-                    <span className="mark">Xtrem</span>
+                    <span className="text">XTREM</span>
                     </span>
                 </div>
-            )
+            )}
         case "HIT_2":
             return(
                 <div className={`card HIT_2 ${color}`}
