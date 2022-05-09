@@ -4,7 +4,7 @@ import 'styles/views/Dashboard.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {Button} from 'components/ui/SquareButton';
 import {Circle} from "../ui/Circle";
-import SocketConnection from 'helpers/socketConnection';
+import socket from 'helpers/socketConnection';
 import {GiCardPlay} from "react-icons/gi";
 
 const Dashboard = props => {
@@ -14,7 +14,6 @@ const Dashboard = props => {
     let localUsername = localStorage.getItem("username");
     let initial = localUsername[0];
     
-    var socket = new SocketConnection();
     socket.connect(localStorage.getItem('token'));
 
     function goToGame(){

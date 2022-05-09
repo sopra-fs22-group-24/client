@@ -183,7 +183,7 @@ const Game = () => {
 
 
     useEffect(() => {
-        socket = new SocketConnection();
+        //socket = new SocketConnection();
         socket.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
         socket.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
         socket.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)

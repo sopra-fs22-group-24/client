@@ -2,7 +2,7 @@ import {Circle} from "../ui/Circle";
 import BaseContainer from "components/ui/BaseContainer";
 import React, {useEffect, useState} from 'react';
 import "styles/views/Waitingroom.scss";
-import SocketConnection from 'helpers/socketConnection';
+//import SocketConnection from 'helpers/socketConnection';
 import {useHistory, useParams} from 'react-router-dom';
 import {api, handleError} from 'helpers/api';
 import socket from "helpers/socketConnection"
@@ -125,7 +125,7 @@ const Waitingroom = () => {
     //console.log(users.length); */
 
     let gameBox;
-    if (usersCounted!=2){// first look, how many players can join the game!
+    if (usersCounted!=1){// first look, how many players can join the game!
         gameBox = (
             <div>Wait until there are enough user in the waiting room.</div>
             
@@ -151,7 +151,7 @@ const Waitingroom = () => {
     }
     
     useEffect(() => {
-        socket = new SocketConnection();
+        //socket = new SocketConnection();
         socket.subscribe("/users/queue/messages", goToURL);
         socket.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
         socket.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
