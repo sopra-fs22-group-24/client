@@ -5,6 +5,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import {Button} from 'components/ui/SquareButton';
 import {Circle} from "../ui/Circle";
 import SocketConnection from 'helpers/socketConnection';
+import {GiCardPlay} from "react-icons/gi";
 
 const Dashboard = props => {
     
@@ -55,33 +56,42 @@ const Dashboard = props => {
                     {initial}
                 </Circle>
             </div>
-            <div className="dashboard container">
-                        <div>
-                            <Button
-                                className="dashboard color-bottom"
-                                onClick={() => goToLobby()}
-                            >
-                                Join Game
-                            </Button> 
-                            <Button
-                                    className="dashboard color-bottom"
-                                    onClick={() => goToGame()}
-                                >
-                                    New Game
-                            </Button>
-                            <Button
-                                className="dashboard color-bottom"
-                                onClick={() => goToRules()}
-                            >
-                                Rules
-                            </Button> {'         '}
-                            <Button
-                                className="dashboard color-bottom"
-                                onClick={() => goToRanking()}
-                            >
-                                Ranking
-                            </Button>
-                        </div>
+            <div 
+                className="dashboard overviewLobby"
+                onClick={() => goToLobby()}>
+                Join Game 
+            </div>
+            <div 
+                className="dashboard overviewGame2"
+                onClick={() => goToGame()}>
+                2 Player
+            </div>
+            <div 
+                className="dashboard overviewGame3">
+                {/* onClick={() => goToGame()}> */}
+                3 Player
+            </div>
+            <div 
+                className="dashboard overviewGame4">
+                {/*onClick={() => goToGame()}> */}
+                4 Player
+            </div>
+            <div 
+                className="dashboard overviewGame">
+                New Game
+            </div>
+            <div 
+                className="dashboard overviewRules"
+                onClick={() => goToRules()}>
+                Rules
+            </div>
+            <div 
+                className="dashboard overviewRanking"
+                onClick={() => goToRanking()}>
+                Ranking
+            </div>
+            <div className="dashboard overview">
+                <GiCardPlay/>
             </div>
                     
         </BaseContainer>
