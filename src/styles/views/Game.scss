@@ -14,19 +14,47 @@
   &.enemyContainer {
     display: flex;
     float: right;
-    width: 400px;
     height: 250px;
     padding-top: 2em;
     padding-bottom: 4em;
+    margin-left: 15em;
+  }
+
+  &.singleEnemy {
+    display: block;
+    width: 120px;
+    border-radius: 5px;
+    padding-right: 1em;
+    padding-left: 1em;
+    border:solid;
+    margin-left: 1em;
+    margin-right: 1em;
+    text-align: center;
+    h1{
+      font-size: 48px;
+      margin-top: 0;
+      margin-bottom:0;
+      color: $color4;
+    }
+    p{
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 0.2em;
+      margin-bottom: 0.2em;
+      color: white;
+      text-overflow: ellipsis;
+    }
   }
 
   &.initContainer{
+    flex-direction:column;
     display: flex;
     float: left;
-    width: 100px;
+    width: 200px;
     height: 200px;
     padding-top: 2em;
     padding-bottom: 4em;
+    margin-left: 30em;
   }
 
   &.currentPlayerContainer{
@@ -38,6 +66,12 @@
       color: $color4;
     }
 
+  }
+
+  &.inputContainer{
+    display: flex;
+    padding: 1em;
+    z-index: 2;
   }
 
   &.playerContainer {
@@ -71,7 +105,12 @@
     display: flex;
     position: relative;
     width: 1000px;
+    align-items: center;
   }
+
+  &.cardWrapper { overflow: hidden;  }
+  &.cardWrapper:last-child,
+  &.cardWrapper:hover {overflow: visible;  }
 
   &.launcher {
     float: left;

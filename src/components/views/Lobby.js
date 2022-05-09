@@ -19,19 +19,23 @@ const Lobby = () => {
     
     const [ownUsername, setOwnUsername] = useState(null);
 
+    
+
     //fetch all lobby-data
     useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
       async function fetchData() {
         try {
-          const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
-          const id = localStorage.getItem("id")
-          const responseUser = await api.get(`/users/${id}`);
-         //console.log(responseUser);
-          setOwnUsername(responseUser.data.username);
-          //console.log(response);
-          // Get the returned lobbies and update the state.
-          setLobbies(response.data);
+           const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+           const id = localStorage.getItem("id")
+           const responseUser = await api.get(`/users/${id}`);
+           //console.log(responseUser);
+            setOwnUsername(responseUser.data.username);
+        //   console.log(ownUsername);
+        //   //console.log(response);
+        //   // Get the returned lobbies and update the state.
+            //console.log(response.data);
+            //setLobbies(response.data);
           
           let open = [];
           let count = 0;
@@ -40,10 +44,10 @@ const Lobby = () => {
               open[count] = response.data[j];
               count +=1;
             }
-            console.log(response.data[j]);
-            console.log(response.data[j].players.length);
+            // console.log(response.data[j]);
+            // console.log(response.data[j].players.length);
           }
-
+          console.log(open);
           setLobbies(open);
           
         } catch (error) {
@@ -100,8 +104,19 @@ const Lobby = () => {
 
 
   async function goToLobby(requestedId){
+    try{
+      console.log(lobbies);
+      socket.send("/app/lobby/"+requestedId+"/joinLobby", {} );
+      console.log(lobbies);
+      history.push('/waitingroom/'+requestedId);
+    } catch (error) {
+      console.error(`Something went wrong while joining the lobbies: \n${handleError(error)}`);
+      console.error("Details:", error);
+      alert("Something went wrong while joining the lobby! See the console for details.");
+    }
     
-      let alreadyInLobby=0;
+    
+   /*    let alreadyInLobby=0;
       //console.log(ownUsername);
       for (let i in lobbies){
         if (lobbies[i].lobbyId==requestedId){//find lobby to join
@@ -115,13 +130,15 @@ const Lobby = () => {
       if (alreadyInLobby===0){//user didn't join so far!
         localStorage.setItem('lobbyId',requestedId);
         socket.send("/app/lobby/"+requestedId+"/joinLobby", {} );
-        // socket.send("/app/joinLobby", {"lobbyId": requestedId} );
+        socket.subscribe("/users/queue/joinLobby", joinLobbyCallback);
         history.push('/waitingroom/'+requestedId);
       }
       else{
         alert("You already joined this lobby!");
-      }
+      } */
   }
+
+
 
   function goToProfile() {
     history.push('/user');
