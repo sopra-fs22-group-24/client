@@ -4,8 +4,8 @@ import 'styles/views/Dashboard.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {Button} from 'components/ui/SquareButton';
 import {Circle} from "../ui/Circle";
-import socket from 'helpers/socketConnection';
 import {GiCardPlay} from "react-icons/gi";
+import SocketConnection from 'helpers/socketConnection';
 
 const Dashboard = props => {
     
@@ -13,12 +13,12 @@ const Dashboard = props => {
     let lobbyId;
     let localUsername = localStorage.getItem("username");
     let initial = localUsername[0];
-    
-    socket.connect(localStorage.getItem('token'));
+
+    SocketConnection.connect(localStorage.getItem('token'));
 
     function goToGame(){
-        socket.send("/app/createLobby",{});
-        socket.subscribe("/users/queue/joinLobby", joinLobbyCallback);
+        SocketConnection.send("/app/createLobby",{});
+        SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
         
     }
 

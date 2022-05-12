@@ -3,15 +3,13 @@ import {useHistory,useParams} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import SocketConnection from 'helpers/socketConnection';
-import socket from "helpers/socketConnection";
 import {Circle} from "../ui/Circle";
 import {Box} from "../ui/Box";
 import "styles/views/Lobby.scss";
 
 
 const Lobby = () => {
-    //var socket = new SocketConnection();
-    socket.connect(localStorage.getItem('token'));
+    SocketConnection.connect(localStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
     const [openLobbies, setOpenLobbies] = useState(null);
     
@@ -93,8 +91,8 @@ const Lobby = () => {
   } 
   
   function goToGame(){
-    socket.send("/app/createLobby",{});
-    socket.subscribe("/users/queue/joinLobby", joinLobbyCallback);  
+      SocketConnection.send("/app/createLobby",{});
+      SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
   }
 
   const joinLobbyCallback = (response) => {
@@ -107,7 +105,7 @@ const Lobby = () => {
   async function goToLobby(requestedId){
     try{
       console.log(lobbies);
-      socket.send("/app/lobby/"+requestedId+"/joinLobby", {} );
+      SocketConnection.send("/app/lobby/"+requestedId+"/joinLobby", {} );
       console.log(lobbies);
       history.push('/waitingroom/'+requestedId);
     } catch (error) {

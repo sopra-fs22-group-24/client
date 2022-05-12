@@ -2,14 +2,12 @@ import {Circle} from "../ui/Circle";
 import BaseContainer from "components/ui/BaseContainer";
 import React, {useEffect, useState} from 'react';
 import "styles/views/Waitingroom.scss";
-//import SocketConnection from 'helpers/socketConnection';
+import SocketConnection from 'helpers/socketConnection';
 import {useHistory, useParams} from 'react-router-dom';
 import {api, handleError} from 'helpers/api';
-import socket from "helpers/socketConnection"
 import {Box} from "../ui/Box";
 
 const Waitingroom = () => {
-    //socketconnection
     let lobbyId = useParams().id;
     let gameId;
 
@@ -32,11 +30,11 @@ const Waitingroom = () => {
 
     function goToGame(){
         //starts game
-        //socket.send("/app/game", {"lobbyId": lobbyId});
-        socket.send("/app/game", {"lobbyId": lobbyId}); //gameId oder lobbyId?
+        //SocketConnection.send("/app/game", {"lobbyId": lobbyId});
+        SocketConnection.send("/app/game", {"lobbyId": lobbyId}); //gameId oder lobbyId?
         history.push('/game/'+lobbyId); //gameId oder lobbyId?
         //if (gameMaster==ownUsername){
-            //socket.send("/app/lobby/"+id+"/leaveLobby", {});
+            //SocketConnection.send("/app/lobby/"+id+"/leaveLobby", {});
         //}
 
     }
@@ -151,13 +149,12 @@ const Waitingroom = () => {
     }
     
     useEffect(() => {
-        //socket = new SocketConnection();
-        socket.subscribe("/users/queue/messages", goToURL);
-        socket.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
-        socket.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
-        socket.subscribe("/lobby/"+lobbyId+"/startGame", startGameCallback)
-        //socket.subscribe("/users/queue/error", receiveErrorCallback)
-        socket.connect(localStorage.getItem('token'));
+        SocketConnection.subscribe("/users/queue/messages", goToURL);
+        SocketConnection.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
+        SocketConnection.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
+        SocketConnection.subscribe("/lobby/"+lobbyId+"/startGame", startGameCallback)
+        //SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
+        SocketConnection.connect(localStorage.getItem('token'));
     },[])
 
 
