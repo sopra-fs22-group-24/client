@@ -8,15 +8,28 @@ import { getDomain } from "./getDomain"
 class SocketConnection {
 
     constructor() {
-        let url = getDomain()
+        this.url = getDomain()
+        /*
         this.socket = new SockJS(`${url}/ws-connect`, {headers: { Authorization:localStorage.getItem("token") }})
+
         this.stompClient = Stomp.over(this.socket)
+        */
         this.isConnected = false;
         this.subscriptions = []
+        console.log("eyyy")
     }
     
-    connect = async (token, lobbyId=null) => {
-        console.log(token)
+    connect = async (token, game=false) => {
+        console.log("try connection")
+        if (!this.socket) {
+            console.log("no socket connection, creating new SockJS")
+            this.socket = new SockJS(`${this.url}/ws-connect`, {headers: { Authorization:localStorage.getItem("token") }})
+        }
+        if(!this.stompClient) {
+            console.log("no stomp connection creating new stompClient")
+            this.stompClient = Stomp.over(this.socket)
+        }
+        console.log(this.stompClient.connected)
         this.stompClient.connect({"token":token}, (response) => {
       
             console.log("Connect: "+response)
@@ -25,8 +38,15 @@ class SocketConnection {
                 this._subscribe(this.subscriptions[i][0], this.subscriptions[i][1])
 
             }
+            console.log(game)
+            if(game) {
+                this.send("/app/game/"+localStorage.getItem("gameId")+"/init")
+            }
         })
+        if(this.stompClient.connected && game) {
+            this.send("/app/game/"+localStorage.getItem("gameId")+"/init")
 
+        }
     }
 
     _subscribe(destination, callback) {
@@ -66,11 +86,12 @@ class SocketConnection {
     unsubscribe(destination) {
         this.stompClient.unsubscribe(destination);
     }
+
+    purge() {
+
+    }
 }
 
 
-/*
-export { SocketConnection,
-        SocketConnection as socket};
-*/
+
 export default new SocketConnection();

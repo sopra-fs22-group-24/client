@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import 'styles/views/Dashboard.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -14,7 +14,6 @@ const Dashboard = props => {
     let localUsername = localStorage.getItem("username");
     let initial = localUsername[0];
 
-    SocketConnection.connect(localStorage.getItem('token'));
 
     function goToGame(){
         SocketConnection.send("/app/createLobby",{});
@@ -44,7 +43,9 @@ const Dashboard = props => {
         history.push('/user');
     }
 
-     
+    useEffect(() => {
+        SocketConnection.connect(localStorage.getItem('token'));
+    },[])
 
     return (
         <BaseContainer>

@@ -16,6 +16,7 @@ const Game = () => {
 
     let hand = []
     const gameId = useParams().id;
+    console.log(gameId)
     const [uno, setUno] = useState(false);
     const [middleCard, setMiddleCard] = useState({color: "YELLOW", symbol: "Test"});
     const [users, setUsers] = useState(null);
@@ -182,6 +183,9 @@ const Game = () => {
 
 
     useEffect(() => {
+        console.log("beforeConnection")
+        console.log(gameId)
+        SocketConnection.purge()
         SocketConnection.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
         SocketConnection.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
         SocketConnection.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
@@ -193,9 +197,9 @@ const Game = () => {
         SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
 
-        SocketConnection.connect(localStorage.getItem('token'));
+        SocketConnection.connect(localStorage.getItem('token'), true);
 
-    }, []);
+    }, [gameId]);
 
 
     if (cards) {
