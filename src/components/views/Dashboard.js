@@ -89,9 +89,11 @@ const Dashboard = props => {
                 onClick={() => goToRanking()}>
                 Ranking
             </div>
+            
             <div className="dashboard overview">
                 <GiCardPlay/>
             </div>
+            
                     
         </BaseContainer>
     );
