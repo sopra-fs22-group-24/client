@@ -6,18 +6,17 @@ import {Enemy} from "../ui/Enemy";
 import BaseContainer from "components/ui/BaseContainer";
 import 'styles/views/Game.scss';
 import SocketConnection from "../../helpers/socketConnection";
-import socket from "helpers/socketConnection"
-
 //import {generatePath, Link, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
+import {useParams} from "react-router-dom";
 //import {Spinner} from "../ui/Spinner";
 
 
 const Game = () => {
 
     let hand = []
+    const gameId = useParams().id;
     const [uno, setUno] = useState(false);
-    const [gameId, setGameId] = useState(localStorage.getItem("gameId"))
     const [middleCard, setMiddleCard] = useState({color: "YELLOW", symbol: "Test"});
     const [users, setUsers] = useState(null);
     const [currentTurn, setCurrentTurn] = useState(null);
@@ -85,11 +84,11 @@ const Game = () => {
     }
 
     const initGame = () => {
-        socket.send("/app/game/" + gameId + "/init")
+        SocketConnection.send("/app/game/" + gameId + "/init")
     }
 
     const drawCards = () => {
-        socket.send("/app/game/" + gameId + "/drawCard")
+        SocketConnection.send("/app/game/" + gameId + "/drawCard")
     }
 
     const playedCardCallback = (response) => {
@@ -105,29 +104,29 @@ const Game = () => {
             let newColor = prompt("What color do you wish?");
             let newCard = {color: newColor, symbol: card.symbol};
             let payload = {"card": newCard, "user": null, "uno": uno};
-            socket.send("/app/game/" + gameId + "/playCard", payload);
+            SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
         } else if (card.symbol == "EXTREME_HIT") {
             let newColor = prompt("What color do you wish?");
             let enemyGetsHit = prompt("Who do you want to hit?");
             let newCard = {color: newColor, symbol: card.symbol};
             let user = {"username": enemyGetsHit}
             let payload = {"card": newCard, "user": user, "uno": uno};
-            socket.send("/app/game/" + gameId + "/playCard", payload);
+            SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
         } else {
             let payload = {"card": cards[index], "user": null, "uno": uno}
-            socket.send("/app/game/" + gameId + "/playCard", payload);
+            SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
         }
     }
 
     function sayUno() {
             synthesizeSpeech("UNO");
-            socket.send('/game/' + gameId + '/UNO', userId);
+        SocketConnection.send('/game/' + gameId + '/UNO', userId);
             setUno(true);
         }
 
     function protest() {
         synthesizeSpeech("Wrong")
-        socket.send('/game/' + gameId + '/callOut', userId)
+        SocketConnection.send('/game/' + gameId + '/callOut', userId)
     }
 
     const displayHand = () => {
@@ -183,19 +182,18 @@ const Game = () => {
 
 
     useEffect(() => {
-        //socket = new SocketConnection();
-        socket.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
-        socket.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
-        socket.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
-        socket.subscribe("/game/" + gameId + "/calledOut", calledOutCallback)
-        socket.subscribe("/game/" + gameId + "/saidUno", unoCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/topMostCard", topMostCardCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/playerTurn", playerTurnCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/calledOut", calledOutCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/saidUno", unoCallback)
         // privateChannel
-        socket.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
-        socket.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
-        socket.subscribe("/users/queue/error", receiveErrorCallback)
-        socket.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
+        SocketConnection.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
+        SocketConnection.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
+        SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
+        SocketConnection.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
 
-        socket.connect(localStorage.getItem('token'));
+        SocketConnection.connect(localStorage.getItem('token'));
 
     }, []);
 
