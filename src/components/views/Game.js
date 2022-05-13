@@ -102,12 +102,12 @@ const Game = () => {
         //debugger;
         let card = cards[index];
         if (card.symbol == "WILDCARD") {
-            let newColor = prompt("What color do you wish?");
+            //let newColor = prompt("What color do you wish?");
             let newCard = {color: newColor, symbol: card.symbol};
             let payload = {"card": newCard, "user": null, "uno": uno};
             SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
         } else if (card.symbol == "EXTREME_HIT") {
-            let newColor = prompt("What color do you wish?");
+            //let newColor = prompt("What color do you wish?");
             let enemyGetsHit = prompt("Who do you want to hit?");
             let newCard = {color: newColor, symbol: card.symbol};
             let user = {"username": enemyGetsHit}
@@ -139,6 +139,7 @@ const Game = () => {
                         color={card.color}
                         symbol={card.symbol}
                         onClick={() => playCard(i)}
+                        onChange={c => setNewColor(c)}
                     />
                 </div>
             )
@@ -208,7 +209,7 @@ const Game = () => {
                 <div className="game topContainer">
                     <div className="game currentPlayerContainer">
                         <h3> Current player: {currentTurn}</h3>
-                        {userWhoSaidUno}
+                        <>{userWhoSaidUno}</>
                     </div>
                     <div className="game enemyContainer">
                         {displayEnemies}

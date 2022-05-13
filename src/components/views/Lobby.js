@@ -12,6 +12,8 @@ const Lobby = () => {
     SocketConnection.connect(localStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
     const [openLobbies, setOpenLobbies] = useState(null);
+    const un = localStorage.getItem("username")
+    const initial = un[0]
     
     const history = useHistory();
     //const { id } = useParams();
@@ -149,7 +151,7 @@ const Lobby = () => {
           <Circle
               onClick={() => goToProfile()}
           >
-              ME
+              {initial}
           </Circle>    
         </div>
         <div className="lobby container">
