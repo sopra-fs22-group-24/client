@@ -25,7 +25,8 @@ const Waitingroom = () => {
     const [ownUsername, setOwnUsername] = useState(null);
     const [users, setUsers] = useState(null);
     const [gameMaster, setGameMaster] = useState(null);
-
+    const [maxSize, setMaxSize] = useState(null);
+    const [currentSize, setCurrentSize] = useState(null);
     const history = useHistory();
 
     function goToGame(){
@@ -39,7 +40,8 @@ const Waitingroom = () => {
 
     }
     function userJoinedCallback(response) {
-        console.log(response)
+        setUsers(response)
+        setCurrentSize(response.length)
     }
 
     function userLeftCallback(response) {
@@ -65,6 +67,8 @@ const Waitingroom = () => {
               const id = localStorage.getItem("id")
               const responseUser = await api.get(`/users/${id}`);//actual user on the page.
               setOwnUsername(responseUser.data.username);
+              setMaxSize(response.data[0].maxSize)
+              setCurrentSize(response.data[0].players.length)
               for (let i in response.data) {
                 
                 if (response.data[i].lobbyId==lobbyId){
@@ -123,9 +127,9 @@ const Waitingroom = () => {
     //console.log(users.length); */
 
     let gameBox;
-    if (usersCounted!=1){// first look, how many players can join the game!
+    if (usersCounted!=maxSize){// first look, how many players can join the game!
         gameBox = (
-            <div>Wait until there are enough user in the waiting room.</div>
+            <div>Wait until there are enough user in the waiting room. Currently: {currentSize}/{maxSize}</div>
             
         );
     } else{
@@ -165,7 +169,7 @@ const Waitingroom = () => {
 
     return (
         <BaseContainer className="waitingroom container">
-             <meta http-equiv="refresh" content="30"></meta>
+             {/*<meta http-equiv="refresh" content="30"></meta>*/}
              <h2 className = "waitingroom label">Waitingroom</h2> 
              <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
              <div className = "waitingroom content">{content}</div>

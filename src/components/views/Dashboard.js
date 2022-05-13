@@ -15,8 +15,8 @@ const Dashboard = props => {
     let initial = localUsername[0];
 
 
-    function goToGame(){
-        SocketConnection.send("/app/createLobby",{});
+    function goToGame(maxSize){
+        SocketConnection.send("/app/createLobby",{"maxSize": maxSize});
         SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
         
     }
@@ -63,17 +63,17 @@ const Dashboard = props => {
             </div>
             <div 
                 className="dashboard overviewGame2"
-                onClick={() => goToGame()}>
+                onClick={() => goToGame(2)}>
                 2 Player
             </div>
             <div 
-                className="dashboard overviewGame3">
-                {/* onClick={() => goToGame()}> */}
+                className="dashboard overviewGame3"
+                 onClick={() => goToGame(3)}> 
                 3 Player
             </div>
             <div 
-                className="dashboard overviewGame4">
-                {/*onClick={() => goToGame()}> */}
+                className="dashboard overviewGame4"
+                onClick={() => goToGame(4)}>
                 4 Player
             </div>
             <div 

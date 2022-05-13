@@ -77,6 +77,7 @@ const Lobby = () => {
                       <div className ="lobby labelLeft">Game {lobby.lobbyId}</div>  
                       <div className ="lobby labelRight">Players joined: 
                       {lobby.players.map(player => (<div>{player.username}</div>))}</div>
+                      <div className="lobby maxSize">Size: {lobby.players.length}/{lobby.maxSize}</div>
                   </Box>
                     
                    {/*  <div>Players joined:</div>
@@ -107,9 +108,10 @@ const Lobby = () => {
   async function goToLobby(requestedId){
     try{
       console.log(lobbies);
+      SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
       SocketConnection.send("/app/lobby/"+requestedId+"/joinLobby", {} );
       console.log(lobbies);
-      history.push('/waitingroom/'+requestedId);
+      //history.push('/waitingroom/'+requestedId);
     } catch (error) {
       console.error(`Something went wrong while joining the lobbies: \n${handleError(error)}`);
       console.error("Details:", error);
