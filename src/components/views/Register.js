@@ -68,7 +68,6 @@ const Register = props => {
 
       // Get the returned user and update a new object.
       const user = new User(response.data);
-      //await api.put(`/users/${user.id}`,picture);
       //let id=user.id;
 
       //THESE TWO LINES!!!!!!!
@@ -83,7 +82,9 @@ const Register = props => {
       localStorage.setItem('token', user.token);
       localStorage.setItem('username', user.username);
       localStorage.setItem('id', user.id);
+
       //let picture2=await api.get(`/users/${user.id}/picture`);
+      
       console.log("Picture from api");
       //console.log(picture2);
 
