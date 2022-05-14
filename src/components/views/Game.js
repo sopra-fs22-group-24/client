@@ -6,10 +6,9 @@ import {Enemy} from "../ui/Enemy";
 import BaseContainer from "components/ui/BaseContainer";
 import 'styles/views/Game.scss';
 import SocketConnection from "../../helpers/socketConnection";
-//import {generatePath, Link, useParams} from "react-router-dom";
-import {api, handleError} from "../../helpers/api";
-import {useParams} from "react-router-dom";
-//import {Spinner} from "../ui/Spinner";
+import Confetti from 'react-confetti'
+import {useHistory, useParams} from "react-router-dom";
+import Popup from "../ui/Popup";
 
 
 const Game = () => {
@@ -17,6 +16,7 @@ const Game = () => {
     let hand = []
     const gameId = useParams().id;
     console.log(gameId)
+    const history = useHistory();
     const [uno, setUno] = useState(false);
     const [middleCard, setMiddleCard] = useState({color: "YELLOW", symbol: "Test"});
     const [users, setUsers] = useState(null);
@@ -26,26 +26,32 @@ const Game = () => {
     const [target, setTarget] = useState(null);
     const [saidUno, setSaidUno] = useState(null);
     const [usernames, setUsernames] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const togglePopup = () =>{ setIsOpen(!isOpen);}
 
     const userId = localStorage.getItem("id");
     const username = localStorage.getItem("username");
 
+    //changes Card in the middle of the table
     const topMostCardCallback = (response) => {
         console.log("/game/" + gameId + "/topMostCard")
         console.log(response);
         setMiddleCard(response);
     }
 
+    //Whose turn
     const playerTurnCallback = (response) => {
         console.log("/game/" + gameId + "/playerTurn")
         console.log(response);
         setCurrentTurn(response.username);
     }
 
+    //How many cards do the players have
     const playerHasNCardsCallback = (response) => {
         console.log("/game/" + gameId + "/playerHasNCards")
         console.log(response);
-        let currentUsers = [];
+        if (Array.isArray(response)) {setUsers(response)}
+        /*let currentUsers = [];
         currentUsers.push(response);
         setUsers(currentUsers);
         let currentUsernames = [];
@@ -53,35 +59,54 @@ const Game = () => {
             currentUsernames.push(currentUsers[i]);
         }
         setUsernames(currentUsernames);
+
+         */
     }
 
+    //Users initial cards
     const playerCardsCallback = (response) => {
         console.log("/users/queue/" + gameId + "/cards")
         console.log(response)
         setCards(response);
     }
 
+    //User new cards
     const playerCardsDrawnCallback = (response) => {
         console.log("/users/queue/" + gameId + "/cardsDrawn")
         console.log(response)
         setCards(response)
     }
 
+    //Errors
     const receiveErrorCallback = (response) => {
         console.log("error")
         console.log(response)
     }
 
+    //Wrongly said uno
     const calledOutCallback = (response) => {
         console.log("calledOut")
         console.log(response)
     }
 
+    //Someone said UNO
     const unoCallback = (response) => {
         console.log("Uno");
         console.log(response);
-        setSaidUno(response);
+        setSaidUno(response.username);
         synthesizeSpeech("UNO");
+    }
+
+    //User hand after first time
+    const playedCardCallback = (response) => {
+        console.log("/game/" + gameId + "/playedCard")
+        setCards(response)
+    }
+
+    const scoreCallback = (response) => {
+        console.log(response);
+        togglePopup();
+
     }
 
     const initGame = () => {
@@ -92,23 +117,21 @@ const Game = () => {
         SocketConnection.send("/app/game/" + gameId + "/drawCard")
     }
 
-    const playedCardCallback = (response) => {
-        console.log("/game/" + gameId + "/playedCard")
-        setCards(response)
-    }
-
+    //play a Card. Checks if Wildcard or Extreme Hit
     const playCard = (index) => {
         console.log("played Card");
         //debugger;
         let card = cards[index];
         if (card.symbol == "WILDCARD") {
+
+
             //let newColor = prompt("What color do you wish?");
             let newCard = {color: newColor, symbol: card.symbol};
             let payload = {"card": newCard, "user": null, "uno": uno};
             SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
         } else if (card.symbol == "EXTREME_HIT") {
             //let newColor = prompt("What color do you wish?");
-            let enemyGetsHit = prompt("Who do you want to hit?");
+            let enemyGetsHit = prompt("Who do you want to hit? Enter Username");
             let newCard = {color: newColor, symbol: card.symbol};
             let user = {"username": enemyGetsHit}
             let payload = {"card": newCard, "user": user, "uno": uno};
@@ -120,14 +143,17 @@ const Game = () => {
     }
 
     function sayUno() {
-            synthesizeSpeech("UNO");
         SocketConnection.send('/game/' + gameId + '/UNO', userId);
-            setUno(true);
+        setUno(true);
         }
 
     function protest() {
         synthesizeSpeech("Wrong")
         SocketConnection.send('/game/' + gameId + '/callOut', userId)
+    }
+
+    function goToDashboard() {
+        history.push('/dashboard');
     }
 
     const displayHand = () => {
@@ -140,6 +166,7 @@ const Game = () => {
                         symbol={card.symbol}
                         onClick={() => playCard(i)}
                         onChange={c => setNewColor(c)}
+                        usernames = {usernames}
                     />
                 </div>
             )
@@ -147,9 +174,9 @@ const Game = () => {
         return (hand)
     }
 
-    let displayEnemies;
+    let EnemyDisplay;
     if (users) {
-        displayEnemies = (
+        EnemyDisplay = (
             <>
                 {users.map(user => (
                     <Enemy
@@ -161,7 +188,6 @@ const Game = () => {
             </>
         );
     }
-
 
     let gameDisplay = (
         <div className="game initContainer">
@@ -192,6 +218,7 @@ const Game = () => {
         SocketConnection.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
         SocketConnection.subscribe("/game/" + gameId + "/calledOut", calledOutCallback)
         SocketConnection.subscribe("/game/" + gameId + "/saidUno", unoCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/score", scoreCallback)
         // privateChannel
         SocketConnection.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
@@ -209,13 +236,25 @@ const Game = () => {
                 <div className="game topContainer">
                     <div className="game currentPlayerContainer">
                         <h3> Current player: {currentTurn}</h3>
-                        <>{userWhoSaidUno}</>
+                        <h3>{saidUno} said UNO</h3>
                     </div>
                     <div className="game enemyContainer">
-                        {displayEnemies}
+                        {EnemyDisplay}
                     </div>
                 </div>
                 <div className="game container">
+                    {isOpen && <Popup
+                        content={<>
+                            <Confetti
+                                width="700px"
+                                height="300px"
+                            />
+                            <b>And the winner is...</b>
+                            <p>You won!</p>
+                            <button onClick={() => goToDashboard()}>To Dashboard</button>
+                        </>}
+                        handleClose={togglePopup}
+                    />}
                     <div className="game launcher">
                         <Launcher onClick={() => drawCards()}>
                                Launch

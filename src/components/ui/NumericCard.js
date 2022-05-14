@@ -4,13 +4,16 @@ import { AiOutlineStop } from "react-icons/ai";
 import {BsArrowLeftRight} from "react-icons/bs";
 import{GiCardDiscard} from "react-icons/gi";
 import Popup from 'reactjs-popup';
+import {Enemy} from "./Enemy";
 
 export const NumericCard = (props) => {
 
     let color = props.color;
     let symbol = props.symbol;
-    const [chosenColor, setChosenColor] = useState(null);
-    const [target, setTarget] = useState(null);
+    const [chosenColor, setChosenColor] = useState("Choose Color");
+    const [target, setTarget] = useState("user");
+    let usernames = props.usernames;
+
 
     switch (symbol){
         case "WILDCARD":
@@ -28,22 +31,24 @@ export const NumericCard = (props) => {
                     <span className="inner">
                     <span className="text">
                         <Popup
-                            trigger={<button> WILD</button>}
-                            position="center center"
-                            closeOnDocumentClick>
+                            trigger={<button> Wild</button>}
+                            position="top center">
                         <select value={chosenColor}
                                 onChange={e => props.onChange(e.target.value)}>
-                              <option selected value="BLUE">Blue</option>
+                              <option value="BLUE">Blue</option>
                               <option value="YELLOW">Yellow</option>
                               <option value="GREEN">Green</option>
                               <option value="RED">Red</option>
-                        </select>  </Popup></span>
+                        </select>
+                        </Popup>
+                    </span>
                     </span>
                 </div>
             )}
         case "EXTREME_HIT":
             if (color != "NULL") {
-                return(<div className={`card EXTREME_HIT ${color}`}
+                return(
+                    <div className={`card EXTREME_HIT ${color}`}
                             onClick={() => props.onClick()}>
                     <span className="inner">
                     <span className="text">XTREM</span>
@@ -57,15 +62,16 @@ export const NumericCard = (props) => {
                     <span className="text">
                         <Popup
                             trigger={<button> XTREM</button>}
-                            position="center center"
-                            closeOnDocumentClick>
+                            position="top center">
                         <select value={chosenColor}
                                 onChange={e => props.onChange(e.target.value)}>
-                              <option selected value="BLUE">Blue</option>
+                              <option value="BLUE">Blue</option>
                               <option value="YELLOW">Yellow</option>
                               <option value="GREEN">Green</option>
                               <option value="RED">Red</option>
-                        </select>  </Popup></span>
+                        </select>
+                        </Popup>
+                    </span>
                     </span>
                 </div>
             )}

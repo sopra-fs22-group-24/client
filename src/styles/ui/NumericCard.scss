@@ -17,7 +17,11 @@
   text-align:center;
   position:relative;
   cursor: pointer;
-
+  button{
+    color: red;
+    font-weight: bold;
+    text-shadow: 2px 2px black;
+  }
 
 }
 .card .inner{
@@ -201,9 +205,7 @@
 .card.EXTREME_HIT:after{
   content:"Extreme";
 }
-.button{
-  color: red;
-}
+
 
 .popup-content {
   margin: auto;
@@ -215,7 +217,7 @@
   color: rgb(255, 255, 255);
 }
 [role='tooltip'].popup-content {
-  width: 200px;
+  width: 20px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
 }
 

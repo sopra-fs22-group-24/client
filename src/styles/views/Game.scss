@@ -9,8 +9,12 @@
 
   &.topContainer {
     display: flex;
-
   }
+
+  &.playedWildcard{
+   z-index: 3;
+  }
+
   &.enemyContainer {
     display: flex;
     float: right;
@@ -58,7 +62,7 @@
   }
 
   &.currentPlayerContainer{
-    display: flex;
+    display: block;
     padding-left: 3em;
     padding-top: 2em;
     width: 400px;
