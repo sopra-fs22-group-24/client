@@ -16,8 +16,8 @@ const Dashboard = props => {
 
 
     function goToGame(maxSize){
-        SocketConnection.send("/app/createLobby",{"maxSize": maxSize});
         SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
+        SocketConnection.send("/app/createLobby",{"maxSize": maxSize});
         
     }
 
