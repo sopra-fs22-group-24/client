@@ -158,11 +158,11 @@ const Lobby = () => {
         </div>
         <div className="lobby container">
           <div className="lobby form">
-            <h2>Games to join:</h2>
+            <h2 className = "lobby title">Games to join:</h2>
             
             {content}
             <Box
-                className = "lobby field"
+                className = "lobby gameButton"
                 onClick={() => goToGame()}
             >
                 New Game
