@@ -9,7 +9,7 @@ import SocketConnection from "../../helpers/socketConnection";
 import Confetti from 'react-confetti'
 import {useHistory, useParams} from "react-router-dom";
 import Popup from "../ui/Popup";
-
+import {ScoreUser} from 'components/ui/ScoreUser';
 
 const Game = () => {
 
@@ -26,6 +26,7 @@ const Game = () => {
     const [target, setTarget] = useState(null);
     const [saidUno, setSaidUno] = useState(null);
     const [usernames, setUsernames] = useState(null);
+    const [usersWithScores, setUsersWithScores] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const togglePopup = () =>{ setIsOpen(!isOpen);}
 
@@ -51,16 +52,6 @@ const Game = () => {
         console.log("/game/" + gameId + "/playerHasNCards")
         console.log(response);
         if (Array.isArray(response)) {setUsers(response)}
-        /*let currentUsers = [];
-        currentUsers.push(response);
-        setUsers(currentUsers);
-        let currentUsernames = [];
-        for (let i = 0; i < currentUsers.length; i++){
-            currentUsernames.push(currentUsers[i]);
-        }
-        setUsernames(currentUsernames);
-
-         */
     }
 
     //Users initial cards
@@ -103,10 +94,11 @@ const Game = () => {
         setCards(response)
     }
 
+    //End of Game - Scores
     const scoreCallback = (response) => {
         console.log(response);
+        setUsersWithScores(response);
         togglePopup();
-
     }
 
     const initGame = () => {
@@ -204,10 +196,9 @@ const Game = () => {
         userWhoSaidUno= (
             <>
                 <h3> {saidUno} called out UNO!</h3>
-        </>
+            </>
         )
     }
-
 
     useEffect(() => {
         console.log("beforeConnection")
@@ -250,7 +241,15 @@ const Game = () => {
                                 height="300px"
                             />
                             <b>And the winner is...</b>
-                            <p>You won!</p>
+                            <>
+                                {usersWithScores.map(user => (
+                                    <ScoreUser
+                                        username={user.username}
+                                        score={user.score}
+                                    >
+                                    </ScoreUser>
+                                ))}
+                            </>
                             <button onClick={() => goToDashboard()}>To Dashboard</button>
                         </>}
                         handleClose={togglePopup}
