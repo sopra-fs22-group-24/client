@@ -33,7 +33,7 @@ const Waitingroom = () => {
         //starts game
         //SocketConnection.send("/app/game", {"lobbyId": lobbyId});
         SocketConnection.send("/app/game", {"lobbyId": lobbyId}); //gameId oder lobbyId?
-        history.push('/game/'+lobbyId); //gameId oder lobbyId?
+        //history.push('/game/'+lobbyId); //gameId oder lobbyId?
         //if (gameMaster==ownUsername){
             //SocketConnection.send("/app/lobby/"+id+"/leaveLobby", {});
         //}

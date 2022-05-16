@@ -67,7 +67,7 @@ const Register = props => {
       let picture="no";
       const requestBody2 = JSON.stringify({picture});
       console.log(requestBody2);
-      await api.post(`/users/${user.id}/picture`,requestBody2);
+      //await api.post(`/users/${user.id}/picture`,requestBody2);
       //THESE TWO LINES!!!!
       
 
