@@ -23,12 +23,16 @@ const Game = () => {
     const [currentTurn, setCurrentTurn] = useState(null);
     const [cards, setCards] = useState(null);
     const [newColor, setNewColor] = useState(null);
-    const [target, setTarget] = useState(null);
     const [saidUno, setSaidUno] = useState(null);
     const [usernames, setUsernames] = useState(null);
     const [usersWithScores, setUsersWithScores] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
-    const togglePopup = () =>{ setIsOpen(!isOpen);}
+    const [target, setTarget] = useState(null);
+    const [wildcardIsOpen, setWildcardIsOpen] = useState(false);
+    const [xtremIsOpen, setXtremIsOpen] = useState(false);
+    const togglePopupWildcard = () =>  {setWildcardIsOpen(!wildcardIsOpen)};
+    const togglePopupXtrem = () => { setXtremIsOpen(!xtremIsOpen)};
+    const togglePopup = () => {setIsOpen(!isOpen)};
 
     const userId = localStorage.getItem("id");
     const username = localStorage.getItem("username");
@@ -51,7 +55,9 @@ const Game = () => {
     const playerHasNCardsCallback = (response) => {
         console.log("/game/" + gameId + "/playerHasNCards")
         console.log(response);
-        if (Array.isArray(response)) {setUsers(response)}
+        if (Array.isArray(response)) {
+            setUsers(response)
+        }
     }
 
     //Users initial cards
@@ -109,35 +115,41 @@ const Game = () => {
         SocketConnection.send("/app/game/" + gameId + "/drawCard")
     }
 
+
     //play a Card. Checks if Wildcard or Extreme Hit
     const playCard = (index) => {
         console.log("played Card");
         //debugger;
         let card = cards[index];
         if (card.symbol == "WILDCARD") {
-
-
-            //let newColor = prompt("What color do you wish?");
-            let newCard = {color: newColor, symbol: card.symbol};
-            let payload = {"card": newCard, "user": null, "uno": uno};
-            SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
+            togglePopupWildcard();
         } else if (card.symbol == "EXTREME_HIT") {
-            //let newColor = prompt("What color do you wish?");
-            let enemyGetsHit = prompt("Who do you want to hit? Enter Username");
-            let newCard = {color: newColor, symbol: card.symbol};
-            let user = {"username": enemyGetsHit}
-            let payload = {"card": newCard, "user": user, "uno": uno};
-            SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
+            togglePopupXtrem();
         } else {
             let payload = {"card": cards[index], "user": null, "uno": uno}
             SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
         }
     }
 
+    const playWildcard = () =>{
+        togglePopupWildcard()
+        let newCard = {color: newColor, symbol: "WILDCARD"};
+        let payload = {"card": newCard, "user": null, "uno": uno};
+        SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
+    }
+
+    const playXtrem = () => {
+        togglePopupXtrem()
+        let newCard = {color: newColor, symbol: "EXTREME_HIT"};
+        let user = {"username": target}
+        let payload = {"card": newCard, "user": user, "uno": uno};
+        SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
+    }
+
     function sayUno() {
         SocketConnection.send('/game/' + gameId + '/UNO', userId);
         setUno(true);
-        }
+    }
 
     function protest() {
         synthesizeSpeech("Wrong")
@@ -146,6 +158,11 @@ const Game = () => {
 
     function goToDashboard() {
         history.push('/dashboard');
+    }
+
+    const handleCardFeedback = (c,i) => {
+        setNewColor(c);
+        playCard(i);
     }
 
     const displayHand = () => {
@@ -157,8 +174,8 @@ const Game = () => {
                         color={card.color}
                         symbol={card.symbol}
                         onClick={() => playCard(i)}
-                        onChange={c => setNewColor(c)}
-                        usernames = {usernames}
+                        onChange={c => handleCardFeedback(c,i)}
+                        usernames={usernames}
                     />
                 </div>
             )
@@ -184,21 +201,11 @@ const Game = () => {
     let gameDisplay = (
         <div className="game initContainer">
             <Button
-                width= "150px"
+                width="150px"
                 onClick={() => initGame()}>
                 START
             </Button>
         </div>);
-
-    let userWhoSaidUno;
-
-    if (saidUno) {
-        userWhoSaidUno= (
-            <>
-                <h3> {saidUno} called out UNO!</h3>
-            </>
-        )
-    }
 
     useEffect(() => {
         console.log("beforeConnection")
@@ -237,8 +244,8 @@ const Game = () => {
                     {isOpen && <Popup
                         content={<>
                             <Confetti
-                                width="700px"
-                                height="300px"
+                                width="650px"
+                                height="270px"
                             />
                             <b>And the winner is...</b>
                             <>
@@ -254,9 +261,57 @@ const Game = () => {
                         </>}
                         handleClose={togglePopup}
                     />}
+
+                    {wildcardIsOpen && <Popup
+                        className = "Popup wildcard"
+                        content={<>
+                            <b>Please select a color</b>
+                            <><form>
+                                <select value={newColor}
+                                        onChange={e => setNewColor(e.target.value)} >
+                                    <option value="BLUE">Blue</option>
+                                    <option value="YELLOW">Yellow</option>
+                                    <option value="GREEN">Green</option>
+                                    <option value="RED">Red</option>
+                                </select>
+                            </form>
+                            </>
+                            <Button onClick={() => playWildcard()}>Submit</Button>
+                        </>}
+                        handleClose={togglePopupWildcard}
+                    />}
+
+                    {xtremIsOpen && <Popup
+                        content={<>
+                            <b>Please select a color</b>
+                            <div>
+                                <form>
+                                    <div>
+                                <select value={newColor}
+                                        onChange={e => setNewColor(e.target.value)} >
+                                    <option value="BLUE">Blue</option>
+                                    <option value="YELLOW">Yellow</option>
+                                    <option value="GREEN">Green</option>
+                                    <option value="RED">Red</option>
+                                </select></div>
+                                    <div>
+                                <select value={target}
+                                        onChange={e => setTarget(e.target.value)} >
+                                    {users.map((user) => (
+                                        <option value ={user.username}> {user.username}</option>
+                                    ))}
+                                </select>
+                                </div>
+                            </form>
+                            </div>
+                            <Button onClick={() => playXtrem()}>Submit</Button>
+                        </>}
+                        handleClose={togglePopupXtrem}
+                    />}
+
                     <div className="game launcher">
                         <Launcher onClick={() => drawCards()}>
-                               Launch
+                            Launch
                         </Launcher>
                     </div>
                     <div className="game middleCard">
@@ -272,7 +327,7 @@ const Game = () => {
                         <h1> {username} </h1>
                     </div>
                     <div className="game handContainer">
-                            {displayHand()}
+                        {displayHand()}
                     </div>
 
                     <div className="game buttonContainer">
@@ -296,15 +351,12 @@ const Game = () => {
         )
     }
 
-
-        return (
-            <BaseContainer>
-                {gameDisplay}
-            </BaseContainer>
-
-        );
-    }
-;
+    return (
+        <BaseContainer>
+            {gameDisplay}
+        </BaseContainer>
+    );
+};
 
 const sdk = require("microsoft-cognitiveservices-speech-sdk");
 
@@ -323,6 +375,5 @@ function synthesizeSpeech(text) {
             synthesizer.close();
         });
 }
-
 
 export default Game;

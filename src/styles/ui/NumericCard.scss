@@ -190,7 +190,7 @@
 }
 .card.HIT_2:before,
 .card.HIT_2:after{
-  content:"2x";
+  content:"x2";
 }
 .card.SKIP:before,
 .card.SKIP:after{
@@ -205,27 +205,4 @@
 .card.EXTREME_HIT:after{
   content:"Extreme";
 }
-
-
-.popup-content {
-  margin: auto;
-  background: rgb(255, 255, 255);
-  width: 15px;
-  padding: 5px;
-}
-.popup-arrow {
-  color: rgb(255, 255, 255);
-}
-[role='tooltip'].popup-content {
-  width: 20px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
-}
-
-.popup-overlay {
-  background: rgba(0, 0, 0, 0.5);
-}
-[data-popup='tooltip'].popup-overlay {
-  background: transparent;
-}
-
 
