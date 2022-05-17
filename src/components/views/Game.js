@@ -36,7 +36,10 @@ const Game = () => {
 
     const userId = localStorage.getItem("id");
     const username = localStorage.getItem("username");
-
+    function enableSudo() {
+        SocketConnection.send("/app/game/" + gameId + "/enableSudo")
+    }
+    window.enableSudo = enableSudo;
     //changes Card in the middle of the table
     const topMostCardCallback = (response) => {
         console.log("/game/" + gameId + "/topMostCard")
