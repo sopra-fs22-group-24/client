@@ -149,7 +149,7 @@ const UserProfile = () => {
                             width="100px"
                             onClick={() => goToDashboard()}
                             >
-                            Back
+                            Dashboard
                 </Button>
 
                 <Button

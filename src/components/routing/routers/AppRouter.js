@@ -67,7 +67,7 @@ const AppRouter = () => {
                 <Route exact path={"/user"}>
                     <UserProfile/>
                 </Route>
-                <Route path="/profile/:id">
+                <Route exact path={"/profile/:id"}>
                     <Profile/>
                 </Route>
                 <Route exact path={"/waitingroom/:id"}>
