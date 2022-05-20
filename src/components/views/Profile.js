@@ -10,20 +10,20 @@ import {Circle} from "../ui/Circle";
 
 const Profile = () => {
     
-    const { id } = useParams();
+    //const id = useParams().id;
+    const id=1;
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [score, setScore] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(null);
     const [gamesWon, setGamesWon] = useState(null);
+    
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                //const id = localStorage.getItem("id")
-                
+     useEffect(() => {
+         async function fetchData() {
+             try {
+                console.log("hey!");
                 const response = await api.get(`/users/${id}`);
-
                 setUsername(response.data.username);
                 setGamesPlayed(response.data.gamesPlayed);
                 setGamesWon(response.data.gamesWon);
@@ -31,13 +31,14 @@ const Profile = () => {
 
 
 
-            } catch (error) {
+             } catch (error) {
                 alert(`Something went wrong\n${handleError(error)}`);
-            }
-        }
-        console.log("Userprofil")
-        fetchData();
-    }, []);
+             }
+         }
+         fetchData();
+     }, []);
+
+     console.log(username);
 
 
     const logout = () => {
@@ -48,13 +49,13 @@ const Profile = () => {
         history.push('/login');
     }
 
-    const goToDashboard = async () => {
-        history.push(`/dashboard`);
-    };
+// //     const goToDashboard = async () => {
+// //         history.push(`/dashboard`);
+// //     };
 
-    let content = <Spinner/>;
+     let content = <Spinner/>;
 
-    const initial = username[0];
+     const initial = username[0];
 
     if (username) {
       content = (
@@ -76,10 +77,10 @@ const Profile = () => {
                     onClick={() => logout()}
                 >
                     Logout
-                </Button> {'     '}
+                </Button>
                 <Button
                     width="100px"
-                    onClick={() => goToDashboard()}
+                    // onClick={() => goToDashboard()}
                 >
                     Back
                 </Button>
@@ -92,10 +93,10 @@ const Profile = () => {
 
     return (
         <BaseContainer>
-            <div className="profile container">
-                {content}
-            </div>
-        </BaseContainer>
+           <div className="profile container">
+                 {content}
+           </div>
+       </BaseContainer>
     );
 }
 

@@ -11,23 +11,27 @@ import {BsFillTrophyFill} from "react-icons/bs";
 import {BsPerson} from "react-icons/bs";
 
 const Player = ({user}) => {
+    const history = useHistory();
 
     let id = user.id;
+    let idShown = user.id;
+
     if (id ==1){
-        id = <BsFillTrophyFill className = "player first" fontSize="large"/>;
+        idShown = <BsFillTrophyFill className = "player first" fontSize="large"/>;
     }
     if (id ==2){
-        id = <BsFillTrophyFill className = "player second" fontSize="large"/>;
+        idShown = <BsFillTrophyFill className = "player second" fontSize="large"/>;
     }
 
     if (id ==3){
-        id = <BsFillTrophyFill className = "player third" fontSize="large"/>;
+        idShown = <BsFillTrophyFill className = "player third" fontSize="large"/>;
     }
     return (
         <div className="player container">
-            <div className="player id">{id}</div>
-            <Link className = "player link" to={generatePath('/profile/:id', {id}) }> {user.username} </Link>
-            <div className="player score">score: {user.score}</div>
+            <div className="player id">{idShown}</div>
+            <div className = "player link"> {user.username} </div>
+            <div className = "player gamesPlayed"> Games played:{user.gamesPlayed} </div>
+            <div className="player score">Games won: {user.score}</div>
         </div>
     )};
 
@@ -47,6 +51,10 @@ const Ranking = () => {
 
     function goToProfile() {
         history.push('/user');
+    }
+
+    function goToUser(goId) {
+        history.push(`/profile/${goId}`);
     }
 
     useEffect(() => {
@@ -85,7 +93,8 @@ const Ranking = () => {
             <div className="ranking">
                 <ul className="ranking user-list">
                     {users.map(user => (
-                        <div><Player user={user} key={user.id} /> 
+                        <div><Player user={user}  /> 
+                        {/* key={user.id} */}
                         </div>
                     ))}
                 </ul>
