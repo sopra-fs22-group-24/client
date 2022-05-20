@@ -10,6 +10,7 @@ import Confetti from 'react-confetti'
 import {useHistory, useParams} from "react-router-dom";
 import Popup from "../ui/Popup";
 import {ScoreUser} from 'components/ui/ScoreUser';
+import SelectionPopup from "../ui/SelectionPopup";
 
 const Game = () => {
 
@@ -265,13 +266,13 @@ const Game = () => {
                         handleClose={togglePopup}
                     />}
 
-                    {wildcardIsOpen && <Popup
-                        className = "Popup wildcard"
+                    {wildcardIsOpen && <SelectionPopup
                         content={<>
                             <b>Please select a color</b>
                             <><form>
                                 <select value={newColor}
                                         onChange={e => setNewColor(e.target.value)} >
+                                    <option value="NULL">Choose Color</option>
                                     <option value="BLUE">Blue</option>
                                     <option value="YELLOW">Yellow</option>
                                     <option value="GREEN">Green</option>
@@ -279,12 +280,12 @@ const Game = () => {
                                 </select>
                             </form>
                             </>
-                            <Button onClick={() => playWildcard()}>Submit</Button>
+                            <button onClick={() => playWildcard()}>Submit</button>
                         </>}
                         handleClose={togglePopupWildcard}
                     />}
 
-                    {xtremIsOpen && <Popup
+                    {xtremIsOpen && <SelectionPopup
                         content={<>
                             <b>Please select a color</b>
                             <div>
@@ -292,6 +293,7 @@ const Game = () => {
                                     <div>
                                 <select value={newColor}
                                         onChange={e => setNewColor(e.target.value)} >
+                                    <option value="NULL">Choose Color</option>
                                     <option value="BLUE">Blue</option>
                                     <option value="YELLOW">Yellow</option>
                                     <option value="GREEN">Green</option>
@@ -307,7 +309,7 @@ const Game = () => {
                                 </div>
                             </form>
                             </div>
-                            <Button onClick={() => playXtrem()}>Submit</Button>
+                            <button onClick={() => playXtrem()}>Submit</button>
                         </>}
                         handleClose={togglePopupXtrem}
                     />}
