@@ -5,6 +5,7 @@ import {api, handleError} from 'helpers/api';
 import SocketConnection from 'helpers/socketConnection';
 import {Circle} from "../ui/Circle";
 import {Box} from "../ui/Box";
+import {BsPerson} from "react-icons/bs";
 import "styles/views/Lobby.scss";
 
 
@@ -153,7 +154,7 @@ const Lobby = () => {
           <Circle
               onClick={() => goToProfile()}
           >
-              {initial}
+              <BsPerson fontSize="100px"/>
           </Circle>    
         </div>
         <div className="lobby container">

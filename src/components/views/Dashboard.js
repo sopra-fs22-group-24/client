@@ -5,6 +5,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import {Button} from 'components/ui/SquareButton';
 import {Circle} from "../ui/Circle";
 import {GiCardPlay} from "react-icons/gi";
+import {BsPerson} from "react-icons/bs";
 import SocketConnection from 'helpers/socketConnection';
 
 const Dashboard = props => {
@@ -53,7 +54,7 @@ const Dashboard = props => {
                 <Circle
                     onClick={() => goToProfile()}
                 >
-                    {initial}
+                    <BsPerson fontSize="100px"/>
                 </Circle>
             </div>
             <div 
