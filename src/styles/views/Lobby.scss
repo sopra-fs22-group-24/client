@@ -45,10 +45,12 @@
     position: relative;
     top: 7px;
     left: 100px;
-    width: 800px;
+    width: 225px;
+    margin-right:60px;
     background-color: $color4;
     cursor: pointer;
     display: absolute;
+    float: left;
   }
 
   &.title{
