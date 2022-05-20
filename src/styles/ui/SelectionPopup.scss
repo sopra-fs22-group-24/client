@@ -1,4 +1,6 @@
-.popup{
+@import 'styles/theme';
+
+.selection-popup{
   position: fixed;
   background: #00000050;
   width: 100%;
@@ -9,14 +11,13 @@
 
   &.bin {
     position: relative;
-    width: 70%;
+    width: 18em;
     margin: 0 auto;
     font-size: 18px;
     padding: 20px;
     height: auto;
-    min-height: 300px;
     margin-top: calc(100vh - 85vh - 20px);
-    background: #fff;
+    background: $color3;
     border-radius: 4px;
     padding: 20px;
     border: 1px solid #999;
@@ -24,6 +25,14 @@
     text-align: center;
     color: black;
     text-transform: uppercase;
+
+    select{
+      margin: 6px;
+    }
+
+    button{
+      margin: 4px;
+    }
 
   }
 }

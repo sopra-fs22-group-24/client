@@ -1,10 +1,10 @@
 import React from "react";
-import "styles/ui/Popup.scss";
+import "styles/ui/SelectionPopup.scss";
 
-const Popup = props => {
+const SelectionPopup = props => {
     return (
-        <div className="popup">
-            <div className="popup bin">
+        <div className="selection-popup">
+            <div className="selection-popup bin">
                 <span className="close-icon" onClick={props.handleClose}>x</span>
                 {props.content}
             </div>
@@ -12,4 +12,4 @@ const Popup = props => {
     );
 };
 
-export default Popup;
+export default SelectionPopup;
