@@ -47,6 +47,8 @@
     left: 100px;
     width: 800px;
     background-color: $color4;
+    cursor: pointer;
+    display: absolute;
   }
 
   &.title{
@@ -97,5 +99,6 @@
     left: 15em;
 
   }
+  
   
 }

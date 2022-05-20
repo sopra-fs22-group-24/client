@@ -9,6 +9,7 @@ import Register from "components/views/Register";
 import {DashboardGuard} from "components/routing/routeProtectors/DashboardGuard";
 import Dashboard from "components/views/Dashboard";
 import Profile from "components/views/Profile";
+import {WaitingroomGuard} from "components/routing/routeProtectors/WaitingroomGuard";
 import Waitingroom from "../../views/Waitingroom";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";

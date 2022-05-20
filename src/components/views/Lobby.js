@@ -9,6 +9,7 @@ import {BsPerson} from "react-icons/bs";
 import "styles/views/Lobby.scss";
 
 
+
 const Lobby = () => {
     SocketConnection.connect(localStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
@@ -20,6 +21,7 @@ const Lobby = () => {
     //const { id } = useParams();
     
     const [ownUsername, setOwnUsername] = useState(null);
+    
 
     
 
@@ -94,16 +96,19 @@ const Lobby = () => {
     );
   } 
   
-  function goToGame(){
-      SocketConnection.send("/app/createLobby",{});
-      SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
-  }
+  function goToGame(maxSize){
+    SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
+    SocketConnection.send("/app/createLobby",{"maxSize": maxSize});
+    
+}
 
   const joinLobbyCallback = (response) => {
     let lobbyId = response.lobbyId;
     localStorage.setItem('lobbyId',lobbyId);
     history.push('/waitingroom/'+lobbyId);
   }
+
+    
 
 
   async function goToLobby(requestedId){
@@ -160,14 +165,27 @@ const Lobby = () => {
         <div className="lobby container">
           <div className="lobby form">
             <h2 className = "lobby title">Games to join:</h2>
-            
             {content}
             <Box
                 className = "lobby gameButton"
-                onClick={() => goToGame()}
+                onClick={() => goToGame(2)}
             >
-                New Game
+                New Game: 2 Player
             </Box>
+            <Box
+                className = "lobby gameButton"
+                onClick={() => goToGame(3)}
+            >
+                New Game: 3 Player
+            </Box>
+            <Box
+                className = "lobby gameButton"
+                onClick={() => goToGame(4)}
+            >
+                New Game: 4 Player
+            </Box>
+            
+            
           </div>
           
         </div>

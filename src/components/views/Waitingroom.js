@@ -133,23 +133,7 @@ const Waitingroom = () => {
             
         );
     } else{
-        gameBox = (
-            <div>
-                <div>You are enough user now! Start game by clicking on the following button:</div>
-                <Box
-                className = "waitingroom field"
-                disabled={true}
-                onClick={() => goToGame()}
-                >
-                    Start Game
-                </Box> 
-                
-                
-            </div>
-             
-            
-        );
-        //goToGame(gameId);
+        goToGame();
     }
     
     useEffect(() => {
@@ -171,7 +155,7 @@ const Waitingroom = () => {
         <BaseContainer className="waitingroom container">
              {/*<meta http-equiv="refresh" content="30"></meta>*/}
              <h2 className = "waitingroom label">Waitingroom</h2> 
-             <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('gameId')}</div>
+             <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('lobbyId')}</div>
              <div className = "waitingroom content">{content}</div>
              <div className = "waitingroom gameBox">{gameBox}</div>
                 
