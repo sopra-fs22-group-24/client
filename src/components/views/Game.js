@@ -11,6 +11,8 @@ import {useHistory, useParams} from "react-router-dom";
 import Popup from "../ui/Popup";
 import {ScoreUser} from 'components/ui/ScoreUser';
 import SelectionPopup from "../ui/SelectionPopup";
+import {handleError} from "../../helpers/api";
+import {Spinner} from "../ui/Spinner";
 
 const Game = () => {
 
@@ -23,12 +25,11 @@ const Game = () => {
     const [users, setUsers] = useState(null);
     const [currentTurn, setCurrentTurn] = useState(null);
     const [cards, setCards] = useState(null);
-    const [newColor, setNewColor] = useState(null);
+    const [newColor, setNewColor] = useState("");
     const [saidUno, setSaidUno] = useState(null);
-    const [usernames, setUsernames] = useState(null);
-    const [usersWithScores, setUsersWithScores] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [target, setTarget] = useState(null);
+    const [target, setTarget] = useState("");
+    const [winner, setWinner] = useState(null);
     const [wildcardIsOpen, setWildcardIsOpen] = useState(false);
     const [xtremIsOpen, setXtremIsOpen] = useState(false);
     const togglePopupWildcard = () =>  {setWildcardIsOpen(!wildcardIsOpen)};
@@ -37,10 +38,12 @@ const Game = () => {
 
     const userId = localStorage.getItem("id");
     const username = localStorage.getItem("username");
+
     function enableSudo() {
         SocketConnection.send("/app/game/" + gameId + "/enableSudo")
     }
     window.enableSudo = enableSudo;
+
     //changes Card in the middle of the table
     const topMostCardCallback = (response) => {
         console.log("/game/" + gameId + "/topMostCard")
@@ -48,7 +51,7 @@ const Game = () => {
         setMiddleCard(response);
     }
 
-    //Whose turn
+    //Whose turn is it
     const playerTurnCallback = (response) => {
         console.log("/game/" + gameId + "/playerTurn")
         console.log(response);
@@ -94,8 +97,8 @@ const Game = () => {
     const unoCallback = (response) => {
         console.log("Uno");
         console.log(response);
-        setSaidUno(response.username);
         synthesizeSpeech("UNO");
+        if (saidUno != username){alert(`Watch out! ` + saidUno + ` said UNO!`);}
     }
 
     //User hand after first time
@@ -104,10 +107,10 @@ const Game = () => {
         setCards(response)
     }
 
-    //End of Game - Scores
-    const scoreCallback = (response) => {
+    //End of Game - Winner
+    const gameEndCallback = (response) => {
         console.log(response);
-        setUsersWithScores(response);
+        setWinner(response.username);
         togglePopup();
     }
 
@@ -123,7 +126,6 @@ const Game = () => {
     //play a Card. Checks if Wildcard or Extreme Hit
     const playCard = (index) => {
         console.log("played Card");
-        //debugger;
         let card = cards[index];
         if (card.symbol == "WILDCARD") {
             togglePopupWildcard();
@@ -132,6 +134,7 @@ const Game = () => {
         } else {
             let payload = {"card": cards[index], "user": null, "uno": uno}
             SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
+            setUno(false)
         }
     }
 
@@ -140,6 +143,7 @@ const Game = () => {
         let newCard = {color: newColor, symbol: "WILDCARD"};
         let payload = {"card": newCard, "user": null, "uno": uno};
         SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
+        setUno(false)
     }
 
     const playXtrem = () => {
@@ -148,6 +152,7 @@ const Game = () => {
         let user = {"username": target}
         let payload = {"card": newCard, "user": user, "uno": uno};
         SocketConnection.send("/app/game/" + gameId + "/playCard", payload);
+        setUno(false)
     }
 
     function sayUno() {
@@ -164,12 +169,7 @@ const Game = () => {
         history.push('/dashboard');
     }
 
-    const handleCardFeedback = (c,i) => {
-        setNewColor(c);
-        playCard(i);
-    }
-
-    const displayHand = () => {
+    const handDisplay = () => {
         for (let i = 0; i < cards.length; i++) {
             const card = cards[i];
             hand.push(
@@ -178,8 +178,6 @@ const Game = () => {
                         color={card.color}
                         symbol={card.symbol}
                         onClick={() => playCard(i)}
-                        onChange={c => handleCardFeedback(c,i)}
-                        usernames={usernames}
                     />
                 </div>
             )
@@ -202,14 +200,7 @@ const Game = () => {
         );
     }
 
-    let gameDisplay = (
-        <div className="game initContainer">
-            <Button
-                width="150px"
-                onClick={() => initGame()}>
-                START
-            </Button>
-        </div>);
+
 
     useEffect(() => {
         console.log("beforeConnection")
@@ -220,7 +211,7 @@ const Game = () => {
         SocketConnection.subscribe("/game/" + gameId + "/playerHasNCards", playerHasNCardsCallback)
         SocketConnection.subscribe("/game/" + gameId + "/calledOut", calledOutCallback)
         SocketConnection.subscribe("/game/" + gameId + "/saidUno", unoCallback)
-        SocketConnection.subscribe("/game/" + gameId + "/score", scoreCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/gameEnd", gameEndCallback)
         // privateChannel
         SocketConnection.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
@@ -232,13 +223,13 @@ const Game = () => {
     }, [gameId]);
 
 
+    let gameDisplay = <Spinner/>;
     if (cards) {
         gameDisplay = (
             <div>
                 <div className="game topContainer">
                     <div className="game currentPlayerContainer">
                         <h3> Current player: {currentTurn}</h3>
-                        <h3>{saidUno} said UNO</h3>
                     </div>
                     <div className="game enemyContainer">
                         {EnemyDisplay}
@@ -248,19 +239,11 @@ const Game = () => {
                     {isOpen && <Popup
                         content={<>
                             <Confetti
-                                width="650px"
-                                height="270px"
+                                width="580px"
+                                height="280px"
                             />
                             <b>And the winner is...</b>
-                            <>
-                                {usersWithScores.map(user => (
-                                    <ScoreUser
-                                        username={user.username}
-                                        score={user.score}
-                                    >
-                                    </ScoreUser>
-                                ))}
-                            </>
+                            <h1> {winner} </h1>
                             <button onClick={() => goToDashboard()}>To Dashboard</button>
                         </>}
                         handleClose={togglePopup}
@@ -302,6 +285,7 @@ const Game = () => {
                                     <div>
                                 <select value={target}
                                         onChange={e => setTarget(e.target.value)} >
+                                    <option value = "NULL"> Choose Target</option>
                                     {users.map((user) => (
                                         <option value ={user.username}> {user.username}</option>
                                     ))}
@@ -316,7 +300,7 @@ const Game = () => {
 
                     <div className="game launcher">
                         <Launcher onClick={() => drawCards()}>
-                            Launch
+                            PUSH
                         </Launcher>
                     </div>
                     <div className="game middleCard">
@@ -332,7 +316,7 @@ const Game = () => {
                         <h1> {username} </h1>
                     </div>
                     <div className="game handContainer">
-                        {displayHand()}
+                        {handDisplay()}
                     </div>
 
                     <div className="game buttonContainer">

@@ -5,7 +5,7 @@ const SelectionPopup = props => {
     return (
         <div className="selection-popup">
             <div className="selection-popup bin">
-                <span className="close-icon" onClick={props.handleClose}>x</span>
+                <span className="selection-close-icon" onClick={props.handleClose}>x</span>
                 {props.content}
             </div>
         </div>

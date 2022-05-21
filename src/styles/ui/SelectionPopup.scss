@@ -17,7 +17,7 @@
     padding: 20px;
     height: auto;
     margin-top: calc(100vh - 85vh - 20px);
-    background: $color3;
+    background: #6aa5a6;
     border-radius: 4px;
     padding: 20px;
     border: 1px solid #999;
@@ -32,16 +32,17 @@
 
     button{
       margin: 4px;
+      background: #e8cc56
     }
 
   }
 }
 
-.close-icon {
+.selection-close-icon {
   content: 'x';
   cursor: pointer;
   position: fixed;
-  right: calc(15% - 30px);
+  right: calc(31%);
   top: calc(100vh - 85vh - 33px);
   background: #ededed;
   width: 25px;
