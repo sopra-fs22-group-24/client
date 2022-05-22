@@ -92,6 +92,11 @@ const Game = () => {
         setCurrentErrorMessage(response["msg"])
     }
 
+    const messageCallback = (response) => {
+        console.log(response)
+        setCurrentMessage(response["msg"])
+    }
+
     //Wrongly said uno
     const calledOutCallback = (response) => {
         console.log("calledOut")
@@ -167,7 +172,7 @@ const Game = () => {
         if(currentTurn == localStorage.getItem("username")) {
             setUno(true);
         } else {
-            SocketConnection.send('/app/game/' + gameId + '/UNO', userId);
+            SocketConnection.send('/app/game/' + gameId + '/uno', userId);
         }
     }
 
@@ -225,12 +230,12 @@ const Game = () => {
         SocketConnection.subscribe("/game/" + gameId + "/calledOut", calledOutCallback)
         SocketConnection.subscribe("/game/" + gameId + "/saidUno", unoCallback)
         SocketConnection.subscribe("/game/" + gameId + "/gameEnd", gameEndCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/messages", messageCallback)
         // privateChannel
         SocketConnection.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
         SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
-
         SocketConnection.connect(localStorage.getItem('token'), true);
 
     }, [gameId]);
