@@ -54,34 +54,17 @@ const Register = props => {
   const history = useHistory();
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-  //const [picture, setPicture] = useState(null);
   const doRegister = async () => {
     try {
            
       const requestBody = JSON.stringify({username, password});
       const response = await api.post('/users', requestBody);
-      
-
-      
       const user = new User(response.data);
-      let picture="no";
-      const requestBody2 = JSON.stringify({picture});
-      console.log(requestBody2);
-      //await api.post(`/users/${user.id}/picture`,requestBody2);
-      //THESE TWO LINES!!!!
-      
-
-
 
       // Store the token into the local storage.
       localStorage.setItem('token', user.token);
       localStorage.setItem('username', user.username);
       localStorage.setItem('id', user.id);
-
-      let picture2=await api.get(`/users/${user.id}/picture`);
-      
-      console.log("Picture from api");
-      console.log(picture2.data.picture);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/dashboard`);
