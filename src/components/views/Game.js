@@ -32,9 +32,11 @@ const Game = () => {
     const [winner, setWinner] = useState(null);
     const [wildcardIsOpen, setWildcardIsOpen] = useState(false);
     const [xtremIsOpen, setXtremIsOpen] = useState(false);
+    const [callOutOpen, setCallOutOpen] = useState(false)
     const togglePopupWildcard = () =>  {setWildcardIsOpen(!wildcardIsOpen)};
     const togglePopupXtrem = () => { setXtremIsOpen(!xtremIsOpen)};
     const togglePopup = () => {setIsOpen(!isOpen)};
+    const togglePopupCallOut = () => {setCallOutOpen(!callOutOpen)}
 
     const userId = localStorage.getItem("id");
     const username = localStorage.getItem("username");
@@ -156,13 +158,17 @@ const Game = () => {
     }
 
     function sayUno() {
-        SocketConnection.send('/game/' + gameId + '/UNO', userId);
+        console.log(currentTurn)
+
+        SocketConnection.send('/app/game/' + gameId + '/UNO', userId);
         setUno(true);
     }
 
     function protest() {
-        synthesizeSpeech("Wrong")
-        SocketConnection.send('/game/' + gameId + '/callOut', userId)
+        //synthesizeSpeech("Wrong")
+        togglePopupCallOut()
+        let user = {"username": target}
+        SocketConnection.send('/app/game/' + gameId + '/callOut', user)
     }
 
     function goToDashboard() {
@@ -297,7 +303,29 @@ const Game = () => {
                         </>}
                         handleClose={togglePopupXtrem}
                     />}
-
+                    {callOutOpen && <SelectionPopup
+                        content={<>
+                            <b>Choose Player to call out</b>
+                            <div>
+                                <form>
+                 
+                                    <div>
+                                <select value={target}
+                                        onChange={e => setTarget(e.target.value)} >
+                                    <option value = "NULL"> Choose Target</option>
+                                    {users.map((user) => (
+                                        <option value ={user.username}> {user.username}</option>
+                                    ))}
+                                </select>
+                                </div>
+                            </form>
+                            </div>
+                            <button onClick={() => protest(target)}>Submit</button>
+                        </>}
+                        handleClose={togglePopupCallOut}
+                    />}
+                        
+                        
                     <div className="game launcher">
                         <Launcher onClick={() => drawCards()}>
                             PUSH
@@ -331,7 +359,7 @@ const Game = () => {
                             <Button
                                 width="100px"
                                 onClick={() => protest()}>
-                                PROTEST
+                                Call out
                             </Button>
                         </div>
                     </div>
