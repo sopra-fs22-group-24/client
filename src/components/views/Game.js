@@ -107,6 +107,7 @@ const Game = () => {
     const unoCallback = (response) => {
         console.log("Uno");
         console.log(response);
+        setSaidUno(response.username);
         synthesizeSpeech("UNO");
         if (saidUno != username){alert(`Watch out! ` + saidUno + ` said UNO!`);}
     }

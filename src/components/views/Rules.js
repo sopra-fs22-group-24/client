@@ -9,7 +9,7 @@ import {BsPerson} from "react-icons/bs";
 
 const sdk = require("microsoft-cognitiveservices-speech-sdk");
 
-const objectText = "The first player to play all of the cards in their hand in each round scores points for the cards their opponents are left holding. The first player to score 500 points wins the game"
+const objectText = "The first player to play all of the cards in their hand wins the game"
 const setUpText = "Each player is dealt 7 cards. One card is placed in the middle of the game"
 const specialCardText = "Reverse Card:This card reverses direction of play. Skip Card: The next person in line to play after this card is played loses his/her turn and is skipped. This card may only be played on matching color or on another Skip card. Hit 2: The next person must hit the launcher twice and forfeit his/her turn. This card may only be played on a matching color or on another Hit 2 card. Discard All: Play this card when you want to discard all of the cards in your hand of the same color. For example, if a yellow 7 is in the Discard pile, you may discard all the yellow cards in your hand, with a yellow Discard All card placed on top. Wild Card: This card can be played on any card. When you play this card, you may change the color being played to any color. Extreme Hit:  When this card is played, whoever played it gets to call any color and then choose any other player in the game to hit."
 const letsPlayText = "Match the top card on the discard pile either by number, color or word. For example, if the card is a Green 7, you must play a green card or any color 7. Or, you may play any Wild card. If you don't have anything that matches, you must press the launcher. If you draw a card you can play, play it. Otherwise, play moves to the next person."
