@@ -33,6 +33,8 @@ const Game = () => {
     const [wildcardIsOpen, setWildcardIsOpen] = useState(false);
     const [xtremIsOpen, setXtremIsOpen] = useState(false);
     const [callOutOpen, setCallOutOpen] = useState(false)
+    const [currentMessage, setCurrentMessage] = useState(false);
+    const [currentErrorMessage, setCurrentErrorMessage] = useState(false);
     const togglePopupWildcard = () =>  {setWildcardIsOpen(!wildcardIsOpen)};
     const togglePopupXtrem = () => { setXtremIsOpen(!xtremIsOpen)};
     const togglePopup = () => {setIsOpen(!isOpen)};
@@ -87,6 +89,7 @@ const Game = () => {
     const receiveErrorCallback = (response) => {
         console.log("error")
         console.log(response)
+        setCurrentErrorMessage(response["msg"])
     }
 
     //Wrongly said uno
@@ -159,9 +162,13 @@ const Game = () => {
 
     function sayUno() {
         console.log(currentTurn)
-
-        SocketConnection.send('/app/game/' + gameId + '/UNO', userId);
-        setUno(true);
+        //if it is players turn set Uno to true and send it with next card
+        
+        if(currentTurn == localStorage.getItem("username")) {
+            setUno(true);
+        } else {
+            SocketConnection.send('/app/game/' + gameId + '/UNO', userId);
+        }
     }
 
     function protest() {
@@ -236,11 +243,14 @@ const Game = () => {
                 <div className="game topContainer">
                     <div className="game currentPlayerContainer">
                         <h3> Current player: {currentTurn}</h3>
+                        <h4>{currentMessage}</h4>
+                        <h4>{currentErrorMessage}</h4>
                     </div>
                     <div className="game enemyContainer">
                         {EnemyDisplay}
                     </div>
                 </div>
+     
                 <div className="game container">
                     {isOpen && <Popup
                         content={<>
