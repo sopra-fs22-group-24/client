@@ -5,6 +5,7 @@ import React from "react";
 import {useHistory} from 'react-router-dom';
 import {Circle} from "../ui/Circle";
 import { GiSpeaker } from "react-icons/gi";
+import {BsPerson} from "react-icons/bs";
 
 const sdk = require("microsoft-cognitiveservices-speech-sdk");
 
@@ -34,13 +35,13 @@ function synthesizeSpeech(text) {
 const Rules = () => {
     const history = useHistory();
     let localUsername = localStorage.getItem("username");
-    let initial = localUsername[0];
+    //let initial = localUsername[0];
 
     const goToDashboard = async () => {
         history.push(`/dashboard`);
     };
     function goToProfile() {
-        history.push('/profile');
+        history.push('/user');
     }
 
     return (
@@ -49,7 +50,7 @@ const Rules = () => {
                 <Circle
                     onClick={() => goToProfile()}
                 >
-                    {initial}
+                    <BsPerson fontSize="100px"/>
                 </Circle>
             </div>
             <div className="rules container">

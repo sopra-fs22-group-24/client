@@ -5,6 +5,7 @@ import "styles/views/Waitingroom.scss";
 import SocketConnection from 'helpers/socketConnection';
 import {useHistory, useParams} from 'react-router-dom';
 import {api, handleError} from 'helpers/api';
+import {BsArrowRightShort} from "react-icons/bs";
 import {Box} from "../ui/Box";
 
 const Waitingroom = () => {
@@ -155,7 +156,7 @@ const Waitingroom = () => {
         <BaseContainer className="waitingroom container">
              {/*<meta http-equiv="refresh" content="30"></meta>*/}
              <h2 className = "waitingroom label">Waitingroom</h2> 
-             <div className = "waitingroom Url">Invite Friends: localhost:3000/waitingroom/{localStorage.getItem('lobbyId')}</div>
+             <div className = "waitingroom Url">Invite Friends? Say them to join Game {localStorage.getItem('lobbyId')}: (Dashboard <BsArrowRightShort/> Join Game <BsArrowRightShort/> Game {localStorage.getItem('lobbyId')}).</div>
              <div className = "waitingroom content">{content}</div>
              <div className = "waitingroom gameBox">{gameBox}</div>
                 

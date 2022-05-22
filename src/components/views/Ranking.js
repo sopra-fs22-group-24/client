@@ -9,29 +9,38 @@ import {Button} from 'components/ui/Button';
 import {Circle} from "../ui/Circle";
 import {BsFillTrophyFill} from "react-icons/bs";
 import {BsPerson} from "react-icons/bs";
+import {BsHourglassSplit} from "react-icons/bs";
 
-const Player = ({user}) => {
+const Player = (userIndexArray) => {
     const history = useHistory();
+    //console.log(userIndexArray.user[0]);//userInfos
+    //console.log(userIndexArray.user[1]);//index: where is this user in the user-array
+    // let id = user.id;
+    // let idShown = user.id;
+    let id = userIndexArray.user[1];
+    
+    let idShown = id;
 
-    let id = user.id;
-    let idShown = user.id;
-
-    if (id ==1){
+    if (id ==1 && userIndexArray.user[0].score!=0){
         idShown = <BsFillTrophyFill className = "player first" fontSize="large"/>;
     }
-    if (id ==2){
+    if (id ==2 && userIndexArray.user[0].score!=0){
         idShown = <BsFillTrophyFill className = "player second" fontSize="large"/>;
     }
 
-    if (id ==3){
+    if (id ==3 && userIndexArray.user[0].score!=0){
         idShown = <BsFillTrophyFill className = "player third" fontSize="large"/>;
+    }
+    if (userIndexArray.user[0].score==0){
+        idShown = <BsHourglassSplit fontSize="large"/>; 
     }
     return (
         <div className="player container">
             <div className="player id">{idShown}</div>
-            <div className = "player link"> {user.username} </div>
-            <div className = "player gamesPlayed"> Games played:{user.gamesPlayed} </div>
-            <div className="player score">Games won: {user.score}</div>
+            <div className = "player link"> {userIndexArray.user[0].username} </div>
+            <div className = "player gamesPlayed"> Games played:{userIndexArray.user[0].gamesPlayed} </div>
+            <div className = "player gamesWon"> Games won:{userIndexArray.user[0].gamesWon} </div>
+            <div className="player score">Score: {userIndexArray.user[0].score}</div>
         </div>
     )};
 
@@ -92,8 +101,8 @@ const Ranking = () => {
         content = (
             <div className="ranking">
                 <ul className="ranking user-list">
-                    {users.map(user => (
-                        <div><Player user={user}  /> 
+                    {users.map((user,index) => (
+                        <div><Player user={[user,index]}  /> 
                         {/* key={user.id} */}
                         </div>
                     ))}

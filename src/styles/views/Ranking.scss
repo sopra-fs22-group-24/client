@@ -95,8 +95,8 @@
 
 
   &.gamesPlayed{
-    position: absolute;
-    left: 750px;
+    position: relative;
+    left: 100px;
     font-family: $fontMono;
     font-weight: 300;
   }
@@ -108,9 +108,16 @@
     font-weight: 300;
   }
 
+  &.gamesWon { 
+    position: relative;
+    left: 200px;
+    font-family: $fontMono;
+    font-weight: 300;
+  }
+
   &.link {
-    position: absolute;
-    left: 550px;
+    position: relative;
+    left: 50px;
     font-family: $fontMono;
     font-weight: 300;
     color:black;
