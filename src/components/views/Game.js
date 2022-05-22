@@ -32,9 +32,13 @@ const Game = () => {
     const [winner, setWinner] = useState(null);
     const [wildcardIsOpen, setWildcardIsOpen] = useState(false);
     const [xtremIsOpen, setXtremIsOpen] = useState(false);
+    const [callOutOpen, setCallOutOpen] = useState(false)
+    const [currentMessage, setCurrentMessage] = useState(false);
+    const [currentErrorMessage, setCurrentErrorMessage] = useState(false);
     const togglePopupWildcard = () =>  {setWildcardIsOpen(!wildcardIsOpen)};
     const togglePopupXtrem = () => { setXtremIsOpen(!xtremIsOpen)};
     const togglePopup = () => {setIsOpen(!isOpen)};
+    const togglePopupCallOut = () => {setCallOutOpen(!callOutOpen)}
 
     const userId = localStorage.getItem("id");
     const username = localStorage.getItem("username");
@@ -85,6 +89,12 @@ const Game = () => {
     const receiveErrorCallback = (response) => {
         console.log("error")
         console.log(response)
+        setCurrentErrorMessage(response["msg"])
+    }
+
+    const messageCallback = (response) => {
+        console.log(response)
+        setCurrentMessage(response["msg"])
     }
 
     //Wrongly said uno
@@ -156,13 +166,21 @@ const Game = () => {
     }
 
     function sayUno() {
-        SocketConnection.send('/game/' + gameId + '/UNO', userId);
-        setUno(true);
+        console.log(currentTurn)
+        //if it is players turn set Uno to true and send it with next card
+        
+        if(currentTurn == localStorage.getItem("username")) {
+            setUno(true);
+        } else {
+            SocketConnection.send('/app/game/' + gameId + '/uno', userId);
+        }
     }
 
     function protest() {
-        synthesizeSpeech("Wrong")
-        SocketConnection.send('/game/' + gameId + '/callOut', userId)
+        //synthesizeSpeech("Wrong")
+        togglePopupCallOut()
+        let user = {"username": target}
+        SocketConnection.send('/app/game/' + gameId + '/callOut', user)
     }
 
     function goToDashboard() {
@@ -212,12 +230,12 @@ const Game = () => {
         SocketConnection.subscribe("/game/" + gameId + "/calledOut", calledOutCallback)
         SocketConnection.subscribe("/game/" + gameId + "/saidUno", unoCallback)
         SocketConnection.subscribe("/game/" + gameId + "/gameEnd", gameEndCallback)
+        SocketConnection.subscribe("/game/" + gameId + "/messages", messageCallback)
         // privateChannel
         SocketConnection.subscribe("/users/queue/" + gameId + "/cards", playerCardsCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
         SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
-
         SocketConnection.connect(localStorage.getItem('token'), true);
 
     }, [gameId]);
@@ -230,11 +248,14 @@ const Game = () => {
                 <div className="game topContainer">
                     <div className="game currentPlayerContainer">
                         <h3> Current player: {currentTurn}</h3>
+                        <h4>{currentMessage}</h4>
+                        <h4>{currentErrorMessage}</h4>
                     </div>
                     <div className="game enemyContainer">
                         {EnemyDisplay}
                     </div>
                 </div>
+     
                 <div className="game container">
                     {isOpen && <Popup
                         content={<>
@@ -297,7 +318,29 @@ const Game = () => {
                         </>}
                         handleClose={togglePopupXtrem}
                     />}
-
+                    {callOutOpen && <SelectionPopup
+                        content={<>
+                            <b>Choose Player to call out</b>
+                            <div>
+                                <form>
+                 
+                                    <div>
+                                <select value={target}
+                                        onChange={e => setTarget(e.target.value)} >
+                                    <option value = "NULL"> Choose Target</option>
+                                    {users.map((user) => (
+                                        <option value ={user.username}> {user.username}</option>
+                                    ))}
+                                </select>
+                                </div>
+                            </form>
+                            </div>
+                            <button onClick={() => protest(target)}>Submit</button>
+                        </>}
+                        handleClose={togglePopupCallOut}
+                    />}
+                        
+                        
                     <div className="game launcher">
                         <Launcher onClick={() => drawCards()}>
                             PUSH
@@ -331,7 +374,7 @@ const Game = () => {
                             <Button
                                 width="100px"
                                 onClick={() => protest()}>
-                                PROTEST
+                                Call out
                             </Button>
                         </div>
                     </div>
