@@ -9,13 +9,15 @@ The game we choose is the popular game Uno Extreeme.
 ## Technologies
 - React
 - Microsoft Azure Text to Speech
+- Heroku
 
 ## High Level Components
-- dashboard
-- ranking
-- profilpage
-- game
-- lobby
+- login & registration
+- dashboard: Overview Page from which the pages of the website can be accesed
+- ranking: Displays the current users of the webpage and their ranking
+- profilpage: Displays profile of the user and profile picture can be added
+- game: on this page the game can be played
+- lobby: Joining and creating lobbies in order to start a game
 
 ## Launch and Deployement
 Download your IDE of choice: (e.g., [Eclipse](http://www.eclipse.org/downloads/), [IntelliJ](https://www.jetbrains.com/idea/download/)), [Visual Studio Code](https://code.visualstudio.com/) and make sure Java 15 is installed on your system (for Windows-users, please make sure your JAVA_HOME environment variable is set to the correct version of Java).
