@@ -53,8 +53,13 @@ const Game = () => {
         console.log("/game/" + gameId + "/topMostCard")
         console.log(response);
         setMiddleCard(response);
+        if (response.symbol == "WILDCARD") {
+            synthesizeSpeech("Wild");
+        }
+        if (response.symbol == "EXTREME_HIT") {
+            synthesizeSpeech("Extreme");
+        }
     }
-
     //Whose turn is it
     const playerTurnCallback = (response) => {
         console.log("/game/" + gameId + "/playerTurn")
@@ -395,6 +400,7 @@ const sdk = require("microsoft-cognitiveservices-speech-sdk");
 
 function synthesizeSpeech(text) {
     const speechConfig = sdk.SpeechConfig.fromSubscription("1cb611117bf54151b4b078fcdff6ee56", "switzerlandnorth");
+    //speechConfig.speechSynthesisVoiceName = "en-US-DavisNeural";
     const synthesizer = new sdk.SpeechSynthesizer(speechConfig);
 
     synthesizer.speakTextAsync(
