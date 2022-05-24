@@ -15,7 +15,7 @@ const WebSocketTestWithStates = () => {
     const [cards, setCards] = useState([])
     const [topMostCard, setTopMostCard] = useState([])
     const [playerTurn, setPlayerTurn] = useState(null)
-    const [players, setPlayers] = useState([localStorage.getItem("username")])
+    const [players, setPlayers] = useState([sessionStorage.getItem("username")])
     const [cardToPlay, setCardToPlay] = useState(null)
     var ctp = null;
     const receiveMessageCallback = (response) => {
@@ -63,7 +63,7 @@ const WebSocketTestWithStates = () => {
     const userLeftCallback = (response) => {
         console.log("/lobby/"+lobbyId+"/userLeft");
         console.log(response)
-        if(response.username === localStorage.getItem("username")) {
+        if(response.username === sessionStorage.getItem("username")) {
             socket.unsubscribe("/lobby/"+lobbyId+"/userJoined")
             socket.unsubscribe("/lobby/"+lobbyId+"/userLeft")
             socket.unsubscribe("/lobby/"+lobbyId+"/startGame")
@@ -109,7 +109,7 @@ const WebSocketTestWithStates = () => {
         console.log(response)
         // Don't use state or else the whole component will reload and you have to reconnect
         setGameId(response.gameId)
-        localStorage.setItem("testGameId", gameId)
+        sessionStorage.setItem("testGameId", gameId)
         // We are now connected to the game
         // Let us now subscribe to the game channels
         // public channels
@@ -189,7 +189,7 @@ const WebSocketTestWithStates = () => {
         socket = new SocketConnection()
         socket.subscribe("/users/queue/joinLobby", joinLobbyCallback)
         // connect
-        socket.connect(localStorage.getItem('token'));
+        socket.connect(sessionStorage.getItem('token'));
         }, [])
     useEffect(() => {
         if (lobbyId == null) {

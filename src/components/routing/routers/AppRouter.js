@@ -1,6 +1,4 @@
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import {GameGuard} from "components/routing/routeProtectors/GameGuard";
-import GameRouter from "components/routing/routers/GameRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import WebSocketTest from "components/views/webSocketTest"
@@ -9,7 +7,6 @@ import Register from "components/views/Register";
 import {DashboardGuard} from "components/routing/routeProtectors/DashboardGuard";
 import Dashboard from "components/views/Dashboard";
 import Profile from "components/views/Profile";
-import {WaitingroomGuard} from "components/routing/routeProtectors/WaitingroomGuard";
 import Waitingroom from "../../views/Waitingroom";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";

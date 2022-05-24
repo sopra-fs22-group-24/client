@@ -62,9 +62,9 @@ const Register = props => {
       const user = new User(response.data);
 
       // Store the token into the local storage.
-      localStorage.setItem('token', user.token);
-      localStorage.setItem('username', user.username);
-      localStorage.setItem('id', user.id);
+      sessionStorage.setItem('token', user.token);
+      sessionStorage.setItem('username', user.username);
+      sessionStorage.setItem('id', user.id);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/dashboard`);

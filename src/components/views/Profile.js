@@ -42,10 +42,7 @@ const Profile = () => {
 
 
     const logout = () => {
-        //const id = localStorage.getItem("id");
-        //const requestBody = JSON.stringify({id});
-        //api.post('/logout', requestBody);
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         history.push('/login');
     }
 

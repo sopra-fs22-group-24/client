@@ -17,7 +17,7 @@ const Waitingroom = () => {
         // console.log(response)
         // Don't use state or else the whole component will reload and you have to reconnect
         gameId = response.gameId;
-        localStorage.setItem("gameId", gameId)
+        sessionStorage.setItem("gameId", gameId)
         history.push('/game/'+gameId);
     }
 
@@ -63,9 +63,9 @@ const Waitingroom = () => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
           async function fetchData() {
             try {
-              const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
+              const response = await api.get("/lobby", {headers:{Authorization:sessionStorage.getItem('token')}});
               console.log(response);
-              const id = localStorage.getItem("id")
+              const id = sessionStorage.getItem("id")
               const responseUser = await api.get(`/users/${id}`);//actual user on the page.
               setOwnUsername(responseUser.data.username);
               setMaxSize(response.data[0].maxSize)
@@ -75,7 +75,7 @@ const Waitingroom = () => {
                 if (response.data[i].lobbyId==lobbyId){
                     setUsers(response.data[i].players);
                     setGameMaster(response.data[i].players[0].username);
-                    localStorage.setItem("gameMaster", gameMaster);
+                    sessionStorage.setItem("gameMaster", gameMaster);
                     // let usersCounted=0;
                     // for (let j in response.data[i].players){
                     //     usersCounted+=1;
@@ -143,7 +143,7 @@ const Waitingroom = () => {
         SocketConnection.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
         SocketConnection.subscribe("/lobby/"+lobbyId+"/startGame", startGameCallback)
         //SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
-        SocketConnection.connect(localStorage.getItem('token'));
+        SocketConnection.connect(sessionStorage.getItem('token'));
     },[])
 
 
@@ -156,7 +156,7 @@ const Waitingroom = () => {
         <BaseContainer className="waitingroom container">
              {/*<meta http-equiv="refresh" content="30"></meta>*/}
              <h2 className = "waitingroom label">Waitingroom</h2> 
-             <div className = "waitingroom Url">Invite Friends? Say them to join Game {localStorage.getItem('lobbyId')}: (Dashboard <BsArrowRightShort/> Join Game <BsArrowRightShort/> Game {localStorage.getItem('lobbyId')}).</div>
+             <div className = "waitingroom Url">Invite Friends? Say them to join Game {sessionStorage.getItem('lobbyId')}: (Dashboard <BsArrowRightShort/> Join Game <BsArrowRightShort/> Game {sessionStorage.getItem('lobbyId')}).</div>
              <div className = "waitingroom content">{content}</div>
              <div className = "waitingroom gameBox">{gameBox}</div>
                 

@@ -10,7 +10,7 @@ class SocketConnection {
     constructor() {
         this.url = getDomain()
         /*
-        this.socket = new SockJS(`${url}/ws-connect`, {headers: { Authorization:localStorage.getItem("token") }})
+        this.socket = new SockJS(`${url}/ws-connect`, {headers: { Authorization:sessionStorage.getItem("token") }})
 
         this.stompClient = Stomp.over(this.socket)
         */
@@ -23,7 +23,7 @@ class SocketConnection {
         console.log("try connection")
         if (!this.socket) {
             console.log("no socket connection, creating new SockJS")
-            this.socket = new SockJS(`${this.url}/ws-connect`, {headers: { Authorization:localStorage.getItem("token") }})
+            this.socket = new SockJS(`${this.url}/ws-connect`, {headers: { Authorization:sessionStorage.getItem("token") }})
         }
         if(!this.stompClient) {
             console.log("no stomp connection creating new stompClient")
@@ -40,11 +40,11 @@ class SocketConnection {
             }
             console.log(game)
             if(game) {
-                this.send("/app/game/"+localStorage.getItem("gameId")+"/init")
+                this.send("/app/game/"+sessionStorage.getItem("gameId")+"/init")
             }
         })
         if(this.stompClient.connected && game) {
-            this.send("/app/game/"+localStorage.getItem("gameId")+"/init")
+            this.send("/app/game/"+sessionStorage.getItem("gameId")+"/init")
 
         }
     }
@@ -64,7 +64,7 @@ class SocketConnection {
             throw Error("Websocket not connected")
         }
         console.log(content)
-        this.stompClient.send(destination, {token: localStorage.getItem("token")}, JSON.stringify(content));
+        this.stompClient.send(destination, {token: sessionStorage.getItem("token")}, JSON.stringify(content));
     }
 
     /*

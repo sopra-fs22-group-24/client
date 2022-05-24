@@ -12,7 +12,7 @@ const Dashboard = props => {
     
     const history = useHistory();
     let lobbyId;
-    let localUsername = localStorage.getItem("username");
+    let localUsername = sessionStorage.getItem("username");
     let initial = localUsername[0];
 
 
@@ -24,7 +24,7 @@ const Dashboard = props => {
 
     const joinLobbyCallback = (response) => {
         lobbyId = response.lobbyId;
-        localStorage.setItem('lobbyId',lobbyId);
+        sessionStorage.setItem('lobbyId',lobbyId);
         history.push('/waitingroom/'+lobbyId);
     }
 
@@ -45,7 +45,7 @@ const Dashboard = props => {
     }
 
     useEffect(() => {
-        SocketConnection.connect(localStorage.getItem('token'));
+        SocketConnection.connect(sessionStorage.getItem('token'));
     },[])
 
     return (

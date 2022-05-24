@@ -40,8 +40,8 @@ const Game = () => {
     const togglePopup = () => {setIsOpen(!isOpen)};
     const togglePopupCallOut = () => {setCallOutOpen(!callOutOpen)}
 
-    const userId = localStorage.getItem("id");
-    const username = localStorage.getItem("username");
+    const userId = sessionStorage.getItem("id");
+    const username = sessionStorage.getItem("username");
 
     function enableSudo() {
         SocketConnection.send("/app/game/" + gameId + "/enableSudo")
@@ -175,7 +175,7 @@ const Game = () => {
         console.log(currentTurn)
         //if it is players turn set Uno to true and send it with next card
         
-        if(currentTurn == localStorage.getItem("username")) {
+        if(currentTurn == sessionStorage.getItem("username")) {
             setUno(true);
         } else {
             SocketConnection.send('/app/game/' + gameId + '/uno', userId);
@@ -242,7 +242,7 @@ const Game = () => {
         SocketConnection.subscribe("/users/queue/" + gameId + "/cardsDrawn", playerCardsDrawnCallback)
         SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
-        SocketConnection.connect(localStorage.getItem('token'), true);
+        SocketConnection.connect(sessionStorage.getItem('token'), true);
 
     }, [gameId]);
 

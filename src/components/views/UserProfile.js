@@ -15,7 +15,7 @@ const UserProfile = () => {
     const [gamesWon, setGamesWon] = useState(null);
     const [picture, setPicture] = useState(null);
     const [newPictur,setNewPicture]=useState(null);
-    const id = localStorage.getItem("id")
+    const id = sessionStorage.getItem("id")
     async function fetchData() {
         try {
             
@@ -47,10 +47,7 @@ const UserProfile = () => {
     
 
     const logout = () => {
-        //const id = localStorage.getItem("id");
-        //const requestBody = JSON.stringify({id});
-        //api.post('/logout', requestBody);
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         history.push('/login');
     }
 
@@ -66,7 +63,7 @@ const UserProfile = () => {
                 setNewPicture(document.getElementById('pictureInput').files[0]);
                 let formData = new FormData();
                 formData.append("picture",document.getElementById('pictureInput').files[0]  )
-                    const id = localStorage.getItem("id");
+                    const id = sessionStorage.getItem("id");
                     await api.post(`/users/${id}/picture`,formData);
                    
                     fetchProfilePicture();

@@ -11,10 +11,10 @@ import "styles/views/Lobby.scss";
 
 
 const Lobby = () => {
-    SocketConnection.connect(localStorage.getItem('token'));
+    SocketConnection.connect(sessionStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
     const [openLobbies, setOpenLobbies] = useState(null);
-    const un = localStorage.getItem("username")
+    const un = sessionStorage.getItem("username")
     const initial = un[0]
     
     const history = useHistory();
@@ -30,8 +30,8 @@ const Lobby = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
       async function fetchData() {
         try {
-           const response = await api.get("/lobby", {headers:{Authorization:localStorage.getItem('token')}});
-           const id = localStorage.getItem("id")
+           const response = await api.get("/lobby", {headers:{Authorization:sessionStorage.getItem('token')}});
+           const id = sessionStorage.getItem("id")
            const responseUser = await api.get(`/users/${id}`);
            //console.log(responseUser);
             setOwnUsername(responseUser.data.username);
@@ -104,7 +104,7 @@ const Lobby = () => {
 
   const joinLobbyCallback = (response) => {
     let lobbyId = response.lobbyId;
-    localStorage.setItem('lobbyId',lobbyId);
+    sessionStorage.setItem('lobbyId',lobbyId);
     history.push('/waitingroom/'+lobbyId);
   }
 
@@ -123,28 +123,6 @@ const Lobby = () => {
       console.error("Details:", error);
       alert("Something went wrong while joining the lobby! See the console for details.");
     }
-    
-    
-   /*    let alreadyInLobby=0;
-      //console.log(ownUsername);
-      for (let i in lobbies){
-        if (lobbies[i].lobbyId==requestedId){//find lobby to join
-          for (let j in lobbies[i].players){
-            if (lobbies[i].players[j].username==ownUsername){//look for own username in players list in lobby to join
-              alreadyInLobby=1;
-            }
-          }
-        }
-      }
-      if (alreadyInLobby===0){//user didn't join so far!
-        localStorage.setItem('lobbyId',requestedId);
-        socket.send("/app/lobby/"+requestedId+"/joinLobby", {} );
-        socket.subscribe("/users/queue/joinLobby", joinLobbyCallback);
-        history.push('/waitingroom/'+requestedId);
-      }
-      else{
-        alert("You already joined this lobby!");
-      } */
   }
 
 

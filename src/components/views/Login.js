@@ -58,14 +58,9 @@ const Login = props => {
       const response = await api.post("/login",JSON.stringify({username, password}))
       // Store the token into the local storage.
       const data = response.data
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', data.username);
-      localStorage.setItem('id', data.id);
-      //socket.connect(localStorage.getItem('token'));
-      //await new Promise(resolve => setTimeout(resolve, 5000));
-      //localStorage.setItem('socket', socket);
-      //console.log(socket);
-      //console.log(localStorage.getItem('socket'));
+      sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('username', data.username);
+      sessionStorage.setItem('id', data.id);
       
       history.push('/dashboard');
 

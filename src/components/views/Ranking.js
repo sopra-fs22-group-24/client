@@ -51,7 +51,7 @@ Player.propTypes = {
 const Ranking = () => {
     const history = useHistory();
     const [users, setUsers] = useState(null);
-    let localUsername = localStorage.getItem("username");
+    let localUsername = sessionStorage.getItem("username");
     //let initial = localUsername[0];
 
     const goToDashboard = async () => {

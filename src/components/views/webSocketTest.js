@@ -46,7 +46,7 @@ const WebSocketTest = () => {
         console.log(response)
         // Don't use state or else the whole component will reload and you have to reconnect
         lobbyId = response.lobbyId;
-        localStorage.setItem("testLobbyId", lobbyId)
+        sessionStorage.setItem("testLobbyId", lobbyId)
         // We are now connected to the lobby
         // Let us now subscribe to the lobby channels
         socket.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
@@ -67,7 +67,7 @@ const WebSocketTest = () => {
     const userLeftCallback = (response) => {
         console.log("/lobby/"+lobbyId+"/userLeft");
         console.log(response)
-        if(response.username === localStorage.getItem("username")) {
+        if(response.username === sessionStorage.getItem("username")) {
             socket.unsubscribe("/lobby/"+lobbyId+"/userJoined")
 
             socket.unsubscribe("/lobby/"+lobbyId+"/userLeft")
@@ -108,7 +108,7 @@ const WebSocketTest = () => {
         console.log(response)
         // Don't use state or else the whole component will reload and you have to reconnect
         gameId = response.gameId
-        localStorage.setItem("testGameId", gameId)
+        sessionStorage.setItem("testGameId", gameId)
         // We are now connected to the game
         // Let us now subscribe to the game channels
         // public channels
@@ -164,7 +164,7 @@ const WebSocketTest = () => {
     socket.subscribe("/users/queue/joinLobby", joinLobbyCallback)
 
     // connect
-    socket.connect(localStorage.getItem('token'));
+    socket.connect(sessionStorage.getItem('token'));
     
 
     return (

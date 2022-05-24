@@ -34,7 +34,7 @@ function synthesizeSpeech(text) {
 
 const Rules = () => {
     const history = useHistory();
-    let localUsername = localStorage.getItem("username");
+    let localUsername = sessionStorage.getItem("username");
     //let initial = localUsername[0];
 
     const goToDashboard = async () => {
