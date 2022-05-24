@@ -1,5 +1,5 @@
 import "styles/ui/NumericCard.scss";
-import React, {useState} from "react";
+import React from "react";
 import { AiOutlineStop } from "react-icons/ai";
 import {BsArrowLeftRight} from "react-icons/bs";
 import{GiCardDiscard} from "react-icons/gi";

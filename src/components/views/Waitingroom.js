@@ -6,7 +6,6 @@ import SocketConnection from 'helpers/socketConnection';
 import {useHistory, useParams} from 'react-router-dom';
 import {api, handleError} from 'helpers/api';
 import {BsArrowRightShort} from "react-icons/bs";
-import {Box} from "../ui/Box";
 
 const Waitingroom = () => {
     let lobbyId = useParams().id;
@@ -32,12 +31,7 @@ const Waitingroom = () => {
 
     function goToGame(){
         //starts game
-        //SocketConnection.send("/app/game", {"lobbyId": lobbyId});
-        SocketConnection.send("/app/game", {"lobbyId": lobbyId}); //gameId oder lobbyId?
-        //history.push('/game/'+lobbyId); //gameId oder lobbyId?
-        //if (gameMaster==ownUsername){
-            //SocketConnection.send("/app/lobby/"+id+"/leaveLobby", {});
-        //}
+        SocketConnection.send("/app/game", {"lobbyId": lobbyId}); 
 
     }
     function userJoinedCallback(response) {
@@ -76,12 +70,6 @@ const Waitingroom = () => {
                     setUsers(response.data[i].players);
                     setGameMaster(response.data[i].players[0].username);
                     sessionStorage.setItem("gameMaster", gameMaster);
-                    // let usersCounted=0;
-                    // for (let j in response.data[i].players){
-                    //     usersCounted+=1;
-                    // }
-                    // console.log("Users in Lobby:");
-                    // console.log(usersCounted);
                 }
               }
               
@@ -118,14 +106,6 @@ const Waitingroom = () => {
     for (let i in users){
         usersCounted+=1;
     }
-    /* console.log("GameMaster:");
-    console.log(gameMaster);
-    console.log("Own Username:");
-    console.log(ownUsername);
-    console.log("Users in Lobby:");
-    console.log(usersCounted);
-    console.log(usersCounted!=4);
-    //console.log(users.length); */
 
     let gameBox;
     if (usersCounted!=maxSize){// first look, how many players can join the game!
@@ -142,19 +122,12 @@ const Waitingroom = () => {
         SocketConnection.subscribe("/lobby/"+lobbyId+"/userJoined", userJoinedCallback)
         SocketConnection.subscribe("/lobby/"+lobbyId+"/userLeft", userLeftCallback)
         SocketConnection.subscribe("/lobby/"+lobbyId+"/startGame", startGameCallback)
-        //SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
         SocketConnection.connect(sessionStorage.getItem('token'));
     },[])
 
 
-    // setInterval(function(){
-    //     window.location.reload(1);
-    //   }, 30000);
-
-
     return (
         <BaseContainer className="waitingroom container">
-             {/*<meta http-equiv="refresh" content="30"></meta>*/}
              <h2 className = "waitingroom label">Waitingroom</h2> 
              <div className = "waitingroom Url">Invite Friends? Say them to join Game {sessionStorage.getItem('lobbyId')}: (Dashboard <BsArrowRightShort/> Join Game <BsArrowRightShort/> Game {sessionStorage.getItem('lobbyId')}).</div>
              <div className = "waitingroom content">{content}</div>

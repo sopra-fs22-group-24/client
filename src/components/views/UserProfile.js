@@ -15,12 +15,19 @@ const UserProfile = () => {
     const [gamesWon, setGamesWon] = useState(null);
     const [picture, setPicture] = useState(null);
     const [newPictur,setNewPicture]=useState(null);
-    const id = sessionStorage.getItem("id")
+    const id = sessionStorage.getItem("id");
+
+    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
+    
+    function noMoreTime(){
+        sessionStorage.removeItem('token');
+        history.push('/login');
+    }
+    
     async function fetchData() {
         try {
             
             const response = await api.get(`/users/${id}`);
-            //console.log(response.data);
             setUsername(response.data.username);
             setGamesPlayed(response.data.gamesPlayed);
             setGamesWon(response.data.gamesWon);
@@ -57,7 +64,7 @@ const UserProfile = () => {
 
       
 
-    //const loadPicture = async () => {
+    
         async function uploadPicture() {
             try {
                 setNewPicture(document.getElementById('pictureInput').files[0]);

@@ -1,5 +1,5 @@
 import BaseContainer from "components/ui/BaseContainer";
-import {useHistory,useParams} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import SocketConnection from 'helpers/socketConnection';
@@ -13,16 +13,14 @@ import "styles/views/Lobby.scss";
 const Lobby = () => {
     SocketConnection.connect(sessionStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
-    const [openLobbies, setOpenLobbies] = useState(null);
-    const un = sessionStorage.getItem("username")
-    const initial = un[0]
-    
     const history = useHistory();
-    //const { id } = useParams();
-    
+    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     const [ownUsername, setOwnUsername] = useState(null);
     
-
+    function noMoreTime(){
+      sessionStorage.removeItem('token');
+      history.push('/login');
+    }
     
 
     //fetch all lobby-data
@@ -33,13 +31,7 @@ const Lobby = () => {
            const response = await api.get("/lobby", {headers:{Authorization:sessionStorage.getItem('token')}});
            const id = sessionStorage.getItem("id")
            const responseUser = await api.get(`/users/${id}`);
-           //console.log(responseUser);
-            setOwnUsername(responseUser.data.username);
-        //   console.log(ownUsername);
-        //   //console.log(response);
-        //   // Get the returned lobbies and update the state.
-            //console.log(response.data);
-            //setLobbies(response.data);
+           setOwnUsername(responseUser.data.username);
           
           let open = [];
           let count = 0;
@@ -48,8 +40,6 @@ const Lobby = () => {
               open[count] = response.data[j];
               count +=1;
             }
-            // console.log(response.data[j]);
-            // console.log(response.data[j].players.length);
           }
           console.log(open);
           setLobbies(open);
@@ -62,10 +52,7 @@ const Lobby = () => {
       }
       fetchData();}, []
     );
-    //console.log(lobbies);
 
-
-  // lobby-content displayed correctly   
   let content; 
   if (lobbies) {
     content = (
@@ -82,12 +69,6 @@ const Lobby = () => {
                       {lobby.players.map(player => (<div>{player.username}</div>))}</div>
                       <div className="lobby maxSize">Size: {lobby.players.length}/{lobby.maxSize}</div>
                   </Box>
-                    
-                   {/*  <div>Players joined:</div>
-                    {lobby.players.map(player => (
-                      <div>{player.username}</div>
-                    ))} */}
-
                 </div> 
               ))}         
 
@@ -117,7 +98,6 @@ const Lobby = () => {
       SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
       SocketConnection.send("/app/lobby/"+requestedId+"/joinLobby", {} );
       console.log(lobbies);
-      //history.push('/waitingroom/'+requestedId);
     } catch (error) {
       console.error(`Something went wrong while joining the lobbies: \n${handleError(error)}`);
       console.error("Details:", error);

@@ -9,27 +9,27 @@ import {Circle} from "../ui/Circle";
 
 
 const Profile = () => {
-    
-    //const id = useParams().id;
     const id=1;
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [score, setScore] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(null);
     const [gamesWon, setGamesWon] = useState(null);
+    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     
+    function noMoreTime(){
+        sessionStorage.removeItem('token');
+        history.push('/login');
+    }
 
      useEffect(() => {
          async function fetchData() {
              try {
-                console.log("hey!");
                 const response = await api.get(`/users/${id}`);
                 setUsername(response.data.username);
                 setGamesPlayed(response.data.gamesPlayed);
                 setGamesWon(response.data.gamesWon);
                 setScore(response.data.score);
-
-
 
              } catch (error) {
                 alert(`Something went wrong\n${handleError(error)}`);
@@ -45,10 +45,6 @@ const Profile = () => {
         sessionStorage.removeItem('token');
         history.push('/login');
     }
-
-// //     const goToDashboard = async () => {
-// //         history.push(`/dashboard`);
-// //     };
 
      let content = <Spinner/>;
 
@@ -77,7 +73,6 @@ const Profile = () => {
                 </Button>
                 <Button
                     width="100px"
-                    // onClick={() => goToDashboard()}
                 >
                     Back
                 </Button>

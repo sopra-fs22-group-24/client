@@ -1,6 +1,6 @@
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Ranking.scss";
-import {generatePath, Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import React, {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
@@ -13,13 +13,16 @@ import {BsHourglassSplit} from "react-icons/bs";
 
 const Player = (userIndexArray) => {
     const history = useHistory();
-    //console.log(userIndexArray.user[0]);//userInfos
-    //console.log(userIndexArray.user[1]);//index: where is this user in the user-array
-    // let id = user.id;
-    // let idShown = user.id;
-    let id = userIndexArray.user[1];
+    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     
+    let id = userIndexArray.user[1];
     let idShown = id;
+
+    
+    function noMoreTime(){
+        sessionStorage.removeItem('token');
+        history.push('/login');
+    }
 
     if (id ==1 && userIndexArray.user[0].score!=0){
         idShown = <BsFillTrophyFill className = "player first" fontSize="large"/>;
@@ -52,7 +55,6 @@ const Ranking = () => {
     const history = useHistory();
     const [users, setUsers] = useState(null);
     let localUsername = sessionStorage.getItem("username");
-    //let initial = localUsername[0];
 
     const goToDashboard = async () => {
         history.push(`/dashboard`);
@@ -60,10 +62,6 @@ const Ranking = () => {
 
     function goToProfile() {
         history.push('/user');
-    }
-
-    function goToUser(goId) {
-        history.push(`/profile/${goId}`);
     }
 
     useEffect(() => {
@@ -75,12 +73,6 @@ const Ranking = () => {
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
                 setUsers(response.data);
-
-                // console.log('request to:', response.request.responseURL);
-                // console.log('status code:', response.status);
-                // console.log('status text:', response.statusText);
-                // console.log('requested data:', response.data);
-                // console.log(response);
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
@@ -102,8 +94,7 @@ const Ranking = () => {
             <div className="ranking">
                 <ul className="ranking user-list">
                     {users.map((user,index) => (
-                        <div><Player user={[user,index]}  /> 
-                        {/* key={user.id} */}
+                        <div><Player user={[user,index]}  />
                         </div>
                     ))}
                 </ul>

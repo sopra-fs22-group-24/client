@@ -2,24 +2,25 @@ import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import 'styles/views/Dashboard.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import {Button} from 'components/ui/SquareButton';
 import {Circle} from "../ui/Circle";
 import {GiCardPlay} from "react-icons/gi";
 import {BsPerson} from "react-icons/bs";
 import SocketConnection from 'helpers/socketConnection';
 
 const Dashboard = props => {
-    
+    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     const history = useHistory();
     let lobbyId;
-    let localUsername = sessionStorage.getItem("username");
-    let initial = localUsername[0];
+
+    function noMoreTime(){
+        sessionStorage.removeItem('token');
+        history.push('/login');
+    }
 
 
     function goToGame(maxSize){
         SocketConnection.subscribe("/users/queue/joinLobby", joinLobbyCallback);
         SocketConnection.send("/app/createLobby",{"maxSize": maxSize});
-        
     }
 
     const joinLobbyCallback = (response) => {
@@ -49,7 +50,7 @@ const Dashboard = props => {
     },[])
 
     return (
-        <BaseContainer>
+        <BaseContainer className="dashboard container">
             <div className="dashboard profile-container">
                 <Circle
                     onClick={() => goToProfile()}
@@ -57,44 +58,48 @@ const Dashboard = props => {
                     <BsPerson fontSize="100px"/>
                 </Circle>
             </div>
-            <div 
-                className="dashboard overviewLobby"
-                onClick={() => goToLobby()}>
-                Join Game 
-            </div>
-            <div 
-                className="dashboard overviewGame2"
-                onClick={() => goToGame(2)}>
-                2 Player
-            </div>
-            <div 
-                className="dashboard overviewGame3"
-                 onClick={() => goToGame(3)}> 
-                3 Player
-            </div>
-            <div 
-                className="dashboard overviewGame4"
-                onClick={() => goToGame(4)}>
-                4 Player
-            </div>
-            <div 
-                className="dashboard overviewGame">
-                New Game
-            </div>
-            <div 
-                className="dashboard overviewRules"
-                onClick={() => goToRules()}>
-                Rules
-            </div>
-            <div 
-                className="dashboard overviewRanking"
-                onClick={() => goToRanking()}>
-                Ranking
+            <div className="dashboard fixed">
+                <div 
+                    className="dashboard overviewLobby"
+                    onClick={() => goToLobby()}>
+                    Join Game 
+                </div>
+                <div 
+                    className="dashboard overviewGame2"
+                    onClick={() => goToGame(2)}>
+                    2 Player
+                </div>
+                <div 
+                    className="dashboard overviewGame3"
+                    onClick={() => goToGame(3)}> 
+                    3 Player
+                </div>
+                <div 
+                    className="dashboard overviewGame4"
+                    onClick={() => goToGame(4)}>
+                    4 Player
+                </div>
+                <div 
+                    className="dashboard overviewGame">
+                    New Game
+                </div>
+                <div 
+                    className="dashboard overviewRules"
+                    onClick={() => goToRules()}>
+                    Rules
+                </div>
+                <div 
+                    className="dashboard overviewRanking"
+                    onClick={() => goToRanking()}>
+                    Ranking
+                </div>
+                
+                <div className="dashboard overview">
+                    <GiCardPlay/>
+                </div>
+
             </div>
             
-            <div className="dashboard overview">
-                <GiCardPlay/>
-            </div>
             
                     
         </BaseContainer>
