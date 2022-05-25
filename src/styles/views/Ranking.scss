@@ -8,16 +8,12 @@
     @include center;
     flex-direction: column;
     color:black;
-    
-    
-
   }
 
   &.profile-container {
     position: absolute;
     top: 32px;
     right: 50px;
-    
   }
 
   &.form {
@@ -96,7 +92,8 @@
 
   &.gamesPlayed{
     position: relative;
-    left: 100px;
+    margin-left: auto;
+    margin-right: 100px;
     font-family: $fontMono;
     font-weight: 300;
   }
@@ -109,8 +106,8 @@
   }
 
   &.gamesWon { 
-    position: relative;
-    left: 200px;
+    margin-left: auto;
+    margin-right: 10px;
     font-family: $fontMono;
     font-weight: 300;
   }

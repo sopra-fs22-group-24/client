@@ -2,7 +2,6 @@
 
 .profile {
   &.container {
-    
     margin-top: 2em;
     min-height: 500px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
@@ -13,23 +12,10 @@
     position: absolute;
     top: 250px;
     left: 550px;
-    width: 800px;
-    height: 250px;//s400px;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-    // width: 20em;
-    // max-width: 30em;
-    // height: 25em;
+    width: 600px;
+    height: 250px;
     font-size: 16px;
-    // font-weight: 300;
-    // padding-left: 37px;
-    // padding-right: 37px;
-    // border-radius: 0.75em;
     background-color:$background;
-    // transition: opacity 0.5s ease, transform 0.5s ease;
-    // box-shadow: $dropShadow;
   }
 
   &.picture{
@@ -40,15 +26,6 @@
     height: 400px;
   }
 
- /*  &.button-container {
-    position: absolute;
-    top: 100px;
-    left: 800px;
-    margin-left: 30px;
-    // display: flex;
-    // justify-content: center;
-    // margin-top: 3em;
-  } */
   &.line{
     position: absolute;
     top: 45px;
@@ -82,8 +59,6 @@
     left: 0px;
     border: 1px solid $color1;
   }
-
-  
 
   &.properties{
     margin-top: 15px;

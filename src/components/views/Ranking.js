@@ -16,7 +16,7 @@ const Player = (userIndexArray) => {
     const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     
     let id = userIndexArray.user[1];
-    let idShown = id;
+    let idShown = id+1;
 
     
     function noMoreTime(){
@@ -24,17 +24,17 @@ const Player = (userIndexArray) => {
         history.push('/login');
     }
 
-    if (id ==1 && userIndexArray.user[0].score!=0){
+    if (id ==0 && userIndexArray.user[0].gamesPlayed!=0){
         idShown = <BsFillTrophyFill className = "player first" fontSize="large"/>;
     }
-    if (id ==2 && userIndexArray.user[0].score!=0){
+    if (id ==1 && userIndexArray.user[0].gamesPlayed!=0){
         idShown = <BsFillTrophyFill className = "player second" fontSize="large"/>;
     }
 
-    if (id ==3 && userIndexArray.user[0].score!=0){
+    if (id ==2 && userIndexArray.user[0].gamesPlayed!=0){
         idShown = <BsFillTrophyFill className = "player third" fontSize="large"/>;
     }
-    if (userIndexArray.user[0].score==0){
+    if (userIndexArray.user[0].gamesPlayed==0){
         idShown = <BsHourglassSplit fontSize="large"/>; 
     }
     return (
@@ -43,7 +43,7 @@ const Player = (userIndexArray) => {
             <div className = "player link"> {userIndexArray.user[0].username} </div>
             <div className = "player gamesPlayed"> Games played:{userIndexArray.user[0].gamesPlayed} </div>
             <div className = "player gamesWon"> Games won:{userIndexArray.user[0].gamesWon} </div>
-            <div className="player score">Score: {userIndexArray.user[0].score}</div>
+            {/* <div className="player score">Score: {userIndexArray.user[0].score}</div> */}
         </div>
     )};
 

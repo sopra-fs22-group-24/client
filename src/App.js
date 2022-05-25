@@ -11,5 +11,3 @@ const App = () => {
 };
 
 export default App;
-
-//<Header height="100"/>

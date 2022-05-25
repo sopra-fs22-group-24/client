@@ -12,9 +12,6 @@ const Waitingroom = () => {
     let gameId;
 
     const startGameCallback = (response) => {
-        // console.log("/lobby/"+lobbyId+"/startGame")
-        // console.log(response)
-        // Don't use state or else the whole component will reload and you have to reconnect
         gameId = response.gameId;
         sessionStorage.setItem("gameId", gameId)
         history.push('/game/'+gameId);
