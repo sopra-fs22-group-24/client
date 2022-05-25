@@ -131,6 +131,7 @@ const Game = () => {
     const calledOutCallback = (response) => {
         console.log("calledOut")
         console.log(response)
+        setCurrentMessage(response.callee + " called out " + response.calledOutPlayer)
     }
 
     //Someone said UNO
@@ -203,7 +204,6 @@ const Game = () => {
     }
 
     function protest() {
-        //synthesizeSpeech("Wrong")
         togglePopupCallOut()
         let user = {"username": target}
         SocketConnection.send('/app/game/' + gameId + '/callOut', user)
@@ -264,7 +264,6 @@ const Game = () => {
         SocketConnection.subscribe("/users/queue/error", receiveErrorCallback)
         SocketConnection.subscribe("/users/queue/" + gameId + "/playedCard", playedCardCallback)
         SocketConnection.connect(sessionStorage.getItem('token'), true);
-
     }, [gameId]);
 
 
