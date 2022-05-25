@@ -17,7 +17,7 @@ const UserProfile = () => {
     const [newPictur,setNewPicture]=useState(null);
     const id = sessionStorage.getItem("id");
 
-    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
+    //const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     
     function noMoreTime(){
         sessionStorage.removeItem('token');

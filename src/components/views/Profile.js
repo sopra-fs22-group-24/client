@@ -15,7 +15,7 @@ const Profile = () => {
     const [score, setScore] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(null);
     const [gamesWon, setGamesWon] = useState(null);
-    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
+    //const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     
     function noMoreTime(){
         sessionStorage.removeItem('token');

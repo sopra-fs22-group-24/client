@@ -9,9 +9,7 @@ import SocketConnection from "../../helpers/socketConnection";
 import Confetti from 'react-confetti'
 import {useHistory, useParams} from "react-router-dom";
 import Popup from "../ui/Popup";
-import {ScoreUser} from 'components/ui/ScoreUser';
 import SelectionPopup from "../ui/SelectionPopup";
-import {handleError} from "../../helpers/api";
 import {Spinner} from "../ui/Spinner";
 
 const Game = () => {
@@ -26,7 +24,6 @@ const Game = () => {
     const [currentTurn, setCurrentTurn] = useState(null);
     const [cards, setCards] = useState(null);
     const [newColor, setNewColor] = useState("");
-    const [saidUno, setSaidUno] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [target, setTarget] = useState("");
     const [winner, setWinner] = useState(null);
@@ -35,10 +32,18 @@ const Game = () => {
     const [callOutOpen, setCallOutOpen] = useState(false)
     const [currentMessage, setCurrentMessage] = useState(false);
     const [currentErrorMessage, setCurrentErrorMessage] = useState(false);
-    const togglePopupWildcard = () =>  {setWildcardIsOpen(!wildcardIsOpen)};
-    const togglePopupXtrem = () => { setXtremIsOpen(!xtremIsOpen)};
-    const togglePopup = () => {setIsOpen(!isOpen)};
-    const togglePopupCallOut = () => {setCallOutOpen(!callOutOpen)}
+    const togglePopupWildcard = () => {
+        setWildcardIsOpen(!wildcardIsOpen)
+    };
+    const togglePopupXtrem = () => {
+        setXtremIsOpen(!xtremIsOpen)
+    };
+    const togglePopup = () => {
+        setIsOpen(!isOpen)
+    };
+    const togglePopupCallOut = () => {
+        setCallOutOpen(!callOutOpen)
+    }
 
     const userId = sessionStorage.getItem("id");
     const username = sessionStorage.getItem("username");
@@ -46,6 +51,7 @@ const Game = () => {
     function enableSudo() {
         SocketConnection.send("/app/game/" + gameId + "/enableSudo")
     }
+
     window.enableSudo = enableSudo;
 
     //changes Card in the middle of the table
@@ -64,6 +70,7 @@ const Game = () => {
     const playerTurnCallback = (response) => {
         console.log("/game/" + gameId + "/playerTurn")
         console.log(response);
+        setCurrentErrorMessage("");
         setCurrentTurn(response.username);
     }
 
@@ -97,6 +104,7 @@ const Game = () => {
         setCurrentErrorMessage(response["msg"])
     }
 
+    //Messages
     const messageCallback = (response) => {
         console.log(response)
         setCurrentMessage(response["msg"])
@@ -112,9 +120,7 @@ const Game = () => {
     const unoCallback = (response) => {
         console.log("Uno");
         console.log(response);
-        setSaidUno(response.username);
         synthesizeSpeech("UNO");
-        if (saidUno != username){alert(`Watch out! ` + saidUno + ` said UNO!`);}
     }
 
     //User hand after first time
@@ -130,11 +136,8 @@ const Game = () => {
         togglePopup();
     }
 
-    const initGame = () => {
-        SocketConnection.send("/app/game/" + gameId + "/init")
-    }
-
     const drawCards = () => {
+        setCurrentMessage("")
         SocketConnection.send("/app/game/" + gameId + "/drawCard")
     }
 
@@ -142,6 +145,7 @@ const Game = () => {
     //play a Card. Checks if Wildcard or Extreme Hit
     const playCard = (index) => {
         console.log("played Card");
+        setCurrentMessage("")
         let card = cards[index];
         if (card.symbol == "WILDCARD") {
             togglePopupWildcard();
@@ -154,7 +158,7 @@ const Game = () => {
         }
     }
 
-    const playWildcard = () =>{
+    const playWildcard = () => {
         togglePopupWildcard()
         let newCard = {color: newColor, symbol: "WILDCARD"};
         let payload = {"card": newCard, "user": null, "uno": uno};
@@ -174,8 +178,7 @@ const Game = () => {
     function sayUno() {
         console.log(currentTurn)
         //if it is players turn set Uno to true and send it with next card
-        
-        if(currentTurn == sessionStorage.getItem("username")) {
+        if (currentTurn == sessionStorage.getItem("username")) {
             setUno(true);
         } else {
             SocketConnection.send('/app/game/' + gameId + '/uno', userId);
@@ -225,7 +228,6 @@ const Game = () => {
     }
 
 
-
     useEffect(() => {
         console.log("beforeConnection")
         console.log(gameId)
@@ -255,13 +257,13 @@ const Game = () => {
                     <div className="game currentPlayerContainer">
                         <h3> Current player: {currentTurn}</h3>
                         <h4>{currentMessage}</h4>
-                        <h4>{currentErrorMessage}</h4>
+                        <h5>{currentErrorMessage}</h5>
                     </div>
                     <div className="game enemyContainer">
                         {EnemyDisplay}
                     </div>
                 </div>
-     
+
                 <div className="game container">
                     {isOpen && <Popup
                         content={<>
@@ -279,16 +281,17 @@ const Game = () => {
                     {wildcardIsOpen && <SelectionPopup
                         content={<>
                             <b>Please select a color</b>
-                            <><form>
-                                <select value={newColor}
-                                        onChange={e => setNewColor(e.target.value)} >
-                                    <option value="NULL">Choose Color</option>
-                                    <option value="BLUE">Blue</option>
-                                    <option value="YELLOW">Yellow</option>
-                                    <option value="GREEN">Green</option>
-                                    <option value="RED">Red</option>
-                                </select>
-                            </form>
+                            <>
+                                <form>
+                                    <select value={newColor}
+                                            onChange={e => setNewColor(e.target.value)}>
+                                        <option value="NULL">Choose Color</option>
+                                        <option value="BLUE">Blue</option>
+                                        <option value="YELLOW">Yellow</option>
+                                        <option value="GREEN">Green</option>
+                                        <option value="RED">Red</option>
+                                    </select>
+                                </form>
                             </>
                             <button onClick={() => playWildcard()}>Submit</button>
                         </>}
@@ -301,24 +304,24 @@ const Game = () => {
                             <div>
                                 <form>
                                     <div>
-                                <select value={newColor}
-                                        onChange={e => setNewColor(e.target.value)} >
-                                    <option value="NULL">Choose Color</option>
-                                    <option value="BLUE">Blue</option>
-                                    <option value="YELLOW">Yellow</option>
-                                    <option value="GREEN">Green</option>
-                                    <option value="RED">Red</option>
-                                </select></div>
+                                        <select value={newColor}
+                                                onChange={e => setNewColor(e.target.value)}>
+                                            <option value="NULL">Choose Color</option>
+                                            <option value="BLUE">Blue</option>
+                                            <option value="YELLOW">Yellow</option>
+                                            <option value="GREEN">Green</option>
+                                            <option value="RED">Red</option>
+                                        </select></div>
                                     <div>
-                                <select value={target}
-                                        onChange={e => setTarget(e.target.value)} >
-                                    <option value = "NULL"> Choose Target</option>
-                                    {users.map((user) => (
-                                        <option value ={user.username}> {user.username}</option>
-                                    ))}
-                                </select>
-                                </div>
-                            </form>
+                                        <select value={target}
+                                                onChange={e => setTarget(e.target.value)}>
+                                            <option value="NULL"> Choose Target</option>
+                                            {users.map((user) => (
+                                                <option value={user.username}> {user.username}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </form>
                             </div>
                             <button onClick={() => playXtrem()}>Submit</button>
                         </>}
@@ -329,27 +332,28 @@ const Game = () => {
                             <b>Choose Player to call out</b>
                             <div>
                                 <form>
-                 
                                     <div>
-                                <select value={target}
-                                        onChange={e => setTarget(e.target.value)} >
-                                    <option value = "NULL"> Choose Target</option>
-                                    {users.map((user) => (
-                                        <option value ={user.username}> {user.username}</option>
-                                    ))}
-                                </select>
-                                </div>
-                            </form>
+                                        <select value={target}
+                                                onChange={e => setTarget(e.target.value)}>
+                                            <option value="NULL"> Choose Target</option>
+                                            {users.map((user) => (
+                                                <option value={user.username}> {user.username}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </form>
                             </div>
                             <button onClick={() => protest(target)}>Submit</button>
                         </>}
                         handleClose={togglePopupCallOut}
                     />}
-                        
-                        
+
+
                     <div className="game launcher">
                         <Launcher onClick={() => drawCards()}>
-                            PUSH
+                            Press
+                            for
+                            Cards
                         </Launcher>
                     </div>
                     <div className="game middleCard">

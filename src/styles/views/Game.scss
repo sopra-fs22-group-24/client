@@ -31,6 +31,7 @@
     padding-right: 1em;
     padding-left: 1em;
     border:solid;
+    margin-top: 3px;
     margin-left: 1em;
     margin-right: 1em;
     text-align: center;
@@ -69,7 +70,13 @@
     h3{
       color: $color4;
     }
-
+    h4{
+      color: white;
+    }
+    h5{
+      color: red;
+      font-size: 1.1em;
+    }
   }
 
   &.inputContainer{

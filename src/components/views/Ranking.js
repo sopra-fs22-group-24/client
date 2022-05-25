@@ -13,7 +13,7 @@ import {BsHourglassSplit} from "react-icons/bs";
 
 const Player = (userIndexArray) => {
     const history = useHistory();
-    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
+    //const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     
     let id = userIndexArray.user[1];
     let idShown = id;

@@ -110,7 +110,7 @@ const Waitingroom = () => {
     let gameBox;
     if (usersCounted!=maxSize){// first look, how many players can join the game!
         gameBox = (
-            <div>Wait until there are enough user in the waiting room. Currently: {currentSize}/{maxSize}</div>
+            <div>Wait until there are enough users in the waiting room. Currently: {currentSize}/{maxSize}</div>
             
         );
     } else{
@@ -129,7 +129,7 @@ const Waitingroom = () => {
     return (
         <BaseContainer className="waitingroom container">
              <h2 className = "waitingroom label">Waitingroom</h2> 
-             <div className = "waitingroom Url">Invite Friends? Say them to join Game {sessionStorage.getItem('lobbyId')}: (Dashboard <BsArrowRightShort/> Join Game <BsArrowRightShort/> Game {sessionStorage.getItem('lobbyId')}).</div>
+             <div className = "waitingroom Url">Want to invite Friends? Tell them to join Game {sessionStorage.getItem('lobbyId')}: (Dashboard <BsArrowRightShort/> Join Game <BsArrowRightShort/> Game {sessionStorage.getItem('lobbyId')}).</div>
              <div className = "waitingroom content">{content}</div>
              <div className = "waitingroom gameBox">{gameBox}</div>
                 

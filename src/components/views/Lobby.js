@@ -14,7 +14,7 @@ const Lobby = () => {
     SocketConnection.connect(sessionStorage.getItem('token'));
     const [lobbies, setLobbies] = useState(null);
     const history = useHistory();
-    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
+    //const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     const [ownUsername, setOwnUsername] = useState(null);
     
     function noMoreTime(){
