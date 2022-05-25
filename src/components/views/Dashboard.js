@@ -14,6 +14,8 @@ const Dashboard = props => {
 
     function noMoreTime(){
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('id');
         history.push('/login');
     }
 

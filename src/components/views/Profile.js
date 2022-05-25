@@ -19,6 +19,8 @@ const Profile = () => {
     
     function noMoreTime(){
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('id');
         history.push('/login');
     }
 
@@ -43,6 +45,8 @@ const Profile = () => {
 
     const logout = () => {
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('id');
         history.push('/login');
     }
 
