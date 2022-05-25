@@ -16,10 +16,7 @@
   }
 
   &.form {
-    color:black;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    color:whitesmoke;
     text-align: center;
     width: 50em;
     height: auto;
@@ -29,12 +26,15 @@
     padding-right: 37px;
     padding-bottom: 30px;
     border-radius: 0.75em;
-    border-color:black;
-    border:solid;
+    border: solid black;
     background-color:$background;
-    transition:opacity 0.5s ease, transform 0.5s ease;
     box-shadow: $dropShadow;
-
+   h1{
+     color:$color4;
+   }
+    h3{
+      color:$color4;
+    }
   }
 
   &.button-container {
