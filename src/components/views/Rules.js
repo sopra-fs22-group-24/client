@@ -35,7 +35,7 @@ function synthesizeSpeech(text) {
 const Rules = () => {
     const history = useHistory();
     let localUsername = sessionStorage.getItem("username");
-    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
+    //const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     
     function noMoreTime(){
         sessionStorage.removeItem('token');

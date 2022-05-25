@@ -8,7 +8,7 @@ import {BsPerson} from "react-icons/bs";
 import SocketConnection from 'helpers/socketConnection';
 
 const Dashboard = props => {
-    const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
+    //const timeout = setTimeout(noMoreTime, 600000);//calls function noMoreTime after 10 minutes
     const history = useHistory();
     let lobbyId;
 
