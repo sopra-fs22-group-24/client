@@ -11,6 +11,7 @@ import {useHistory, useParams} from "react-router-dom";
 import Popup from "../ui/Popup";
 import SelectionPopup from "../ui/SelectionPopup";
 import {Spinner} from "../ui/Spinner";
+import {TiArrowLeftThick, TiArrowRightThick} from "react-icons/ti";
 
 const Game = () => {
 
@@ -27,6 +28,8 @@ const Game = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [target, setTarget] = useState("");
     const [winner, setWinner] = useState(null);
+    const [currentDirection, setCurrentDirection] = useState("right");
+    const [arrow, setArrow] = useState(<TiArrowRightThick fontSize="28px"/>);
     const [wildcardIsOpen, setWildcardIsOpen] = useState(false);
     const [xtremIsOpen, setXtremIsOpen] = useState(false);
     const [callOutOpen, setCallOutOpen] = useState(false)
@@ -54,6 +57,16 @@ const Game = () => {
 
     window.enableSudo = enableSudo;
 
+    function changeDirection() {
+        if (currentDirection == "left"){
+            setCurrentDirection("right")
+            setArrow(<TiArrowRightThick fontSize="28px"/>)
+        }else{
+            setCurrentDirection("left")
+            setArrow(<TiArrowLeftThick fontSize="28px"/>)
+        }
+    }
+
     //changes Card in the middle of the table
     const topMostCardCallback = (response) => {
         console.log("/game/" + gameId + "/topMostCard")
@@ -65,7 +78,11 @@ const Game = () => {
         if (response.symbol == "EXTREME_HIT") {
             synthesizeSpeech("Extreme");
         }
+        if  (response.symbol == "REVERSE"){
+            changeDirection();
+        }
     }
+
     //Whose turn is it
     const playerTurnCallback = (response) => {
         console.log("/game/" + gameId + "/playerTurn")
@@ -110,7 +127,7 @@ const Game = () => {
         setCurrentMessage(response["msg"])
     }
 
-    //Wrongly said uno
+    //Someone was called out for not saying UNO
     const calledOutCallback = (response) => {
         console.log("calledOut")
         console.log(response)
@@ -136,11 +153,11 @@ const Game = () => {
         togglePopup();
     }
 
+    //draw new cards from launcher
     const drawCards = () => {
         setCurrentMessage("")
         SocketConnection.send("/app/game/" + gameId + "/drawCard")
     }
-
 
     //play a Card. Checks if Wildcard or Extreme Hit
     const playCard = (index) => {
@@ -220,9 +237,11 @@ const Game = () => {
                     <Enemy
                         username={user.username}
                         nCards={user.nCards}
+                        isCurrentTurn={currentTurn == user.username}
                     >
                     </Enemy>
                 ))}
+
             </>
         );
     }
@@ -255,7 +274,8 @@ const Game = () => {
             <div>
                 <div className="game topContainer">
                     <div className="game currentPlayerContainer">
-                        <h3> Current player: {currentTurn}</h3>
+                        <h3> Current player: {currentTurn} </h3>
+                        <h3> Direction: {arrow}</h3>
                         <h4>{currentMessage}</h4>
                         <h5>{currentErrorMessage}</h5>
                     </div>

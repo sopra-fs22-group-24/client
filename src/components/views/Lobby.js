@@ -130,19 +130,19 @@ const Lobby = () => {
                 className = "lobby gameButton"
                 onClick={() => goToGame(2)}
             >
-                New Game: 2 Player
+                New Game: 2 Players
             </Box>
             <Box
                 className = "lobby gameButton"
                 onClick={() => goToGame(3)}
             >
-                New Game: 3 Player
+                New Game: 3 Players
             </Box>
             <Box
                 className = "lobby gameButton"
                 onClick={() => goToGame(4)}
             >
-                New Game: 4 Player
+                New Game: 4 Players
             </Box>
             
             
