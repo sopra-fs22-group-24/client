@@ -89,7 +89,7 @@ const UserProfile = () => {
     let content = (
         
         <div className="profile">
-            <img className = "profile picture"
+            <img className = "profile image"
                 src={picture}/>
             <div className="profile container">
                 <div className="profile form">
