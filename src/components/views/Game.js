@@ -138,6 +138,7 @@ const Game = () => {
     const unoCallback = (response) => {
         console.log("Uno");
         console.log(response);
+        setCurrentErrorMessage(response.username + "said UNO!");
         synthesizeSpeech("UNO");
     }
 
