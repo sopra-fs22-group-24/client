@@ -57,13 +57,21 @@ The rules page has a text-to-speech feature, so the rules can be listened to rat
 ![Dashboard](pictures/Dashboard.png)
 
 When creating a new game, the user has to wait until enough players have joined. After that the game automatically starts.  
+The lobby shows all the games that are currently open
+
+![Lobby](pictures/Lobby2.png)
+
 In the game, the user can click on the card to play it or press the launcher to get new cards.  
 They get warned if they want to play a wrong card or if it is not their turn.  
-They see how many card the other players have on the top right. 
+If the UNO button is not pressed at the right moment, other players can call you out and you receive new cards. 
+They see how many card the other players have on the top right.
 
 ![Game](pictures/Game.png)
 
 After the game is finished, a popup appears, showing the winner and the user can go back to the dashboard. 
+The ranking then shows who won how many games.
+
+![Ranking](pictures/Ranking.png)
 
 ## Roadmap
 Future developments could be...
@@ -76,10 +84,12 @@ Future developments could be...
 
 ## Authors and acknowledgment
 ### Authors
-- Livia Stöckli
-- Florian Rüegsegger
+- Mauro Hirt 
 - Lea Kehrli
-- Mauro Hirt
+- Florian Rüegsegger
+- Livia Stöckli
+
+
 
 ### Acknowledgment
 - Kyrill Hux: Project Assistant teacher
