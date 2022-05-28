@@ -28,8 +28,6 @@ const Game = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [target, setTarget] = useState("");
     const [winner, setWinner] = useState(null);
-    const [currentDirection, setCurrentDirection] = useState("right");
-    const [arrow, setArrow] = useState(<TiArrowRightThick fontSize="28px"/>);
     const [wildcardIsOpen, setWildcardIsOpen] = useState(false);
     const [xtremIsOpen, setXtremIsOpen] = useState(false);
     const [callOutOpen, setCallOutOpen] = useState(false)
@@ -54,18 +52,8 @@ const Game = () => {
     function enableSudo() {
         SocketConnection.send("/app/game/" + gameId + "/enableSudo")
     }
-
     window.enableSudo = enableSudo;
 
-    function changeDirection() {
-        if (currentDirection == "left"){
-            setCurrentDirection("right")
-            setArrow(<TiArrowRightThick fontSize="28px"/>)
-        }else{
-            setCurrentDirection("left")
-            setArrow(<TiArrowLeftThick fontSize="28px"/>)
-        }
-    }
 
     //changes Card in the middle of the table
     const topMostCardCallback = (response) => {
@@ -77,9 +65,6 @@ const Game = () => {
         }
         if (response.symbol == "EXTREME_HIT") {
             synthesizeSpeech("Extreme");
-        }
-        if  (response.symbol == "REVERSE"){
-            changeDirection();
         }
     }
 
@@ -275,7 +260,6 @@ const Game = () => {
                 <div className="game topContainer">
                     <div className="game currentPlayerContainer">
                         <h3> Current player: {currentTurn} </h3>
-                        <h3> Direction: {arrow}</h3>
                         <h4>{currentMessage}</h4>
                         <h5>{currentErrorMessage}</h5>
                     </div>
